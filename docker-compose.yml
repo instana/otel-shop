@@ -1,0 +1,61 @@
+version: "3"
+services:
+    agent:
+        image: instana/agent:latest
+        pid: "host"
+        privileged: true
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+          - /dev:/dev
+          - /sys:/sys
+          - /var/log:/var/log
+          - ./agent/configuration-otel.yaml:/opt/instana/agent/etc/instana/configuration-otel.yaml
+          - ./agent/com.instana.agent.main.sender.File.cfg:/opt/instana/agent/etc/instana/com.instana.agent.main.sender.File.cfg
+          - ./agent/logs:/opt/instana/agent/data/log
+        networks:
+            app-network:
+                aliases:
+                - instana-agent
+                - collector
+        environment:
+          - INSTANA_AGENT_ENDPOINT=${agent_endpoint:?No agent endpoint provided}
+          - INSTANA_AGENT_ENDPOINT_PORT=${agent_endpoint_port:-443}
+          - INSTANA_AGENT_KEY=${agent_key:?No agent key provided}
+          - INSTANA_DOWNLOAD_KEY=${download_key}
+          - INSTANA_AGENT_ZONE=${agent_zone:-otel-test}
+          - INSTANA_MVN_REPOSITORY_FEATURES_PATH=artifactory/features-internal@id=features@snapshots@snapshotsUpdate=always
+          - INSTANA_MVN_REPOSITORY_SHARED_PATH=artifactory/shared@id=shared@snapshots@snapshotsUpdate=always
+        expose:
+          - "42699"
+    front:
+        image: instanacedricziel/otel-demo-front:latest
+        build:
+            context: front
+        volumes:
+        - ${TEST_ROOT:-.}/front/conf/nginx.conf:/etc/nginx/nginx.conf
+        - ${TEST_ROOT:-.}/front/conf/otel-nginx.toml:/conf/otel-nginx.toml
+        networks:
+            app-network:
+        ports:
+        - "8000:80"
+        command:
+        - /usr/sbin/nginx
+        - -g
+        - daemon off;
+    web:
+        image: instanacedricziel/otel-demo-web:latest
+        build:
+            context: web
+        volumes:
+        - ${TEST_ROOT:-.}/web/conf/nginx.conf:/etc/nginx/nginx.conf
+        - ${TEST_ROOT:-.}/web/conf/otel-nginx.toml:/conf/otel-nginx.toml
+        - ${TEST_ROOT:-.}/web/html:/var/www/html
+        networks:
+            app-network:
+        command:
+        - /usr/sbin/nginx
+        - -g
+        - daemon off;
+
+networks:
+    app-network: {}

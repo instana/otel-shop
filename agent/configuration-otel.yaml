@@ -1,0 +1,17 @@
+com.instana.plugin.opentelemetry:
+  enabled: true
+
+com.instana.ignore:
+  arguments:
+    - '-javaagent:/opt/otel/opentelemetry-javaagent-all.jar'
+
+com.instana.tracing:
+  extra-http-headers:
+    - traceparent
+    - tracestate
+
+com.instana.plugin.javatrace:
+  instrumentation:
+    sdk:
+      packages:
+        - com.instana.demo
