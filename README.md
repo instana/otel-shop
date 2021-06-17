@@ -2,8 +2,8 @@
 
 This OpenTelemetry demo consists of the following services:
 
-**front**: An nginx frontend proxy server
-**web**: And nginx server for static assets
+* **front**: An nginx frontend proxy server
+* **web**: And nginx server for static assets
 
 ## Usage
 
