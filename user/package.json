@@ -1,0 +1,26 @@
+{
+  "name": "user",
+  "version": "1.0.0",
+  "description": "user REST API",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "SteveW",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@opentelemetry/api": "^1.0.4",
+    "@opentelemetry/auto-instrumentations-node": "^0.27.2",
+    "@opentelemetry/exporter-metrics-otlp-grpc": "^0.27.0",
+    "@opentelemetry/exporter-trace-otlp-grpc": "^0.27.0",
+    "@opentelemetry/sdk-metrics-base": "^0.27.0",
+    "@opentelemetry/sdk-node": "^0.27.0",
+    "body-parser": "^1.18.1",
+    "express": "^4.15.4",
+    "mongodb": "^3.5.3",
+    "redis": "^2.8.0",
+    "pino": "^5.10.8",
+    "express-pino-logger": "^4.0.0",
+    "pino-pretty": "^2.5.0"
+  }
+}

@@ -33,7 +33,7 @@ services:
       context: mongo
     image: ${REPOSITORY}-mongodb:${PROJECT_VERSION}
     networks:
-        app-network:
+      app-network:
     logging: &logging
       driver: "json-file"
       options:
@@ -71,6 +71,7 @@ services:
       context: front
     depends_on:
       - catalogue
+      - user
       - web
     volumes:
       - ./front/conf/nginx.conf:/etc/nginx/nginx.conf
@@ -100,6 +101,31 @@ services:
     image: ${REPOSITORY}-catalogue:${PROJECT_VERSION}
     depends_on:
       - mongodb
+    networks:
+      app-network:
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "curl",
+          "-H",
+          "X-INSTANA-SYNTHETIC: 1",
+          "-f",
+          "http://localhost:8080/health",
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+    logging:
+      <<: *logging
+
+  user:
+    build:
+      context: user
+    image: ${REPOSITORY}-user:${PROJECT_VERSION}
+    depends_on:
+      - mongodb
+      - redis
     networks:
       app-network:
     healthcheck:
