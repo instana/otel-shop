@@ -1,0 +1,3 @@
+# C++ Standard library
+LoadFile /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+LoadModule otel_module /usr/lib/apache2/modules/mod_otel.so

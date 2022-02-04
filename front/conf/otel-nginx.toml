@@ -3,7 +3,7 @@ processor = "simple"
 
 [exporters.otlp]
 host = "collector"
-port = 55680
+port = 4317
 
 [exporters.jaeger]
 host = "localhost"

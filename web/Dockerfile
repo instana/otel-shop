@@ -1,19 +1,10 @@
-FROM ubuntu:20.04
+FROM ubuntu/apache2:2.4-20.04_beta
 
-RUN apt-get update \
-    && DEBIAN_FRONTEND=noninteractive TZ="Europe/London" \
-    apt-get install --no-install-recommends --no-install-suggests -y \
-    curl apt-transport-https software-properties-common
+COPY mod_otel.so /usr/lib/apache2/modules/
+COPY conf/opentelemetry.load /etc/apache2/mods-available/opentelemetry.load
+COPY conf/opentelemetry.conf /etc/apache2/mods-available/opentelemetry.conf
 
-RUN curl -o /etc/apt/trusted.gpg.d/nginx_signing.asc https://nginx.org/keys/nginx_signing.key \
-    && apt-add-repository "deb http://nginx.org/packages/mainline/ubuntu `lsb_release -cs` nginx" \
-    && /bin/bash -c 'echo -e "Package: *\nPin: origin nginx.org\nPin: release o=nginx\nPin-Priority: 900"' | tee /etc/apt/preferences.d/99nginx
+COPY conf/status.conf /etc/apache2/mods-available/status.conf
 
-RUN apt-get update \
-    && DEBIAN_FRONTEND=noninteractive TZ="Europe/London" \
-    apt-get install --no-install-recommends --no-install-suggests -y \
-    nginx
-
-ADD otel_ngx_module.so /usr/share/nginx/modules/otel_ngx_module.so
-
-CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
+RUN a2enmod opentelemetry
+RUN a2enmod status

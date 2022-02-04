@@ -28,12 +28,12 @@ services:
         expose:
           - "42699"
     front:
-        image: ${REPOSITORY}:${PROJECT_VERSION}
+        image: ${REPOSITORY}-front:${PROJECT_VERSION}
         build:
             context: front
         volumes:
-        - ${TEST_ROOT:-.}/front/conf/nginx.conf:/etc/nginx/nginx.conf
-        - ${TEST_ROOT:-.}/front/conf/otel-nginx.toml:/conf/otel-nginx.toml
+        - ./front/conf/nginx.conf:/etc/nginx/nginx.conf
+        - ./front/conf/otel-nginx.toml:/conf/otel-nginx.toml
         networks:
             app-network:
         ports:
@@ -43,19 +43,14 @@ services:
         - -g
         - daemon off;
     web:
-        image: ${REPOSITORY}:${PROJECT_VERSION}
+        image: ${REPOSITORY}-web:${PROJECT_VERSION}
         build:
             context: web
         volumes:
-        - ${TEST_ROOT:-.}/web/conf/nginx.conf:/etc/nginx/nginx.conf
-        - ${TEST_ROOT:-.}/web/conf/otel-nginx.toml:/conf/otel-nginx.toml
-        - ${TEST_ROOT:-.}/web/html:/var/www/html
+        - ./web/conf/opentelemetry.conf:/etc/apache2/mods-available/opentelemetry.conf
+        - ./web/html:/var/www/html
         networks:
             app-network:
-        command:
-        - /usr/sbin/nginx
-        - -g
-        - daemon off;
 
 networks:
     app-network: {}
