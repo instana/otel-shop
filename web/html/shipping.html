@@ -1,0 +1,22 @@
+<!-- shipping template -->
+<div>
+    <h3>Shipping information</h3>
+    <div>
+        Select country <select ng-change="countryChanged();" ng-model="data.selectedCountry" ng-options="opt.name for opt in data.countries track by opt.code"></select>
+    </div>
+    <div>
+        Enter location <input id="location" type="text" size="20" ng-model="data.selectedLocation" ng-disabled="data.disableCity"/>
+    </div>
+    <div>
+        <button ng-click="calcShipping();" ng-disabled="data.disableCalc">Calculate</button>
+    </div>
+    <!-- add in shipping distance and cost -->
+    <div ng-if="data.shipping">
+        <div>Distance {{ data.shipping.distance }}km</div>
+        <div>Cost &euro;{{ data.shipping.cost.toFixed(2) }}</div>
+        <div>
+            <button ng-click="confirmShipping();">Confirm</button>
+        </div>
+    </div>
+</div>
+

@@ -1,56 +1,148 @@
 version: "3"
 services:
-    agent:
-        image: instana/agent:latest
-        pid: "host"
-        privileged: true
-        volumes:
-          - /var/run/docker.sock:/var/run/docker.sock
-          - /dev:/dev
-          - /sys:/sys
-          - /var/log:/var/log
-          - ./agent/configuration-otel.yaml:/opt/instana/agent/etc/instana/configuration-otel.yaml
-          - ./agent/com.instana.agent.main.sender.File.cfg:/opt/instana/agent/etc/instana/com.instana.agent.main.sender.File.cfg
-          - ./agent/logs:/opt/instana/agent/data/log
-        networks:
-            app-network:
-                aliases:
-                - instana-agent
-                - collector
-        environment:
-          - INSTANA_AGENT_ENDPOINT=${agent_endpoint:?No agent endpoint provided}
-          - INSTANA_AGENT_ENDPOINT_PORT=${agent_endpoint_port:-443}
-          - INSTANA_AGENT_KEY=${agent_key:?No agent key provided}
-          - INSTANA_DOWNLOAD_KEY=${download_key}
-          - INSTANA_AGENT_ZONE=${agent_zone:-otel-test}
-          - INSTANA_MVN_REPOSITORY_FEATURES_PATH=artifactory/features-internal@id=features@snapshots@snapshotsUpdate=always
-          - INSTANA_MVN_REPOSITORY_SHARED_PATH=artifactory/shared@id=shared@snapshots@snapshotsUpdate=always
-        expose:
-          - "42699"
-    front:
-        image: ${REPOSITORY}-front:${PROJECT_VERSION}
-        build:
-            context: front
-        volumes:
-        - ./front/conf/nginx.conf:/etc/nginx/nginx.conf
-        - ./front/conf/otel-nginx.toml:/conf/otel-nginx.toml
-        networks:
-            app-network:
-        ports:
-        - "8000:80"
-        command:
-        - /usr/sbin/nginx
-        - -g
-        - daemon off;
-    web:
-        image: ${REPOSITORY}-web:${PROJECT_VERSION}
-        build:
-            context: web
-        volumes:
-        - ./web/conf/opentelemetry.conf:/etc/apache2/mods-available/opentelemetry.conf
-        - ./web/html:/var/www/html
-        networks:
-            app-network:
+  agent:
+    image: instana/agent:latest
+    pid: "host"
+    privileged: true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /dev:/dev
+      - /sys:/sys
+      - /var/log:/var/log
+      - ./agent/configuration-otel.yaml:/opt/instana/agent/etc/instana/configuration-otel.yaml
+      - ./agent/com.instana.agent.main.sender.File.cfg:/opt/instana/agent/etc/instana/com.instana.agent.main.sender.File.cfg
+      - ./agent/logs:/opt/instana/agent/data/log
+    networks:
+      app-network:
+        aliases:
+          - instana-agent
+          - collector
+    environment:
+      - INSTANA_AGENT_ENDPOINT=${agent_endpoint:?No agent endpoint provided}
+      - INSTANA_AGENT_ENDPOINT_PORT=${agent_endpoint_port:-443}
+      - INSTANA_AGENT_KEY=${agent_key:?No agent key provided}
+      - INSTANA_DOWNLOAD_KEY=${download_key}
+      - INSTANA_AGENT_ZONE=${agent_zone:-otel-test}
+      - INSTANA_MVN_REPOSITORY_FEATURES_PATH=artifactory/features-internal@id=features@snapshots@snapshotsUpdate=always
+      - INSTANA_MVN_REPOSITORY_SHARED_PATH=artifactory/shared@id=shared@snapshots@snapshotsUpdate=always
+    expose:
+      - "42699"
+
+  mongodb:
+    build:
+      context: mongo
+    image: ${REPOSITORY}-mongodb:${PROJECT_VERSION}
+    networks:
+        app-network:
+    logging: &logging
+      driver: "json-file"
+      options:
+        max-size: "25m"
+        max-file: "2"
+
+  redis:
+    image: redis:6.2-alpine
+    networks:
+      app-network:
+    logging:
+      <<: *logging
+
+  rabbitmq:
+    image: rabbitmq:3.8-management-alpine
+    networks:
+      app-network:
+    logging:
+      <<: *logging
+
+  mysql:
+    build:
+      context: mysql
+    image: ${REPOSITORY}-mysql-db:${PROJECT_VERSION}
+    cap_add:
+      - NET_ADMIN
+    networks:
+      app-network:
+    logging:
+      <<: *logging
+
+  front:
+    image: ${REPOSITORY}-front:${PROJECT_VERSION}
+    build:
+      context: front
+    depends_on:
+      - catalogue
+      - web
+    volumes:
+      - ./front/conf/nginx.conf:/etc/nginx/nginx.conf
+      - ./front/conf/otel-nginx.toml:/conf/otel-nginx.toml
+    networks:
+      app-network:
+    ports:
+      - "8000:80"
+    command:
+      - /usr/sbin/nginx
+      - -g
+      - daemon off;
+
+  web:
+    image: ${REPOSITORY}-web:${PROJECT_VERSION}
+    build:
+      context: web
+    volumes:
+      - ./web/conf/opentelemetry.conf:/etc/apache2/mods-available/opentelemetry.conf
+      - ./web/html:/var/www/html
+    networks:
+      app-network:
+
+  catalogue:
+    build:
+      context: catalogue
+    image: ${REPOSITORY}-catalogue:${PROJECT_VERSION}
+    depends_on:
+      - mongodb
+    networks:
+      app-network:
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "curl",
+          "-H",
+          "X-INSTANA-SYNTHETIC: 1",
+          "-f",
+          "http://localhost:8080/health",
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+    logging:
+      <<: *logging
+
+  ratings:
+    build:
+      context: ratings
+    image: ${REPOSITORY}-ratings:${PROJECT_VERSION}
+    environment:
+      APP_ENV: prod
+    networks:
+      app-network:
+    depends_on:
+      - mysql
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "curl",
+          "-H",
+          "X-INSTANA-SYNTHETIC: 1",
+          "-f",
+          "http://localhost/_health",
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+    logging:
+      <<: *logging
 
 networks:
-    app-network: {}
+  app-network: {}

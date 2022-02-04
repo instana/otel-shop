@@ -1,0 +1,43 @@
+<!-- payment template -->
+<div>
+    <h3>Review your order</h3>
+    <div ng-if="data.cart.total != 0">
+        <table>
+            <tr>
+                <th>QTY</th>
+                <th>Name</th>
+                <th>Sub Total</th>
+            </tr>
+            <tr ng-repeat="item in data.cart.items">
+                <td>{{ item.qty }}</td>
+                <td>{{ item.name }}</td>
+                <td class="currency">&euro;{{ item.subtotal.toFixed(2) }}</td>
+            </tr>
+            <tr>
+                <td colspan="3">&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>Inc Tax</td>
+                <td class="currency">&euro;{{ data.cart.tax.toFixed(2) }}</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>Total</td>
+                <td class="currency">&euro;{{ data.cart.total.toFixed(2) }}</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <button ng-disabled="data.buttonDisabled" ng-click="pay();">Pay Now</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="message">
+        {{ data.message }}
+    </div>
+    <div ng-if="data.cont">
+        Thank you for your order
+        <a class="cont" href="/">Continue shopping</a>
+    </div>
+</div>
