@@ -28,7 +28,7 @@ services:
         expose:
           - "42699"
     front:
-        image: instanacedricziel/otel-demo-front:latest
+        image: ${REPOSITORY}:${PROJECT_VERSION}
         build:
             context: front
         volumes:
@@ -43,7 +43,7 @@ services:
         - -g
         - daemon off;
     web:
-        image: instanacedricziel/otel-demo-web:latest
+        image: ${REPOSITORY}:${PROJECT_VERSION}
         build:
             context: web
         volumes:
