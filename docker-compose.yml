@@ -66,6 +66,20 @@ services:
     logging:
       <<: *logging
 
+  dispatch:
+    build:
+      context: dispatch
+    image: ${REPOSITORY}-dispatch:${PROJECT_VERSION}
+    depends_on:
+      - rabbitmq
+    networks:
+      app-network:
+    environment:
+      OTEL_EXPORTER_OTLP_ENDPOINT: collector:4317
+      OTEL_SERVICE_NAME: dispatch
+    logging:
+      <<: *logging
+
   front:
     image: ${REPOSITORY}-front:${PROJECT_VERSION}
     build:
@@ -203,6 +217,33 @@ services:
           "X-INSTANA-SYNTHETIC: 1",
           "-f",
           "http://localhost/_health",
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+    logging:
+      <<: *logging
+
+  shipping:
+    build:
+      context: shipping
+    image: ${REPOSITORY}-ratings:${PROJECT_VERSION}
+    depends_on:
+      - mysql
+    networks:
+      app-network:
+    environment:
+      OTEL_EXPORTER_OTLP_ENDPOINT: collector:4317
+      OTEL_SERVICE_NAME: shipping
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "curl",
+          "-H",
+          "X-INSTANA-SYNTHETIC: 1",
+          "-f",
+          "http://localhost:8080/health",
         ]
       interval: 10s
       timeout: 10s
