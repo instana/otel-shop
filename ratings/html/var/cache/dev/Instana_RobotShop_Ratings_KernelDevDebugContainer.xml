@@ -1,0 +1,1345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+  <parameters>
+    <parameter key="kernel.project_dir">/Users/cedricziel/instana/otel-demo-app/ratings/html</parameter>
+    <parameter key="kernel.environment">dev</parameter>
+    <parameter key="kernel.runtime_environment">%env(default:kernel.environment:APP_RUNTIME_ENV)%</parameter>
+    <parameter key="kernel.debug">true</parameter>
+    <parameter key="kernel.build_dir">/Users/cedricziel/instana/otel-demo-app/ratings/html/var/cache/dev</parameter>
+    <parameter key="kernel.cache_dir">/Users/cedricziel/instana/otel-demo-app/ratings/html/var/cache/dev</parameter>
+    <parameter key="kernel.logs_dir">/Users/cedricziel/instana/otel-demo-app/ratings/html/var/log</parameter>
+    <parameter key="kernel.bundles" type="collection">
+      <parameter key="FrameworkBundle">Symfony\Bundle\FrameworkBundle\FrameworkBundle</parameter>
+      <parameter key="MonologBundle">Symfony\Bundle\MonologBundle\MonologBundle</parameter>
+      <parameter key="OtelSdkBundle">OpenTelemetry\Symfony\OtelSdkBundle\OtelSdkBundle</parameter>
+    </parameter>
+    <parameter key="kernel.bundles_metadata" type="collection">
+      <parameter key="FrameworkBundle" type="collection">
+        <parameter key="path">/Users/cedricziel/instana/otel-demo-app/ratings/html/vendor/symfony/framework-bundle</parameter>
+        <parameter key="namespace">Symfony\Bundle\FrameworkBundle</parameter>
+      </parameter>
+      <parameter key="MonologBundle" type="collection">
+        <parameter key="path">/Users/cedricziel/instana/otel-demo-app/ratings/html/vendor/symfony/monolog-bundle</parameter>
+        <parameter key="namespace">Symfony\Bundle\MonologBundle</parameter>
+      </parameter>
+      <parameter key="OtelSdkBundle" type="collection">
+        <parameter key="path">/Users/cedricziel/instana/otel-demo-app/ratings/html/vendor/open-telemetry/opentelemetry-php-contrib/src/Symfony/OtelSdkBundle</parameter>
+        <parameter key="namespace">OpenTelemetry\Symfony\OtelSdkBundle</parameter>
+      </parameter>
+    </parameter>
+    <parameter key="kernel.charset">UTF-8</parameter>
+    <parameter key="kernel.container_class">Instana_RobotShop_Ratings_KernelDevDebugContainer</parameter>
+    <parameter key="catalogueUrl">http://catalogue:8080</parameter>
+    <parameter key="pdo_dsn">mysql:host=mysql;dbname=ratings;charset=utf8mb4</parameter>
+    <parameter key="pdo_user">ratings</parameter>
+    <parameter key="pdo_password">iloveit</parameter>
+    <parameter key="logger.name">RatingsAPI</parameter>
+    <parameter key="event_dispatcher.event_aliases" type="collection">
+      <parameter key="Symfony\Component\HttpKernel\Event\ControllerArgumentsEvent">kernel.controller_arguments</parameter>
+      <parameter key="Symfony\Component\HttpKernel\Event\ControllerEvent">kernel.controller</parameter>
+      <parameter key="Symfony\Component\HttpKernel\Event\ResponseEvent">kernel.response</parameter>
+      <parameter key="Symfony\Component\HttpKernel\Event\FinishRequestEvent">kernel.finish_request</parameter>
+      <parameter key="Symfony\Component\HttpKernel\Event\RequestEvent">kernel.request</parameter>
+      <parameter key="Symfony\Component\HttpKernel\Event\ViewEvent">kernel.view</parameter>
+      <parameter key="Symfony\Component\HttpKernel\Event\ExceptionEvent">kernel.exception</parameter>
+      <parameter key="Symfony\Component\HttpKernel\Event\TerminateEvent">kernel.terminate</parameter>
+    </parameter>
+    <parameter key="fragment.renderer.hinclude.global_template">null</parameter>
+    <parameter key="fragment.path">/_fragment</parameter>
+    <parameter key="kernel.secret">S0ME_SECRET</parameter>
+    <parameter key="kernel.http_method_override">true</parameter>
+    <parameter key="kernel.trusted_hosts" type="collection"/>
+    <parameter key="kernel.default_locale">en</parameter>
+    <parameter key="kernel.enabled_locales" type="collection"/>
+    <parameter key="kernel.error_controller">error_controller</parameter>
+    <parameter key="debug.file_link_format">null</parameter>
+    <parameter key="debug.error_handler.throw_at">-1</parameter>
+    <parameter key="debug.container.dump">/Users/cedricziel/instana/otel-demo-app/ratings/html/var/cache/dev/Instana_RobotShop_Ratings_KernelDevDebugContainer.xml</parameter>
+    <parameter key="router.request_context.host">localhost</parameter>
+    <parameter key="router.request_context.scheme">http</parameter>
+    <parameter key="router.request_context.base_url"></parameter>
+    <parameter key="router.resource">kernel::loadRoutes</parameter>
+    <parameter key="request_listener.http_port">80</parameter>
+    <parameter key="request_listener.https_port">443</parameter>
+    <parameter key="cache.prefix.seed">_/Users/cedricziel/instana/otel-demo-app/ratings/html.Instana_RobotShop_Ratings_KernelDevDebugContainer</parameter>
+    <parameter key="data_collector.templates" type="collection"/>
+    <parameter key="monolog.use_microseconds">true</parameter>
+    <parameter key="monolog.swift_mailer.handlers" type="collection"/>
+    <parameter key="monolog.handlers_to_channels" type="collection">
+      <parameter key="monolog.handler.stdout" type="collection">
+        <parameter key="type">exclusive</parameter>
+        <parameter key="elements" type="collection">
+          <parameter>request</parameter>
+        </parameter>
+      </parameter>
+    </parameter>
+    <parameter key="open_telemetry.sdk.service_name">Symfony Application</parameter>
+    <parameter key="open_telemetry.sdk.trace.sampler.trace_id_ratio_based.default_ratio">1</parameter>
+    <parameter key="open_telemetry.sdk.resource.attributes" type="collection">
+      <parameter key="service.name">OtelBundle Ratings app</parameter>
+    </parameter>
+  </parameters>
+  <services>
+    <service id="service_container" class="Symfony\Component\DependencyInjection\ContainerInterface" public="true" synthetic="true"/>
+    <service id="kernel" class="Instana\RobotShop\Ratings\Kernel" public="true" synthetic="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="routing.route_loader"/>
+      <tag name="kernel.event_subscriber"/>
+      <tag name="container.hot_path"/>
+    </service>
+    <service id="Instana\RobotShop\Ratings\Integration\InstanaHeadersLoggingProcessor" class="Instana\RobotShop\Ratings\Integration\InstanaHeadersLoggingProcessor">
+      <tag name="kernel.event_subscriber"/>
+      <tag name="monolog.processor"/>
+      <tag name="container.hot_path"/>
+      <tag name="container.hot_path"/>
+    </service>
+    <service id="monolog.formatter.instana_headers" class="Monolog\Formatter\LineFormatter">
+      <argument>[%%datetime%%] [%%extra.token%%] %%channel%%.%%level_name%%: %%message%% %%context%% %%extra%%\n</argument>
+    </service>
+    <service id="Instana\RobotShop\Ratings\Database" class="Instana\RobotShop\Ratings\Database" autowire="true">
+      <argument>mysql:host=mysql;dbname=ratings;charset=utf8mb4</argument>
+      <argument>ratings</argument>
+      <argument>iloveit</argument>
+      <call method="setLogger">
+        <argument type="service" id="monolog.logger"/>
+      </call>
+    </service>
+    <service id="Instana\RobotShop\Ratings\Service\CatalogueService" class="Instana\RobotShop\Ratings\Service\CatalogueService" autowire="true">
+      <argument>http://catalogue:8080</argument>
+      <call method="setLogger">
+        <argument type="service" id="monolog.logger"/>
+      </call>
+    </service>
+    <service id="Instana\RobotShop\Ratings\Service\HealthCheckService" class="Instana\RobotShop\Ratings\Service\HealthCheckService" autowire="true">
+      <argument type="service" id="database.connection"/>
+      <call method="setLogger">
+        <argument type="service" id="monolog.logger"/>
+      </call>
+    </service>
+    <service id="database.connection" class="PDO">
+      <factory service="Instana\RobotShop\Ratings\Database" method="getConnection"/>
+    </service>
+    <service id="Instana\RobotShop\Ratings\Service\RatingsService" class="Instana\RobotShop\Ratings\Service\RatingsService" autowire="true">
+      <argument type="service" id="database.connection"/>
+      <call method="setLogger">
+        <argument type="service" id="monolog.logger"/>
+      </call>
+    </service>
+    <service id="Instana\RobotShop\Ratings\Controller\HealthController" class="Instana\RobotShop\Ratings\Controller\HealthController" public="true" autowire="true">
+      <tag name="controller.service_arguments"/>
+      <argument type="service" id="Instana\RobotShop\Ratings\Service\HealthCheckService"/>
+      <call method="setLogger">
+        <argument type="service" id="monolog.logger"/>
+      </call>
+    </service>
+    <service id="Instana\RobotShop\Ratings\Controller\RatingsApiController" class="Instana\RobotShop\Ratings\Controller\RatingsApiController" public="true" autowire="true">
+      <tag name="controller.service_arguments"/>
+      <argument type="service" id="Instana\RobotShop\Ratings\Service\CatalogueService"/>
+      <argument type="service" id="Instana\RobotShop\Ratings\Service\RatingsService"/>
+      <call method="setLogger">
+        <argument type="service" id="monolog.logger"/>
+      </call>
+    </service>
+    <service id="Instana\RobotShop\Ratings\EventSubscriber\TracingKernelSubscriber" class="Instana\RobotShop\Ratings\EventSubscriber\TracingKernelSubscriber" autowire="true">
+      <tag name="kernel.event_subscriber"/>
+      <tag name="container.hot_path"/>
+      <argument type="service" id="open_telemetry.sdk.trace.tracer"/>
+    </service>
+    <service id="controller_resolver" class="Symfony\Bundle\FrameworkBundle\Controller\ControllerResolver">
+      <tag name="monolog.logger" channel="request"/>
+      <argument type="service" id="service_container"/>
+      <argument type="service" id="monolog.logger.request" on-invalid="ignore"/>
+    </service>
+    <service id="argument_metadata_factory" class="Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadataFactory"/>
+    <service id="argument_resolver" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver">
+      <argument type="service" id="argument_metadata_factory"/>
+      <argument type="iterator">
+        <argument type="service" id="argument_resolver.request_attribute"/>
+        <argument type="service" id="argument_resolver.request"/>
+        <argument type="service" id="argument_resolver.session"/>
+        <argument type="service" id="argument_resolver.service"/>
+        <argument type="service" id="argument_resolver.default"/>
+        <argument type="service" id="argument_resolver.variadic"/>
+      </argument>
+    </service>
+    <service id="argument_resolver.request_attribute" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\RequestAttributeValueResolver">
+      <tag name="controller.argument_value_resolver" priority="100"/>
+    </service>
+    <service id="argument_resolver.request" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\RequestValueResolver">
+      <tag name="controller.argument_value_resolver" priority="50"/>
+    </service>
+    <service id="argument_resolver.session" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\SessionValueResolver">
+      <tag name="controller.argument_value_resolver" priority="50"/>
+    </service>
+    <service id="argument_resolver.service" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
+      <tag name="controller.argument_value_resolver" priority="-50"/>
+      <argument type="service" id=".service_locator.6Nt6Yur"/>
+    </service>
+    <service id="argument_resolver.default" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">
+      <tag name="controller.argument_value_resolver" priority="-100"/>
+    </service>
+    <service id="argument_resolver.variadic" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver">
+      <tag name="controller.argument_value_resolver" priority="-150"/>
+    </service>
+    <service id="response_listener" class="Symfony\Component\HttpKernel\EventListener\ResponseListener">
+      <tag name="kernel.event_subscriber"/>
+      <tag name="container.hot_path"/>
+      <argument>UTF-8</argument>
+      <argument>false</argument>
+    </service>
+    <service id="streamed_response_listener" class="Symfony\Component\HttpKernel\EventListener\StreamedResponseListener">
+      <tag name="kernel.event_subscriber"/>
+      <tag name="container.hot_path"/>
+    </service>
+    <service id="locale_listener" class="Symfony\Component\HttpKernel\EventListener\LocaleListener">
+      <tag name="kernel.event_subscriber"/>
+      <tag name="container.hot_path"/>
+      <tag name="container.hot_path"/>
+      <tag name="container.hot_path"/>
+      <argument type="service" id="request_stack"/>
+      <argument>en</argument>
+      <argument type="service" id="router.default" on-invalid="ignore"/>
+      <argument>false</argument>
+      <argument type="collection"/>
+    </service>
+    <service id="validate_request_listener" class="Symfony\Component\HttpKernel\EventListener\ValidateRequestListener">
+      <tag name="kernel.event_subscriber"/>
+      <tag name="container.hot_path"/>
+    </service>
+    <service id="disallow_search_engine_index_response_listener" class="Symfony\Component\HttpKernel\EventListener\DisallowRobotsIndexingListener">
+      <tag name="kernel.event_subscriber"/>
+      <tag name="container.hot_path"/>
+    </service>
+    <service id="error_controller" class="Symfony\Component\HttpKernel\Controller\ErrorController" public="true">
+      <argument type="service" id="http_kernel"/>
+      <argument>error_controller</argument>
+      <argument type="service" id="error_handler.error_renderer.html"/>
+    </service>
+    <service id="exception_listener" class="Symfony\Component\HttpKernel\EventListener\ErrorListener">
+      <tag name="kernel.event_subscriber"/>
+      <tag name="monolog.logger" channel="request"/>
+      <tag name="container.hot_path"/>
+      <tag name="container.hot_path"/>
+      <argument>error_controller</argument>
+      <argument type="service" id="monolog.logger.request" on-invalid="null"/>
+      <argument>true</argument>
+      <argument type="collection"/>
+    </service>
+    <service id="parameter_bag" class="Symfony\Component\DependencyInjection\ParameterBag\ContainerBag">
+      <argument type="service" id="service_container"/>
+    </service>
+    <service id="event_dispatcher" class="Symfony\Component\EventDispatcher\EventDispatcher" public="true">
+      <tag name="container.hot_path"/>
+      <tag name="event_dispatcher">event_dispatcher.dispatcher</tag>
+      <call method="addListener">
+        <argument>kernel.response</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="kernel"/>
+          <argument>corsResponseFilter</argument>
+        </argument>
+        <argument>0</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.request</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="Instana\RobotShop\Ratings\Integration\InstanaHeadersLoggingProcessor"/>
+          <argument>addHeaderData</argument>
+        </argument>
+        <argument>1</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.finish_request</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="Instana\RobotShop\Ratings\Integration\InstanaHeadersLoggingProcessor"/>
+          <argument>removeHeaderData</argument>
+        </argument>
+        <argument>1</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.request</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="Instana\RobotShop\Ratings\EventSubscriber\TracingKernelSubscriber"/>
+          <argument>onKernelRequestEvent</argument>
+        </argument>
+        <argument>0</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.terminate</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="Instana\RobotShop\Ratings\EventSubscriber\TracingKernelSubscriber"/>
+          <argument>onTerminateEvent</argument>
+        </argument>
+        <argument>-10000</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.response</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="response_listener"/>
+          <argument>onKernelResponse</argument>
+        </argument>
+        <argument>0</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.response</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="streamed_response_listener"/>
+          <argument>onKernelResponse</argument>
+        </argument>
+        <argument>-1024</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.request</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="locale_listener"/>
+          <argument>setDefaultLocale</argument>
+        </argument>
+        <argument>100</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.request</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="locale_listener"/>
+          <argument>onKernelRequest</argument>
+        </argument>
+        <argument>16</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.finish_request</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="locale_listener"/>
+          <argument>onKernelFinishRequest</argument>
+        </argument>
+        <argument>0</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.request</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="validate_request_listener"/>
+          <argument>onKernelRequest</argument>
+        </argument>
+        <argument>256</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.response</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="disallow_search_engine_index_response_listener"/>
+          <argument>onResponse</argument>
+        </argument>
+        <argument>-255</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.controller_arguments</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="exception_listener"/>
+          <argument>onControllerArguments</argument>
+        </argument>
+        <argument>0</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.exception</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="exception_listener"/>
+          <argument>logKernelException</argument>
+        </argument>
+        <argument>0</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.exception</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="exception_listener"/>
+          <argument>onKernelException</argument>
+        </argument>
+        <argument>-128</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.response</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="exception_listener"/>
+          <argument>removeCspHeader</argument>
+        </argument>
+        <argument>-128</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.request</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="debug.debug_handlers_listener"/>
+          <argument>configure</argument>
+        </argument>
+        <argument>2048</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.request</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="router_listener"/>
+          <argument>onKernelRequest</argument>
+        </argument>
+        <argument>32</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.finish_request</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="router_listener"/>
+          <argument>onKernelFinishRequest</argument>
+        </argument>
+        <argument>0</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.exception</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="router_listener"/>
+          <argument>onKernelException</argument>
+        </argument>
+        <argument>-64</argument>
+      </call>
+    </service>
+    <service id="http_kernel" class="Symfony\Component\HttpKernel\HttpKernel" public="true">
+      <tag name="container.hot_path"/>
+      <tag name="container.preload" class="Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner"/>
+      <tag name="container.preload" class="Symfony\Component\Runtime\Runner\Symfony\ResponseRunner"/>
+      <tag name="container.preload" class="Symfony\Component\Runtime\SymfonyRuntime"/>
+      <argument type="service" id="event_dispatcher"/>
+      <argument type="service" id="controller_resolver"/>
+      <argument type="service" id="request_stack"/>
+      <argument type="service" id="argument_resolver"/>
+    </service>
+    <service id="request_stack" class="Symfony\Component\HttpFoundation\RequestStack" public="true"/>
+    <service id="http_cache" class="Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache">
+      <tag name="container.hot_path"/>
+      <argument type="service" id="kernel"/>
+      <argument type="service" id="http_cache.store"/>
+      <argument>null</argument>
+      <argument type="collection">
+        <argument key="debug">true</argument>
+      </argument>
+      <argument type="service">
+        <service class="void">
+          <factory class="Symfony\Component\HttpFoundation\Request" method="enableHttpMethodParameterOverride"/>
+        </service>
+      </argument>
+    </service>
+    <service id="http_cache.store" class="Symfony\Component\HttpKernel\HttpCache\Store">
+      <argument>/Users/cedricziel/instana/otel-demo-app/ratings/html/var/cache/dev/http_cache</argument>
+    </service>
+    <service id="url_helper" class="Symfony\Component\HttpFoundation\UrlHelper">
+      <argument type="service" id="request_stack"/>
+      <argument type="service" id="router.request_context" on-invalid="ignore"/>
+    </service>
+    <service id="cache_warmer" class="Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerAggregate" public="true">
+      <tag name="container.no_preload"/>
+      <argument type="tagged_iterator" tag="kernel.cache_warmer"/>
+      <argument>true</argument>
+      <argument>/Users/cedricziel/instana/otel-demo-app/ratings/html/var/cache/dev/Instana_RobotShop_Ratings_KernelDevDebugContainerDeprecations.log</argument>
+    </service>
+    <service id="cache_clearer" class="Symfony\Component\HttpKernel\CacheClearer\ChainCacheClearer" public="true">
+      <tag name="container.private" package="symfony/framework-bundle" version="5.2"/>
+      <argument type="tagged_iterator" tag="kernel.cache_clearer"/>
+    </service>
+    <service id="filesystem" class="Symfony\Component\Filesystem\Filesystem" public="true">
+      <tag name="container.private" package="symfony/framework-bundle" version="5.2"/>
+    </service>
+    <service id="file_locator" class="Symfony\Component\HttpKernel\Config\FileLocator">
+      <argument type="service" id="kernel"/>
+    </service>
+    <service id="uri_signer" class="Symfony\Component\HttpKernel\UriSigner">
+      <argument>S0ME_SECRET</argument>
+    </service>
+    <service id="config_cache_factory" class="Symfony\Component\Config\ResourceCheckerConfigCacheFactory">
+      <argument type="tagged_iterator" tag="config_cache.resource_checker"/>
+    </service>
+    <service id="dependency_injection.config.container_parameters_resource_checker" class="Symfony\Component\DependencyInjection\Config\ContainerParametersResourceChecker">
+      <tag name="config_cache.resource_checker" priority="-980"/>
+      <argument type="service" id="service_container"/>
+    </service>
+    <service id="config.resource.self_checking_resource_checker" class="Symfony\Component\Config\Resource\SelfCheckingResourceChecker">
+      <tag name="config_cache.resource_checker" priority="-990"/>
+    </service>
+    <service id="services_resetter" class="Symfony\Component\HttpKernel\DependencyInjection\ServicesResetter" public="true">
+      <argument type="iterator">
+        <argument key="cache.app" type="service" id="cache.app" on-invalid="ignore_uninitialized"/>
+        <argument key="cache.system" type="service" id="cache.system" on-invalid="ignore_uninitialized"/>
+        <argument key="cache.validator" type="service" id="cache.validator" on-invalid="ignore_uninitialized"/>
+        <argument key="cache.serializer" type="service" id="cache.serializer" on-invalid="ignore_uninitialized"/>
+        <argument key="cache.annotations" type="service" id="cache.annotations" on-invalid="ignore_uninitialized"/>
+        <argument key="cache.property_info" type="service" id="cache.property_info" on-invalid="ignore_uninitialized"/>
+        <argument key="http_client" type="service" id="http_client" on-invalid="ignore_uninitialized"/>
+        <argument key="monolog.handler.stdout" type="service" id="monolog.handler.stdout" on-invalid="ignore_uninitialized"/>
+      </argument>
+      <argument type="collection">
+        <argument key="cache.app" type="collection">
+          <argument>reset</argument>
+        </argument>
+        <argument key="cache.system" type="collection">
+          <argument>reset</argument>
+        </argument>
+        <argument key="cache.validator" type="collection">
+          <argument>reset</argument>
+        </argument>
+        <argument key="cache.serializer" type="collection">
+          <argument>reset</argument>
+        </argument>
+        <argument key="cache.annotations" type="collection">
+          <argument>reset</argument>
+        </argument>
+        <argument key="cache.property_info" type="collection">
+          <argument>reset</argument>
+        </argument>
+        <argument key="http_client" type="collection">
+          <argument>?reset</argument>
+        </argument>
+        <argument key="monolog.handler.stdout" type="collection">
+          <argument>reset</argument>
+        </argument>
+      </argument>
+    </service>
+    <service id="reverse_container" class="Symfony\Component\DependencyInjection\ReverseContainer">
+      <argument type="service" id="service_container"/>
+      <argument type="service" id=".service_locator.XXv1IfR"/>
+    </service>
+    <service id="container.env_var_processor" class="Symfony\Component\DependencyInjection\EnvVarProcessor">
+      <tag name="container.env_var_processor"/>
+      <argument type="service" id="service_container"/>
+      <argument type="tagged_iterator" tag="container.env_var_loader"/>
+    </service>
+    <service id="slugger" class="stdClass"/>
+    <service id="container.getenv" class="Closure">
+      <tag name="routing.expression_language_function" function="env"/>
+      <argument type="collection">
+        <argument type="service" id="service_container"/>
+        <argument>getEnv</argument>
+      </argument>
+      <factory class="Closure" method="fromCallable"/>
+    </service>
+    <service id="container.env" class="Symfony\Component\String\LazyString" abstract="true">
+      <argument type="service" id="container.getenv"/>
+      <factory class="Symfony\Component\String\LazyString" method="fromCallable"/>
+    </service>
+    <service id="config_builder.warmer" class="Symfony\Bundle\FrameworkBundle\CacheWarmer\ConfigBuilderCacheWarmer">
+      <tag name="kernel.cache_warmer"/>
+      <argument type="service" id="kernel"/>
+      <argument type="service" id="monolog.logger" on-invalid="null"/>
+    </service>
+    <service id="fragment.handler" class="Symfony\Component\HttpKernel\DependencyInjection\LazyLoadingFragmentHandler">
+      <argument type="service" id=".service_locator.lLv4pWF"/>
+      <argument type="service" id="request_stack"/>
+      <argument>true</argument>
+    </service>
+    <service id="fragment.uri_generator" class="Symfony\Component\HttpKernel\Fragment\FragmentUriGenerator">
+      <argument>/_fragment</argument>
+      <argument type="service" id="uri_signer"/>
+      <argument type="service" id="request_stack"/>
+    </service>
+    <service id="fragment.renderer.inline" class="Symfony\Component\HttpKernel\Fragment\InlineFragmentRenderer">
+      <tag name="kernel.fragment_renderer" alias="inline"/>
+      <argument type="service" id="http_kernel"/>
+      <argument type="service" id="event_dispatcher"/>
+      <call method="setFragmentPath">
+        <argument>/_fragment</argument>
+      </call>
+    </service>
+    <service id="error_handler.error_renderer.html" class="Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer">
+      <argument type="service">
+        <service>
+          <argument type="service" id="request_stack"/>
+          <argument>true</argument>
+          <factory class="Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer" method="isDebug"/>
+        </service>
+      </argument>
+      <argument>UTF-8</argument>
+      <argument type="service" id="debug.file_link_formatter" on-invalid="null"/>
+      <argument>/Users/cedricziel/instana/otel-demo-app/ratings/html</argument>
+      <argument type="service">
+        <service>
+          <argument type="service" id="request_stack"/>
+          <factory class="Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer" method="getAndCleanOutputBuffer"/>
+        </service>
+      </argument>
+      <argument type="service" id="monolog.logger" on-invalid="null"/>
+    </service>
+    <service id="cache.app" class="Symfony\Component\Cache\Adapter\FilesystemAdapter" public="true">
+      <tag name="cache.pool"/>
+      <tag name="kernel.reset" method="reset"/>
+      <argument>VJ5L-bI7mF</argument>
+      <argument>0</argument>
+      <argument>/Users/cedricziel/instana/otel-demo-app/ratings/html/var/cache/dev/pools/app</argument>
+      <argument type="service" id="cache.default_marshaller" on-invalid="ignore"/>
+      <call method="setLogger">
+        <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
+      </call>
+    </service>
+    <service id="cache.app.taggable" class="Symfony\Component\Cache\Adapter\TagAwareAdapter">
+      <argument type="service" id="cache.app"/>
+    </service>
+    <service id="cache.system" class="Symfony\Component\Cache\Adapter\AdapterInterface" public="true">
+      <tag name="cache.pool"/>
+      <tag name="kernel.reset" method="reset"/>
+      <argument>m-3LmSQLPa</argument>
+      <argument>0</argument>
+      <argument>%container.build_id%</argument>
+      <argument>/Users/cedricziel/instana/otel-demo-app/ratings/html/var/cache/dev/pools/system</argument>
+      <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
+      <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
+    </service>
+    <service id="cache.validator" class="Symfony\Component\Cache\Adapter\AdapterInterface">
+      <tag name="cache.pool"/>
+      <tag name="kernel.reset" method="reset"/>
+      <argument>dnoMC+eNQd</argument>
+      <argument>0</argument>
+      <argument>%container.build_id%</argument>
+      <argument>/Users/cedricziel/instana/otel-demo-app/ratings/html/var/cache/dev/pools/system</argument>
+      <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
+      <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
+    </service>
+    <service id="cache.serializer" class="Symfony\Component\Cache\Adapter\AdapterInterface">
+      <tag name="cache.pool"/>
+      <tag name="kernel.reset" method="reset"/>
+      <argument>fWT1i+kU0s</argument>
+      <argument>0</argument>
+      <argument>%container.build_id%</argument>
+      <argument>/Users/cedricziel/instana/otel-demo-app/ratings/html/var/cache/dev/pools/system</argument>
+      <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
+      <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
+    </service>
+    <service id="cache.annotations" class="Symfony\Component\Cache\Adapter\AdapterInterface">
+      <tag name="cache.pool"/>
+      <tag name="kernel.reset" method="reset"/>
+      <argument>6kNVmfefAn</argument>
+      <argument>0</argument>
+      <argument>%container.build_id%</argument>
+      <argument>/Users/cedricziel/instana/otel-demo-app/ratings/html/var/cache/dev/pools/system</argument>
+      <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
+      <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
+    </service>
+    <service id="cache.property_info" class="Symfony\Component\Cache\Adapter\AdapterInterface">
+      <tag name="cache.pool"/>
+      <tag name="kernel.reset" method="reset"/>
+      <argument>6ELWFYBAH4</argument>
+      <argument>0</argument>
+      <argument>%container.build_id%</argument>
+      <argument>/Users/cedricziel/instana/otel-demo-app/ratings/html/var/cache/dev/pools/system</argument>
+      <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
+      <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
+    </service>
+    <service id="cache.adapter.system" class="Symfony\Component\Cache\Adapter\AdapterInterface" abstract="true">
+      <tag name="cache.pool" clearer="cache.system_clearer" reset="reset"/>
+      <tag name="monolog.logger" channel="cache"/>
+      <argument></argument>
+      <argument>0</argument>
+      <argument>%container.build_id%</argument>
+      <argument>/Users/cedricziel/instana/otel-demo-app/ratings/html/var/cache/dev/pools/system</argument>
+      <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
+      <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
+    </service>
+    <service id="cache.adapter.apcu" class="Symfony\Component\Cache\Adapter\ApcuAdapter" abstract="true">
+      <tag name="cache.pool" clearer="cache.default_clearer" reset="reset"/>
+      <tag name="monolog.logger" channel="cache"/>
+      <argument></argument>
+      <argument>0</argument>
+      <argument>%container.build_id%</argument>
+      <call method="setLogger">
+        <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
+      </call>
+    </service>
+    <service id="cache.adapter.filesystem" class="Symfony\Component\Cache\Adapter\FilesystemAdapter" abstract="true">
+      <tag name="cache.pool" clearer="cache.default_clearer" reset="reset"/>
+      <tag name="monolog.logger" channel="cache"/>
+      <argument></argument>
+      <argument>0</argument>
+      <argument>/Users/cedricziel/instana/otel-demo-app/ratings/html/var/cache/dev/pools/app</argument>
+      <argument type="service" id="cache.default_marshaller" on-invalid="ignore"/>
+      <call method="setLogger">
+        <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
+      </call>
+    </service>
+    <service id="cache.adapter.psr6" class="Symfony\Component\Cache\Adapter\ProxyAdapter" abstract="true">
+      <tag name="cache.pool" provider="cache.default_psr6_provider" clearer="cache.default_clearer" reset="reset"/>
+      <argument type="abstract">PSR-6 provider service</argument>
+      <argument></argument>
+      <argument>0</argument>
+    </service>
+    <service id="cache.adapter.redis" class="Symfony\Component\Cache\Adapter\RedisAdapter" abstract="true">
+      <tag name="cache.pool" provider="cache.default_redis_provider" clearer="cache.default_clearer" reset="reset"/>
+      <tag name="monolog.logger" channel="cache"/>
+      <argument type="abstract">Redis connection service</argument>
+      <argument></argument>
+      <argument>0</argument>
+      <argument type="service" id="cache.default_marshaller" on-invalid="ignore"/>
+      <call method="setLogger">
+        <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
+      </call>
+    </service>
+    <service id="cache.adapter.redis_tag_aware" class="Symfony\Component\Cache\Adapter\RedisTagAwareAdapter" abstract="true">
+      <tag name="cache.pool" provider="cache.default_redis_provider" clearer="cache.default_clearer" reset="reset"/>
+      <tag name="monolog.logger" channel="cache"/>
+      <argument type="abstract">Redis connection service</argument>
+      <argument></argument>
+      <argument>0</argument>
+      <argument type="service" id="cache.default_marshaller" on-invalid="ignore"/>
+      <call method="setLogger">
+        <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
+      </call>
+    </service>
+    <service id="cache.adapter.memcached" class="Symfony\Component\Cache\Adapter\MemcachedAdapter" abstract="true">
+      <tag name="cache.pool" provider="cache.default_memcached_provider" clearer="cache.default_clearer" reset="reset"/>
+      <tag name="monolog.logger" channel="cache"/>
+      <argument type="abstract">Memcached connection service</argument>
+      <argument></argument>
+      <argument>0</argument>
+      <argument type="service" id="cache.default_marshaller" on-invalid="ignore"/>
+      <call method="setLogger">
+        <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
+      </call>
+    </service>
+    <service id="cache.adapter.doctrine_dbal" class="Symfony\Component\Cache\Adapter\DoctrineDbalAdapter" abstract="true">
+      <tag name="cache.pool" provider="cache.default_doctrine_dbal_provider" clearer="cache.default_clearer" reset="reset"/>
+      <tag name="monolog.logger" channel="cache"/>
+      <argument type="abstract">DBAL connection service</argument>
+      <argument></argument>
+      <argument>0</argument>
+      <argument type="collection"/>
+      <argument type="service" id="cache.default_marshaller" on-invalid="ignore"/>
+      <call method="setLogger">
+        <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
+      </call>
+    </service>
+    <service id="cache.adapter.pdo" class="Symfony\Component\Cache\Adapter\PdoAdapter" abstract="true">
+      <tag name="cache.pool" provider="cache.default_pdo_provider" clearer="cache.default_clearer" reset="reset"/>
+      <tag name="monolog.logger" channel="cache"/>
+      <argument type="abstract">PDO connection service</argument>
+      <argument></argument>
+      <argument>0</argument>
+      <argument type="collection"/>
+      <argument type="service" id="cache.default_marshaller" on-invalid="ignore"/>
+      <call method="setLogger">
+        <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
+      </call>
+    </service>
+    <service id="cache.adapter.array" class="Symfony\Component\Cache\Adapter\ArrayAdapter" abstract="true">
+      <tag name="cache.pool" clearer="cache.default_clearer" reset="reset"/>
+      <tag name="monolog.logger" channel="cache"/>
+      <argument>0</argument>
+      <call method="setLogger">
+        <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
+      </call>
+    </service>
+    <service id="cache.default_marshaller" class="Symfony\Component\Cache\Marshaller\DefaultMarshaller">
+      <argument>null</argument>
+      <argument>true</argument>
+    </service>
+    <service id="cache.default_clearer" class="Symfony\Component\HttpKernel\CacheClearer\Psr6CacheClearer">
+      <tag name="cache.pool.clearer"/>
+      <argument type="collection">
+        <argument key="cache.app" type="service" id="cache.app" on-invalid="ignore_uninitialized"/>
+      </argument>
+    </service>
+    <service id="cache.system_clearer" class="Symfony\Component\HttpKernel\CacheClearer\Psr6CacheClearer" public="true">
+      <tag name="cache.pool.clearer"/>
+      <tag name="kernel.cache_clearer"/>
+      <argument type="collection">
+        <argument key="cache.system" type="service" id="cache.system" on-invalid="ignore_uninitialized"/>
+        <argument key="cache.validator" type="service" id="cache.validator" on-invalid="ignore_uninitialized"/>
+        <argument key="cache.serializer" type="service" id="cache.serializer" on-invalid="ignore_uninitialized"/>
+        <argument key="cache.annotations" type="service" id="cache.annotations" on-invalid="ignore_uninitialized"/>
+        <argument key="cache.property_info" type="service" id="cache.property_info" on-invalid="ignore_uninitialized"/>
+      </argument>
+    </service>
+    <service id="cache.global_clearer" class="Symfony\Component\HttpKernel\CacheClearer\Psr6CacheClearer" public="true">
+      <tag name="cache.pool.clearer"/>
+      <argument type="collection">
+        <argument key="cache.app" type="service" id="cache.app" on-invalid="ignore_uninitialized"/>
+        <argument key="cache.system" type="service" id="cache.system" on-invalid="ignore_uninitialized"/>
+        <argument key="cache.validator" type="service" id="cache.validator" on-invalid="ignore_uninitialized"/>
+        <argument key="cache.serializer" type="service" id="cache.serializer" on-invalid="ignore_uninitialized"/>
+        <argument key="cache.annotations" type="service" id="cache.annotations" on-invalid="ignore_uninitialized"/>
+        <argument key="cache.property_info" type="service" id="cache.property_info" on-invalid="ignore_uninitialized"/>
+      </argument>
+    </service>
+    <service id="http_client" class="Symfony\Contracts\HttpClient\HttpClientInterface">
+      <tag name="monolog.logger" channel="http_client"/>
+      <tag name="kernel.reset" method="reset" on_invalid="ignore"/>
+      <tag name="http_client.client"/>
+      <argument type="collection"/>
+      <argument>6</argument>
+      <call method="setLogger">
+        <argument type="service" id="monolog.logger.http_client" on-invalid="ignore"/>
+      </call>
+      <factory class="Symfony\Component\HttpClient\HttpClient" method="create"/>
+    </service>
+    <service id="http_client.abstract_retry_strategy" class="Symfony\Component\HttpClient\Retry\GenericRetryStrategy" abstract="true">
+      <argument type="abstract">http codes</argument>
+      <argument type="abstract">delay ms</argument>
+      <argument type="abstract">multiplier</argument>
+      <argument type="abstract">max delay ms</argument>
+      <argument type="abstract">jitter</argument>
+    </service>
+    <service id="debug.debug_handlers_listener" class="Symfony\Component\HttpKernel\EventListener\DebugHandlersListener">
+      <tag name="kernel.event_subscriber"/>
+      <tag name="monolog.logger" channel="php"/>
+      <tag name="container.hot_path"/>
+      <argument>null</argument>
+      <argument type="service" id="monolog.logger.php" on-invalid="null"/>
+      <argument>null</argument>
+      <argument>-1</argument>
+      <argument>true</argument>
+      <argument>true</argument>
+      <argument>null</argument>
+    </service>
+    <service id="debug.file_link_formatter" class="Symfony\Component\HttpKernel\Debug\FileLinkFormatter">
+      <argument>null</argument>
+    </service>
+    <service id="debug.log_processor" class="Symfony\Bridge\Monolog\Processor\DebugProcessor">
+      <argument type="service" id="request_stack"/>
+    </service>
+    <service id="routing.resolver" class="Symfony\Component\Config\Loader\LoaderResolver">
+      <call method="addLoader">
+        <argument type="service" id="routing.loader.xml"/>
+      </call>
+      <call method="addLoader">
+        <argument type="service" id="routing.loader.yml"/>
+      </call>
+      <call method="addLoader">
+        <argument type="service" id="routing.loader.php"/>
+      </call>
+      <call method="addLoader">
+        <argument type="service" id="routing.loader.glob"/>
+      </call>
+      <call method="addLoader">
+        <argument type="service" id="routing.loader.directory"/>
+      </call>
+      <call method="addLoader">
+        <argument type="service" id="routing.loader.container"/>
+      </call>
+      <call method="addLoader">
+        <argument type="service" id="routing.loader.annotation"/>
+      </call>
+      <call method="addLoader">
+        <argument type="service" id="routing.loader.annotation.directory"/>
+      </call>
+      <call method="addLoader">
+        <argument type="service" id="routing.loader.annotation.file"/>
+      </call>
+    </service>
+    <service id="routing.loader.xml" class="Symfony\Component\Routing\Loader\XmlFileLoader">
+      <tag name="routing.loader"/>
+      <argument type="service" id="file_locator"/>
+      <argument>dev</argument>
+    </service>
+    <service id="routing.loader.yml" class="Symfony\Component\Routing\Loader\YamlFileLoader">
+      <tag name="routing.loader"/>
+      <argument type="service" id="file_locator"/>
+      <argument>dev</argument>
+    </service>
+    <service id="routing.loader.php" class="Symfony\Component\Routing\Loader\PhpFileLoader">
+      <tag name="routing.loader"/>
+      <argument type="service" id="file_locator"/>
+      <argument>dev</argument>
+    </service>
+    <service id="routing.loader.glob" class="Symfony\Component\Routing\Loader\GlobFileLoader">
+      <tag name="routing.loader"/>
+      <argument type="service" id="file_locator"/>
+      <argument>dev</argument>
+    </service>
+    <service id="routing.loader.directory" class="Symfony\Component\Routing\Loader\DirectoryLoader">
+      <tag name="routing.loader"/>
+      <argument type="service" id="file_locator"/>
+      <argument>dev</argument>
+    </service>
+    <service id="routing.loader.container" class="Symfony\Component\Routing\Loader\ContainerLoader">
+      <tag name="routing.loader"/>
+      <argument type="service" id=".service_locator.O0E7dT_"/>
+      <argument>dev</argument>
+    </service>
+    <service id="routing.loader" class="Symfony\Bundle\FrameworkBundle\Routing\DelegatingLoader" public="true">
+      <argument type="service" id="routing.resolver"/>
+      <argument type="collection"/>
+      <argument type="collection"/>
+    </service>
+    <service id="router.default" class="Symfony\Bundle\FrameworkBundle\Routing\Router">
+      <tag name="monolog.logger" channel="router"/>
+      <tag name="container.service_subscriber" id="routing.loader"/>
+      <argument type="service" id=".service_locator.vqno8Yz.router.default"/>
+      <argument>kernel::loadRoutes</argument>
+      <argument type="collection">
+        <argument key="cache_dir">/Users/cedricziel/instana/otel-demo-app/ratings/html/var/cache/dev</argument>
+        <argument key="debug">true</argument>
+        <argument key="generator_class">Symfony\Component\Routing\Generator\CompiledUrlGenerator</argument>
+        <argument key="generator_dumper_class">Symfony\Component\Routing\Generator\Dumper\CompiledUrlGeneratorDumper</argument>
+        <argument key="matcher_class">Symfony\Bundle\FrameworkBundle\Routing\RedirectableCompiledUrlMatcher</argument>
+        <argument key="matcher_dumper_class">Symfony\Component\Routing\Matcher\Dumper\CompiledUrlMatcherDumper</argument>
+        <argument key="strict_requirements">true</argument>
+        <argument key="resource_type">service</argument>
+      </argument>
+      <argument type="service" id="router.request_context" on-invalid="ignore"/>
+      <argument type="service" id="parameter_bag" on-invalid="ignore"/>
+      <argument type="service" id="monolog.logger.router" on-invalid="ignore"/>
+      <argument>en</argument>
+      <call method="setConfigCacheFactory">
+        <argument type="service" id="config_cache_factory"/>
+      </call>
+    </service>
+    <service id="router.request_context" class="Symfony\Component\Routing\RequestContext">
+      <argument></argument>
+      <argument>localhost</argument>
+      <argument>http</argument>
+      <argument>80</argument>
+      <argument>443</argument>
+      <factory class="Symfony\Component\Routing\RequestContext" method="fromUri"/>
+    </service>
+    <service id="router.cache_warmer" class="Symfony\Bundle\FrameworkBundle\CacheWarmer\RouterCacheWarmer">
+      <tag name="container.service_subscriber" id="router"/>
+      <tag name="kernel.cache_warmer"/>
+      <argument type="service" id=".service_locator.oCg4uHe.router.cache_warmer"/>
+    </service>
+    <service id="router_listener" class="Symfony\Component\HttpKernel\EventListener\RouterListener">
+      <tag name="kernel.event_subscriber"/>
+      <tag name="monolog.logger" channel="request"/>
+      <tag name="container.hot_path"/>
+      <tag name="container.hot_path"/>
+      <argument type="service" id="router.default"/>
+      <argument type="service" id="request_stack"/>
+      <argument type="service" id="router.request_context" on-invalid="ignore"/>
+      <argument type="service" id="monolog.logger.request" on-invalid="ignore"/>
+      <argument>/Users/cedricziel/instana/otel-demo-app/ratings/html</argument>
+      <argument>true</argument>
+    </service>
+    <service id="Symfony\Bundle\FrameworkBundle\Controller\RedirectController" class="Symfony\Bundle\FrameworkBundle\Controller\RedirectController" public="true">
+      <argument type="service" id="router.default"/>
+      <argument type="service">
+        <service class="int">
+          <factory service="router.request_context" method="getHttpPort"/>
+        </service>
+      </argument>
+      <argument type="service">
+        <service class="int">
+          <factory service="router.request_context" method="getHttpsPort"/>
+        </service>
+      </argument>
+    </service>
+    <service id="Symfony\Bundle\FrameworkBundle\Controller\TemplateController" class="Symfony\Bundle\FrameworkBundle\Controller\TemplateController" public="true">
+      <argument>null</argument>
+    </service>
+    <service id="routing.loader.annotation" class="Symfony\Bundle\FrameworkBundle\Routing\AnnotatedRouteControllerLoader">
+      <tag name="routing.loader" priority="-10"/>
+      <argument type="service" id="annotations.cached_reader" on-invalid="null"/>
+      <argument>dev</argument>
+    </service>
+    <service id="routing.loader.annotation.directory" class="Symfony\Component\Routing\Loader\AnnotationDirectoryLoader">
+      <tag name="routing.loader" priority="-10"/>
+      <argument type="service" id="file_locator"/>
+      <argument type="service" id="routing.loader.annotation"/>
+    </service>
+    <service id="routing.loader.annotation.file" class="Symfony\Component\Routing\Loader\AnnotationFileLoader">
+      <tag name="routing.loader" priority="-10"/>
+      <argument type="service" id="file_locator"/>
+      <argument type="service" id="routing.loader.annotation"/>
+    </service>
+    <service id="annotations.reader" class="Doctrine\Common\Annotations\AnnotationReader">
+      <call method="addGlobalIgnoredName">
+        <argument>required</argument>
+        <argument type="service" id="annotations.dummy_registry"/>
+      </call>
+    </service>
+    <service id="annotations.dummy_registry" class="Doctrine\Common\Annotations\AnnotationRegistry">
+      <call method="registerUniqueLoader">
+        <argument>class_exists</argument>
+      </call>
+    </service>
+    <service id="annotations.cached_reader" class="Doctrine\Common\Annotations\PsrCachedReader">
+      <tag name="annotations.cached_reader"/>
+      <argument type="service" id="annotations.reader"/>
+      <argument type="service">
+        <service class="Symfony\Component\Cache\Adapter\ArrayAdapter"/>
+      </argument>
+      <argument>true</argument>
+      <property name="cacheProviderBackup" type="service_closure" id="annotations.cache_adapter"/>
+    </service>
+    <service id="annotations.filesystem_cache_adapter" class="Symfony\Component\Cache\Adapter\FilesystemAdapter">
+      <argument></argument>
+      <argument>0</argument>
+      <argument type="abstract">Cache-Directory</argument>
+    </service>
+    <service id="annotations.filesystem_cache" class="Doctrine\Common\Cache\Psr6\DoctrineProvider">
+      <argument type="service" id="annotations.filesystem_cache_adapter"/>
+      <factory class="Doctrine\Common\Cache\Psr6\DoctrineProvider" method="wrap"/>
+      <deprecated package="symfony/framework-bundle" version="5.4">"%service_id% is deprecated"</deprecated>
+    </service>
+    <service id="annotations.cache_warmer" class="Symfony\Bundle\FrameworkBundle\CacheWarmer\AnnotationsCacheWarmer">
+      <tag name="kernel.cache_warmer"/>
+      <argument type="service" id="annotations.reader"/>
+      <argument>/Users/cedricziel/instana/otel-demo-app/ratings/html/var/cache/dev/annotations.php</argument>
+      <argument>#^Symfony\\(?:Component\\HttpKernel\\|Bundle\\FrameworkBundle\\Controller\\(?!.*Controller$))#</argument>
+      <argument>true</argument>
+    </service>
+    <service id="annotations.cache_adapter" class="Symfony\Component\Cache\Adapter\PhpArrayAdapter">
+      <tag name="container.hot_path"/>
+      <argument>/Users/cedricziel/instana/otel-demo-app/ratings/html/var/cache/dev/annotations.php</argument>
+      <argument type="service" id="cache.annotations"/>
+      <factory class="Symfony\Component\Cache\Adapter\PhpArrayAdapter" method="create"/>
+    </service>
+    <service id="annotations.cache" class="Doctrine\Common\Cache\Psr6\DoctrineProvider">
+      <argument type="service" id="annotations.cache_adapter"/>
+      <factory class="Doctrine\Common\Cache\Psr6\DoctrineProvider" method="wrap"/>
+      <deprecated package="symfony/framework-bundle" version="5.4">"%service_id% is deprecated"</deprecated>
+    </service>
+    <service id="secrets.vault" class="Symfony\Bundle\FrameworkBundle\Secrets\SodiumVault">
+      <tag name="container.env_var_loader"/>
+      <argument>/Users/cedricziel/instana/otel-demo-app/ratings/html/config/secrets/%env(default:kernel.environment:APP_RUNTIME_ENV)%</argument>
+      <argument>%env(base64:default::SYMFONY_DECRYPTION_SECRET)%</argument>
+    </service>
+    <service id="secrets.local_vault" class="Symfony\Bundle\FrameworkBundle\Secrets\DotenvVault">
+      <argument>/Users/cedricziel/instana/otel-demo-app/ratings/html/.env.dev.local</argument>
+    </service>
+    <service id=".cache_connection.GD_MSZC" class="Symfony\Component\Cache\Adapter\AbstractAdapter">
+      <argument>redis://localhost</argument>
+      <argument type="collection">
+        <argument key="lazy">true</argument>
+      </argument>
+      <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createConnection"/>
+    </service>
+    <service id=".cache_connection.JKE6keX" class="Symfony\Component\Cache\Adapter\AbstractAdapter">
+      <argument>memcached://localhost</argument>
+      <argument type="collection">
+        <argument key="lazy">true</argument>
+      </argument>
+      <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createConnection"/>
+    </service>
+    <service id="monolog.logger" class="Symfony\Bridge\Monolog\Logger">
+      <argument>app</argument>
+      <call method="pushProcessor">
+        <argument type="service" id="Instana\RobotShop\Ratings\Integration\InstanaHeadersLoggingProcessor"/>
+      </call>
+      <call method="useMicrosecondTimestamps">
+        <argument>true</argument>
+      </call>
+      <call method="pushHandler">
+        <argument type="service" id="monolog.handler.stdout"/>
+      </call>
+    </service>
+    <service id="monolog.logger_prototype" class="Symfony\Bridge\Monolog\Logger" abstract="true">
+      <argument></argument>
+      <call method="pushProcessor">
+        <argument type="service" id="Instana\RobotShop\Ratings\Integration\InstanaHeadersLoggingProcessor"/>
+      </call>
+    </service>
+    <service id="monolog.activation_strategy.not_found" class="Symfony\Bridge\Monolog\Handler\FingersCrossed\NotFoundActivationStrategy" abstract="true"/>
+    <service id="monolog.handler.fingers_crossed.error_level_activation_strategy" class="Monolog\Handler\FingersCrossed\ErrorLevelActivationStrategy" abstract="true"/>
+    <service id="monolog.formatter.chrome_php" class="Monolog\Formatter\ChromePHPFormatter"/>
+    <service id="monolog.formatter.gelf_message" class="Monolog\Formatter\GelfMessageFormatter"/>
+    <service id="monolog.formatter.html" class="Monolog\Formatter\HtmlFormatter"/>
+    <service id="monolog.formatter.json" class="Monolog\Formatter\JsonFormatter"/>
+    <service id="monolog.formatter.line" class="Monolog\Formatter\LineFormatter"/>
+    <service id="monolog.formatter.loggly" class="Monolog\Formatter\LogglyFormatter"/>
+    <service id="monolog.formatter.normalizer" class="Monolog\Formatter\NormalizerFormatter"/>
+    <service id="monolog.formatter.scalar" class="Monolog\Formatter\ScalarFormatter"/>
+    <service id="monolog.formatter.wildfire" class="Monolog\Formatter\WildfireFormatter"/>
+    <service id="monolog.formatter.logstash" class="Monolog\Formatter\LogstashFormatter">
+      <argument>app</argument>
+    </service>
+    <service id="monolog.http_client" class="Symfony\Contracts\HttpClient\HttpClientInterface">
+      <factory class="Symfony\Component\HttpClient\HttpClient" method="create"/>
+    </service>
+    <service id="monolog.processor.psr_log_message" class="Monolog\Processor\PsrLogMessageProcessor"/>
+    <service id="monolog.handler.stdout" class="Monolog\Handler\StreamHandler">
+      <tag name="kernel.reset" method="reset"/>
+      <argument>php://stdout</argument>
+      <argument>200</argument>
+      <argument>true</argument>
+      <argument>null</argument>
+      <argument>false</argument>
+      <call method="pushProcessor">
+        <argument type="service" id="monolog.processor.psr_log_message"/>
+      </call>
+    </service>
+    <service id="open_telemetry.sdk.trace.system_clock" class="OpenTelemetry\SDK\Trace\SystemClock"/>
+    <service id="open_telemetry.sdk.trace.random_id_generator" class="OpenTelemetry\SDK\Trace\RandomIdGenerator"/>
+    <service id="open_telemetry.sdk.trace.attribute_limits" class="OpenTelemetry\SDK\Trace\AttributeLimits"/>
+    <service id="open_telemetry.sdk.trace.attributes" class="OpenTelemetry\SDK\Trace\Attributes">
+      <argument>%open_telemetry.sdk.resource.attributes%</argument>
+      <argument type="service" id="open_telemetry.sdk.trace.attribute_limits"/>
+    </service>
+    <service id="open_telemetry.sdk.resource.resource_info" class="OpenTelemetry\SDK\Resource\ResourceInfo">
+      <argument type="service" id="open_telemetry.sdk.trace.attributes"/>
+      <factory class="OpenTelemetry\SDK\Resource\ResourceInfo" method="create"/>
+    </service>
+    <service id="open_telemetry.sdk.trace.sampler.always_on_sampler" class="OpenTelemetry\SDK\Trace\Sampler\AlwaysOnSampler"/>
+    <service id="open_telemetry.sdk.trace.sampler.always_off_sampler" class="OpenTelemetry\SDK\Trace\Sampler\AlwaysOffSampler"/>
+    <service id="open_telemetry.sdk.trace.sampler.trace_id_ratio_based_sampler" class="OpenTelemetry\SDK\Trace\Sampler\TraceIdRatioBasedSampler">
+      <argument>1</argument>
+    </service>
+    <service id="open_telemetry.sdk.trace.sampler.parent_based" class="OpenTelemetry\SDK\Trace\Sampler\ParentBased">
+      <argument type="service" id="open_telemetry.sdk.trace.sampler.always_on_sampler"/>
+      <argument>null</argument>
+      <argument>null</argument>
+      <argument>null</argument>
+      <argument>null</argument>
+    </service>
+    <service id="open_telemetry.sdk.trace.span_limits_builder" class="OpenTelemetry\SDK\Trace\SpanLimitsBuilder"/>
+    <service id="open_telemetry.sdk.trace.span_limits" class="OpenTelemetry\SDK\Trace\SpanLimits">
+      <factory service="open_telemetry.sdk.trace.span_limits_builder" method="build"/>
+    </service>
+    <service id="open_telemetry.sdk.trace.span_processor.simple_span_processor" class="OpenTelemetry\SDK\Trace\SpanProcessor\SimpleSpanProcessor"/>
+    <service id="open_telemetry.sdk.trace.span_processor.multi_span_processor" class="OpenTelemetry\SDK\Trace\SpanProcessor\MultiSpanProcessor"/>
+    <service id="open_telemetry.sdk.trace.span_processor.noop_span_processor" class="OpenTelemetry\SDK\Trace\SpanProcessor\NoopSpanProcessor"/>
+    <service id="open_telemetry.sdk.trace.span_processor.batch_span_processor" class="OpenTelemetry\SDK\Trace\SpanProcessor\BatchSpanProcessor">
+      <argument>null</argument>
+      <argument type="service" id="open_telemetry.sdk.trace.system_clock"/>
+    </service>
+    <service id="open_telemetry.sdk.trace.tracer_provider" class="OpenTelemetry\SDK\Trace\TracerProvider">
+      <argument type="collection">
+        <argument type="service" id="open_telemetry.sdk.trace.span_processor.default.otlpgrpc"/>
+      </argument>
+      <argument type="service" id="open_telemetry.sdk.trace.sampler.parent_based"/>
+      <argument type="service" id="open_telemetry.sdk.resource.resource_info"/>
+      <argument type="service" id="open_telemetry.sdk.trace.span_limits"/>
+      <argument type="service" id="open_telemetry.sdk.trace.random_id_generator"/>
+    </service>
+    <service id="open_telemetry.sdk.trace.tracer" class="OpenTelemetry\SDK\Trace\Tracer">
+      <argument>io.opentelemetry.contrib.php</argument>
+      <factory service="open_telemetry.sdk.trace.tracer_provider" method="getTracer"/>
+    </service>
+    <service id="open_telemetry.sdk.trace.span_processor.default.otlpgrpc" class="OpenTelemetry\SDK\Trace\SpanProcessor\BatchSpanProcessor">
+      <argument type="service" id="open_telemetry.sdk.trace.span_exporter.otlpgrpc"/>
+      <argument type="service" id="open_telemetry.sdk.trace.system_clock"/>
+    </service>
+    <service id="open_telemetry.sdk.trace.span_exporter.factory.otlpgrpc" class="OpenTelemetry\Symfony\OtelSdkBundle\Trace\ExporterFactory">
+      <argument>OpenTelemetry\Contrib\OtlpGrpc\Exporter</argument>
+    </service>
+    <service id="open_telemetry.sdk.trace.span_exporter.otlpgrpc" class="OpenTelemetry\Contrib\OtlpGrpc\Exporter">
+      <argument type="collection">
+        <argument key="url">http://collector:4317</argument>
+      </argument>
+      <factory service="open_telemetry.sdk.trace.span_exporter.factory.otlpgrpc" method="__invoke"/>
+    </service>
+    <service id=".instanceof.Symfony\Component\EventDispatcher\EventSubscriberInterface.0.kernel" class="Instana\RobotShop\Ratings\Kernel" public="true" abstract="true"/>
+    <service id=".abstract.instanceof.kernel" class="Instana\RobotShop\Ratings\Kernel" public="true" synthetic="true" autoconfigure="true" abstract="true"/>
+    <service id=".service_locator.gSv9zYw" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="base64" type="service_closure" id="container.env_var_processor"/>
+        <argument key="bool" type="service_closure" id="container.env_var_processor"/>
+        <argument key="const" type="service_closure" id="container.env_var_processor"/>
+        <argument key="csv" type="service_closure" id="container.env_var_processor"/>
+        <argument key="default" type="service_closure" id="container.env_var_processor"/>
+        <argument key="file" type="service_closure" id="container.env_var_processor"/>
+        <argument key="float" type="service_closure" id="container.env_var_processor"/>
+        <argument key="int" type="service_closure" id="container.env_var_processor"/>
+        <argument key="json" type="service_closure" id="container.env_var_processor"/>
+        <argument key="key" type="service_closure" id="container.env_var_processor"/>
+        <argument key="not" type="service_closure" id="container.env_var_processor"/>
+        <argument key="query_string" type="service_closure" id="container.env_var_processor"/>
+        <argument key="require" type="service_closure" id="container.env_var_processor"/>
+        <argument key="resolve" type="service_closure" id="container.env_var_processor"/>
+        <argument key="string" type="service_closure" id="container.env_var_processor"/>
+        <argument key="trim" type="service_closure" id="container.env_var_processor"/>
+        <argument key="url" type="service_closure" id="container.env_var_processor"/>
+      </argument>
+    </service>
+    <service id=".service_locator.eTP2f4Q" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="event" type="service_closure" id=".errored..service_locator.eTP2f4Q.Symfony\Component\HttpKernel\Event\ResponseEvent"/>
+      </argument>
+    </service>
+    <service id=".service_locator.bRdave9" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="response" type="service_closure" id=".errored..service_locator.bRdave9.Symfony\Component\HttpFoundation\Response"/>
+      </argument>
+    </service>
+    <service id=".service_locator.xUrKPVU" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="loader" type="service_closure" id=".errored..service_locator.xUrKPVU.Symfony\Component\Config\Loader\LoaderInterface"/>
+      </argument>
+    </service>
+    <service id=".service_locator.B2N.LKQ" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="logger" type="service_closure" id="monolog.logger"/>
+      </argument>
+    </service>
+    <service id=".service_locator.6Nt6Yur" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="kernel::corsResponseFilter" type="service_closure" id=".service_locator.eTP2f4Q"/>
+        <argument key="kernel::loadRoutes" type="service_closure" id=".service_locator.xUrKPVU"/>
+        <argument key="kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.xUrKPVU"/>
+        <argument key="kernel::terminate" type="service_closure" id=".service_locator.bRdave9"/>
+        <argument key="kernel:corsResponseFilter" type="service_closure" id=".service_locator.eTP2f4Q"/>
+        <argument key="kernel:loadRoutes" type="service_closure" id=".service_locator.xUrKPVU"/>
+        <argument key="kernel:registerContainerConfiguration" type="service_closure" id=".service_locator.xUrKPVU"/>
+        <argument key="kernel:terminate" type="service_closure" id=".service_locator.bRdave9"/>
+      </argument>
+    </service>
+    <service id=".service_locator.lLv4pWF" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="inline" type="service_closure" id="fragment.renderer.inline"/>
+      </argument>
+    </service>
+    <service id="monolog.logger.request" class="Symfony\Bridge\Monolog\Logger">
+      <argument>request</argument>
+      <call method="pushProcessor">
+        <argument type="service" id="Instana\RobotShop\Ratings\Integration\InstanaHeadersLoggingProcessor"/>
+      </call>
+      <call method="pushHandler">
+        <argument type="service" id="monolog.handler.null_internal"/>
+      </call>
+    </service>
+    <service id="monolog.logger.cache" class="Symfony\Bridge\Monolog\Logger">
+      <argument>cache</argument>
+      <call method="pushProcessor">
+        <argument type="service" id="Instana\RobotShop\Ratings\Integration\InstanaHeadersLoggingProcessor"/>
+      </call>
+      <call method="pushHandler">
+        <argument type="service" id="monolog.handler.stdout"/>
+      </call>
+    </service>
+    <service id="monolog.logger.http_client" class="Symfony\Bridge\Monolog\Logger">
+      <argument>http_client</argument>
+      <call method="pushProcessor">
+        <argument type="service" id="Instana\RobotShop\Ratings\Integration\InstanaHeadersLoggingProcessor"/>
+      </call>
+      <call method="pushHandler">
+        <argument type="service" id="monolog.handler.stdout"/>
+      </call>
+    </service>
+    <service id="monolog.logger.php" class="Symfony\Bridge\Monolog\Logger">
+      <argument>php</argument>
+      <call method="pushProcessor">
+        <argument type="service" id="Instana\RobotShop\Ratings\Integration\InstanaHeadersLoggingProcessor"/>
+      </call>
+      <call method="pushHandler">
+        <argument type="service" id="monolog.handler.stdout"/>
+      </call>
+    </service>
+    <service id="monolog.logger.router" class="Symfony\Bridge\Monolog\Logger">
+      <argument>router</argument>
+      <call method="pushProcessor">
+        <argument type="service" id="Instana\RobotShop\Ratings\Integration\InstanaHeadersLoggingProcessor"/>
+      </call>
+      <call method="pushHandler">
+        <argument type="service" id="monolog.handler.stdout"/>
+      </call>
+    </service>
+    <service id="monolog.handler.null_internal" class="Monolog\Handler\NullHandler"/>
+    <service id=".service_locator.vqno8Yz" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="routing.loader" type="service_closure" id="routing.loader"/>
+      </argument>
+    </service>
+    <service id=".service_locator.vqno8Yz.router.default" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="router.default"/>
+      <argument>router.default</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.vqno8Yz" method="withContext"/>
+    </service>
+    <service id=".service_locator.oCg4uHe" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="router" type="service_closure" id="router.default"/>
+      </argument>
+    </service>
+    <service id=".service_locator.oCg4uHe.router.cache_warmer" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="router.cache_warmer"/>
+      <argument>router.cache_warmer</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.oCg4uHe" method="withContext"/>
+    </service>
+    <service id=".service_locator.XXv1IfR" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="reverse_container" type="service_closure" id="reverse_container" on-invalid="ignore_uninitialized"/>
+      </argument>
+    </service>
+    <service id=".service_locator.O0E7dT_" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="kernel" type="service_closure" id="kernel"/>
+      </argument>
+    </service>
+    <service id=".errored..service_locator.eTP2f4Q.Symfony\Component\HttpKernel\Event\ResponseEvent" class="Symfony\Component\HttpKernel\Event\ResponseEvent"/>
+    <service id=".errored..service_locator.bRdave9.Symfony\Component\HttpFoundation\Response" class="Symfony\Component\HttpFoundation\Response"/>
+    <service id=".errored..service_locator.xUrKPVU.Symfony\Component\Config\Loader\LoaderInterface" class="Symfony\Component\Config\Loader\LoaderInterface"/>
+    <service id="Psr\Container\ContainerInterface" alias="service_container">
+      <deprecated package="symfony/dependency-injection" version="5.1">The "%alias_id%" autowiring alias is deprecated. Define it explicitly in your app if you want to keep using it.</deprecated>
+    </service>
+    <service id="Symfony\Component\DependencyInjection\ContainerInterface" alias="service_container">
+      <deprecated package="symfony/dependency-injection" version="5.1">The "%alias_id%" autowiring alias is deprecated. Define it explicitly in your app if you want to keep using it.</deprecated>
+    </service>
+    <service id="PDO" alias="database.connection"/>
+    <service id="Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface" alias="parameter_bag"/>
+    <service id="Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface" alias="parameter_bag"/>
+    <service id="Symfony\Component\EventDispatcher\EventDispatcherInterface" alias="event_dispatcher"/>
+    <service id="Symfony\Contracts\EventDispatcher\EventDispatcherInterface" alias="event_dispatcher"/>
+    <service id="Symfony\Component\HttpKernel\HttpKernelInterface" alias="http_kernel"/>
+    <service id="Symfony\Component\HttpFoundation\RequestStack" alias="request_stack"/>
+    <service id="Symfony\Component\HttpKernel\HttpCache\StoreInterface" alias="http_cache.store"/>
+    <service id="Symfony\Component\HttpFoundation\UrlHelper" alias="url_helper"/>
+    <service id="Symfony\Component\HttpKernel\KernelInterface" alias="kernel"/>
+    <service id="Symfony\Component\Filesystem\Filesystem" alias="filesystem"/>
+    <service id="Symfony\Component\HttpKernel\Config\FileLocator" alias="file_locator"/>
+    <service id="Symfony\Component\HttpKernel\UriSigner" alias="uri_signer"/>
+    <service id="Symfony\Component\DependencyInjection\ReverseContainer" alias="reverse_container"/>
+    <service id="Symfony\Component\String\Slugger\SluggerInterface" alias="slugger"/>
+    <service id="Symfony\Component\HttpKernel\Fragment\FragmentUriGeneratorInterface" alias="fragment.uri_generator"/>
+    <service id="error_renderer.html" alias="error_handler.error_renderer.html"/>
+    <service id="error_renderer" alias="error_handler.error_renderer.html"/>
+    <service id="Psr\EventDispatcher\EventDispatcherInterface" alias="event_dispatcher"/>
+    <service id="Psr\Container\ContainerInterface $parameterBag" alias="parameter_bag"/>
+    <service id="cache.app_clearer" alias="cache.default_clearer" public="true"/>
+    <service id="Psr\Cache\CacheItemPoolInterface" alias="cache.app"/>
+    <service id="Symfony\Component\Cache\Adapter\AdapterInterface" alias="cache.app">
+      <deprecated package="symfony/framework-bundle" version="5.4">The "%alias_id%" alias is deprecated, use "Psr\Cache\CacheItemPoolInterface" instead.</deprecated>
+    </service>
+    <service id="Symfony\Contracts\Cache\CacheInterface" alias="cache.app"/>
+    <service id="Symfony\Contracts\Cache\TagAwareCacheInterface" alias="cache.app.taggable"/>
+    <service id="Symfony\Contracts\HttpClient\HttpClientInterface" alias="http_client"/>
+    <service id="Symfony\Component\HttpKernel\Debug\FileLinkFormatter" alias="debug.file_link_formatter"/>
+    <service id="router" alias="router.default" public="true"/>
+    <service id="Symfony\Component\Routing\RouterInterface" alias="router.default"/>
+    <service id="Symfony\Component\Routing\Generator\UrlGeneratorInterface" alias="router.default"/>
+    <service id="Symfony\Component\Routing\Matcher\UrlMatcherInterface" alias="router.default"/>
+    <service id="Symfony\Component\Routing\RequestContextAwareInterface" alias="router.default"/>
+    <service id="Symfony\Component\Routing\RequestContext" alias="router.request_context"/>
+    <service id="annotation_reader" alias="annotations.cached_reader"/>
+    <service id="Doctrine\Common\Annotations\Reader" alias="annotations.cached_reader"/>
+    <service id="cache.default_redis_provider" alias=".cache_connection.GD_MSZC"/>
+    <service id="cache.default_memcached_provider" alias=".cache_connection.JKE6keX"/>
+    <service id="cache.default_doctrine_dbal_provider" alias="database_connection"/>
+    <service id="logger" alias="monolog.logger"/>
+    <service id="Psr\Log\LoggerInterface" alias="monolog.logger"/>
+    <service id="OpenTelemetry\SDK\Trace\SystemClock" alias="open_telemetry.sdk.trace.system_clock"/>
+    <service id="OpenTelemetry\SDK\Trace\RandomIdGenerator" alias="open_telemetry.sdk.trace.random_id_generator"/>
+    <service id="OpenTelemetry\SDK\Trace\AttributeLimits" alias="open_telemetry.sdk.trace.attribute_limits"/>
+    <service id="OpenTelemetry\SDK\Trace\Attributes" alias="open_telemetry.sdk.trace.attributes"/>
+    <service id="OpenTelemetry\SDK\Resource\ResourceInfo" alias="open_telemetry.sdk.resource.resource_info"/>
+    <service id="OpenTelemetry\SDK\Trace\Sampler\AlwaysOnSampler" alias="open_telemetry.sdk.trace.sampler.always_on_sampler"/>
+    <service id="OpenTelemetry\SDK\Trace\Sampler\AlwaysOffSampler" alias="open_telemetry.sdk.trace.sampler.always_off_sampler"/>
+    <service id="OpenTelemetry\SDK\Trace\Sampler\TraceIdRatioBasedSampler" alias="open_telemetry.sdk.trace.sampler.trace_id_ratio_based_sampler"/>
+    <service id="open_telemetry.sdk.trace.sampler.trace_id_ratio_based_sampler.1" alias="open_telemetry.sdk.trace.sampler.trace_id_ratio_based_sampler"/>
+    <service id="OpenTelemetry\SDK\Trace\Sampler\ParentBased" alias="open_telemetry.sdk.trace.sampler.parent_based"/>
+    <service id="OpenTelemetry\SDK\Trace\SpanLimitsBuilder" alias="open_telemetry.sdk.trace.span_limits_builder"/>
+    <service id="OpenTelemetry\SDK\Trace\SpanLimits" alias="open_telemetry.sdk.trace.span_limits"/>
+    <service id="OpenTelemetry\SDK\Trace\SpanProcessor\SimpleSpanProcessor" alias="open_telemetry.sdk.trace.span_processor.simple_span_processor"/>
+    <service id="OpenTelemetry\SDK\Trace\SpanProcessor\MultiSpanProcessor" alias="open_telemetry.sdk.trace.span_processor.multi_span_processor"/>
+    <service id="OpenTelemetry\SDK\Trace\SpanProcessor\NoopSpanProcessor" alias="open_telemetry.sdk.trace.span_processor.noop_span_processor"/>
+    <service id="OpenTelemetry\SDK\Trace\SpanProcessor\BatchSpanProcessor" alias="open_telemetry.sdk.trace.span_processor.batch_span_processor"/>
+    <service id="open_telemetry.sdk.trace.span_processor.default" alias="open_telemetry.sdk.trace.span_processor.batch_span_processor"/>
+    <service id="OpenTelemetry\SDK\Trace\TracerProvider" alias="open_telemetry.sdk.trace.tracer_provider"/>
+    <service id="OpenTelemetry\SDK\Trace\Tracer" alias="open_telemetry.sdk.trace.tracer"/>
+    <service id="container.env_var_processors_locator" alias=".service_locator.gSv9zYw" public="true"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.6Nt6Yur"/>
+    <service id="Psr\Log\LoggerInterface $requestLogger" alias="monolog.logger.request"/>
+    <service id="Psr\Log\LoggerInterface $cacheLogger" alias="monolog.logger.cache"/>
+    <service id="Psr\Log\LoggerInterface $httpClientLogger" alias="monolog.logger.http_client"/>
+    <service id="Psr\Log\LoggerInterface $phpLogger" alias="monolog.logger.php"/>
+    <service id="Psr\Log\LoggerInterface $routerLogger" alias="monolog.logger.router"/>
+    <service id=".service_locator.0GV1BZZ" alias=".service_locator.gSv9zYw"/>
+    <service id=".service_locator.WKFKw0S" alias=".service_locator.6Nt6Yur"/>
+    <service id=".service_locator.4xUHCjE" alias=".service_locator.eTP2f4Q"/>
+    <service id=".service_locator.FatRZu2" alias=".service_locator.bRdave9"/>
+    <service id=".service_locator.uo5c0SP" alias=".service_locator.xUrKPVU"/>
+    <service id=".service_locator.6u2lGWO" alias=".service_locator.B2N.LKQ"/>
+  </services>
+</container>

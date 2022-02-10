@@ -6,12 +6,14 @@ namespace Instana\RobotShop\Ratings;
 
 use Instana\RobotShop\Ratings\Controller\HealthController;
 use Instana\RobotShop\Ratings\Controller\RatingsApiController;
-use Instana\RobotShop\Ratings\EventListener\InstanaDataCenterListener;
+use Instana\RobotShop\Ratings\EventSubscriber\TracingKernelSubscriber;
 use Instana\RobotShop\Ratings\Integration\InstanaHeadersLoggingProcessor;
 use Instana\RobotShop\Ratings\Service\CatalogueService;
 use Instana\RobotShop\Ratings\Service\HealthCheckService;
 use Instana\RobotShop\Ratings\Service\RatingsService;
 use Monolog\Formatter\LineFormatter;
+use OpenTelemetry\SDK\Trace\Tracer;
+use OpenTelemetry\Symfony\OtelSdkBundle\OtelSdkBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Bundle\MonologBundle\MonologBundle;
@@ -33,6 +35,7 @@ class Kernel extends BaseKernel implements EventSubscriberInterface
         return [
             new FrameworkBundle(),
             new MonologBundle(),
+            new OtelSdkBundle(),
         ];
     }
 
@@ -73,6 +76,23 @@ class Kernel extends BaseKernel implements EventSubscriberInterface
             ],
         ]);
 
+        $c->loadFromExtension('otel_sdk', [
+            'resource' => [
+                'attributes' => [
+                    'service.name' => "OtelBundle Ratings app",
+                ]
+            ],
+            'trace' => [
+                'sampler' => 'always_on',
+                'exporters' => [
+                    'otlpgrpc' => [
+                        'type' => 'otlpgrpc',
+                        'url' => 'collector:4317',
+                    ]
+                ]
+            ],
+        ]);
+
         $c->setParameter('catalogueUrl', getenv('CATALOGUE_URL') ?: 'http://catalogue:8080');
         $c->setParameter('pdo_dsn', getenv('PDO_URL') ?: 'mysql:host=mysql;dbname=ratings;charset=utf8mb4');
         $c->setParameter('pdo_user', 'ratings');
@@ -90,6 +110,7 @@ class Kernel extends BaseKernel implements EventSubscriberInterface
             ->addArgument($c->getParameter('pdo_dsn'))
             ->addArgument($c->getParameter('pdo_user'))
             ->addArgument($c->getParameter('pdo_password'))
+            ->addArgument(new Reference(Tracer::class))
             ->addMethodCall('setLogger', [new Reference('logger')])
             ->setAutowired(true);
 
@@ -122,10 +143,14 @@ class Kernel extends BaseKernel implements EventSubscriberInterface
             ->addTag('controller.service_arguments')
             ->setAutowired(true);
 
-        $c->register(InstanaDataCenterListener::class)
-            ->addTag('kernel.event_listener', [
-                'event' => 'kernel.request'
-            ])
+        //$c->register(DataCenterListener::class)
+        //    ->addTag('kernel.event_listener', [
+        //        'event' => 'kernel.request'
+        //    ])
+        //    ->setAutowired(true);
+
+        $c->register(TracingKernelSubscriber::class)
+            ->addTag('kernel.event_subscriber')
             ->setAutowired(true);
     }
 

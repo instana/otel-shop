@@ -33,7 +33,7 @@ class InstanaHeadersLoggingProcessor implements EventSubscriberInterface, ResetI
 
     public function addHeaderData(RequestEvent $event): void
     {
-        if ($event->isMasterRequest()) {
+        if ($event->isMainRequest()) {
             $this->reset();
         }
 

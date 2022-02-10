@@ -10,6 +10,7 @@ services:
       - /sys:/sys
       - /var/log:/var/log
       - ./agent/configuration-otel.yaml:/opt/instana/agent/etc/instana/configuration-otel.yaml
+      - ./agent/configuration-php.yaml:/opt/instana/agent/etc/instana/configuration-php.yaml
       - ./agent/com.instana.agent.main.sender.File.cfg:/opt/instana/agent/etc/instana/com.instana.agent.main.sender.File.cfg
       - ./agent/logs:/opt/instana/agent/data/log
     networks:
@@ -71,6 +72,7 @@ services:
       context: front
     depends_on:
       - catalogue
+      - ratings
       - user
       - web
     volumes:
@@ -150,6 +152,9 @@ services:
     image: ${REPOSITORY}-ratings:${PROJECT_VERSION}
     environment:
       APP_ENV: prod
+      OTEL_EXPORTER_OTLP_ENDPOINT: collector:4317
+      OTEL_PROPAGATORS: w3c
+      OTEL_EXPORTER_OTLP_PROTOCOL: grpc
     networks:
       app-network:
     depends_on:

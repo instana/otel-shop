@@ -1,0 +1,32 @@
+{
+  "name": "instana/instana-php-sdk",
+  "homepage": "http://instana.com",
+  "description": "Instana PHP Trace SDK stubs",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Gordon Oheim",
+      "email": "gordon.oheim@instana.com",
+      "role": "Developer"
+    },
+    {
+      "name": "Andrey Ovcharov",
+      "email": "andrey.ovcharov@instana.com",
+      "role": "Developer"
+    }
+  ],
+  "autoload": {
+    "files": [
+      "instana.php"
+    ]
+  },
+  "support": {
+    "source": "https://github.com/instana/instana-php-sdk",
+    "issues": "https://github.com/instana/instana-php-sdk/issues",
+    "docs": "https://docs.instana.io/ecosystem/php/#php-sdk"
+  },
+  "require": {
+    "php": ">=5.3"
+  }
+}
