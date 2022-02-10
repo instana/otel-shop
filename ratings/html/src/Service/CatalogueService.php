@@ -6,6 +6,7 @@ namespace Instana\RobotShop\Ratings\Service;
 
 use Exception;
 use OpenTelemetry\API\Trace\SpanKind;
+use OpenTelemetry\SDK\Trace\Propagation\TraceContextPropagator;
 use OpenTelemetry\SDK\Trace\Tracer;
 use OpenTelemetry\SemConv\TraceAttributes;
 use Psr\Log\LoggerAwareInterface;
@@ -31,11 +32,16 @@ class CatalogueService implements LoggerAwareInterface
     public function checkSKU(string $sku): bool
     {
         $url = sprintf('%s/product/%s', $this->catalogueUrl, $sku);
-        $span = $this->startSpan($url);
+        $span = $this->startSpan('GET', $url);
+
+        $carrier = [];
+        TraceContextPropagator::getInstance()->inject($carrier);
 
         $opt = [
             CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HEADER => $carrier,
         ];
+
         $curl = curl_init($url);
         curl_setopt_array($curl, $opt);
 
@@ -58,11 +64,12 @@ class CatalogueService implements LoggerAwareInterface
         return 200 === $status;
     }
 
-    private function startSpan(string $url)
+    private function startSpan(string $method, string $url)
     {
-        return $this->tracer->spanBuilder($url)
+        return $this->tracer->spanBuilder(sprintf('%s %s', $method, $url))
             ->setSpanKind(SpanKind::KIND_CLIENT)
             ->setAttribute(TraceAttributes::HTTP_URL, $url)
+            ->setAttribute(TraceAttributes::HTTP_METHOD, $method)
             ->startSpan();
     }
 }
