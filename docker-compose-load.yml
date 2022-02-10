@@ -1,0 +1,17 @@
+version: "3"
+services:
+  load:
+    image: ${REPOSITORY}-load:${PROJECT_VERSION}
+    build:
+      context: load-gen
+    environment:
+      HOST: http://front:8080
+    networks:
+      app-network:
+    depends_on:
+      - front
+    logging: &logging
+      driver: "json-file"
+      options:
+        max-size: "25m"
+        max-file: "2"
