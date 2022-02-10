@@ -6,13 +6,19 @@ const { getNodeAutoInstrumentations } = require('@opentelemetry/auto-instrumenta
 const { ConsoleSpanExporter, SimpleSpanProcessor } = require('@opentelemetry/sdk-trace-base');
 const { registerInstrumentations } = require('@opentelemetry/instrumentation');
 const { OTLPTraceExporter } = require('@opentelemetry/exporter-trace-otlp-grpc');
+const { Resource } = require('@opentelemetry/resources');
+const { SemanticResourceAttributes } = require('@opentelemetry/semantic-conventions');
 
 module.exports = (serviceName) => {
-  const provider = new NodeTracerProvider();
+  const provider = new NodeTracerProvider({
+    resource: new Resource({
+      [SemanticResourceAttributes.SERVICE_NAME]: process.env.OTEL_SERVICE_NAME,
+    }),
+  });
 
   const otlpExporter = new OTLPTraceExporter({
     // todo: switch to environment smh?
-    url: 'grpc://localhost:4317',
+    url: 'collector:4317',
 
     // optional - collection of custom headers to be sent with each request, empty by default
     headers: {},

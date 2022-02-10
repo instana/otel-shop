@@ -34,5 +34,5 @@ module.exports = (serviceName) => {
     tracerProvider: provider,
   });
 
-  return opentelemetry.trace.getTracer('user-service');
+  return opentelemetry.trace.getTracer('cart-service');
 };

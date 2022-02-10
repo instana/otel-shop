@@ -12,5 +12,4 @@ COPY server.js /opt/server/
 COPY tracer.js /opt/server/
 COPY monitoring.js /opt/server/
 
-CMD ["node", "server.js"]
-
+CMD ["node", "-r", "./tracer.js", "server.js"]

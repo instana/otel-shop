@@ -75,6 +75,8 @@ services:
       - ratings
       - user
       - web
+    environment:
+      OTEL_SERVICE_NAME: front
     volumes:
       - ./front/conf/nginx.conf:/etc/nginx/nginx.conf
       - ./front/conf/otel-nginx.toml:/conf/otel-nginx.toml
@@ -91,11 +93,39 @@ services:
     image: ${REPOSITORY}-web:${PROJECT_VERSION}
     build:
       context: web
+    environment:
+      OTEL_SERVICE_NAME: web
     volumes:
       - ./web/conf/opentelemetry.conf:/etc/apache2/mods-available/opentelemetry.conf
       - ./web/html:/var/www/html
     networks:
       app-network:
+
+  cart:
+    build:
+      context: cart
+    image: ${REPOSITORY}-cart:${PROJECT_VERSION}
+    depends_on:
+      - redis
+    networks:
+      app-network:
+    environment:
+      OTEL_SERVICE_NAME: cart
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "curl",
+          "-H",
+          "X-INSTANA-SYNTHETIC: 1",
+          "-f",
+          "http://localhost:8080/health-check",
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+    logging:
+      <<: *logging
 
   catalogue:
     build:
@@ -105,6 +135,8 @@ services:
       - mongodb
     networks:
       app-network:
+    environment:
+      OTEL_SERVICE_NAME: catalogue
     healthcheck:
       test:
         [
@@ -113,7 +145,7 @@ services:
           "-H",
           "X-INSTANA-SYNTHETIC: 1",
           "-f",
-          "http://localhost:8080/health",
+          "http://localhost:8080/health-check",
         ]
       interval: 10s
       timeout: 10s
@@ -130,6 +162,8 @@ services:
       - redis
     networks:
       app-network:
+    environment:
+      OTEL_SERVICE_NAME: cart
     healthcheck:
       test:
         [
@@ -138,7 +172,7 @@ services:
           "-H",
           "X-INSTANA-SYNTHETIC: 1",
           "-f",
-          "http://localhost:8080/health",
+          "http://localhost:8080/health-check",
         ]
       interval: 10s
       timeout: 10s
@@ -155,6 +189,7 @@ services:
       OTEL_EXPORTER_OTLP_ENDPOINT: collector:4317
       OTEL_PROPAGATORS: w3c
       OTEL_EXPORTER_OTLP_PROTOCOL: grpc
+      OTEL_SERVICE_NAME: ratings
     networks:
       app-network:
     depends_on:

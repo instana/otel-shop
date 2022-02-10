@@ -33,6 +33,7 @@ app.use(countAllRequests());
 app.use((req, res, next) => {
     res.set('Timing-Allow-Origin', '*');
     res.set('Access-Control-Allow-Origin', '*');
+
     next();
 });
 
@@ -54,11 +55,12 @@ app.use((req, res, next) => {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.get('/health', (req, res) => {
+app.get('/health-check', (req, res) => {
     var stat = {
         app: 'OK',
         mongo: mongoConnected
     };
+
     res.json(stat);
 });
 
