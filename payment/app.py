@@ -17,6 +17,8 @@ from rabbitmq import Publisher
 import prometheus_client
 from prometheus_client import Counter, Histogram
 
+from opentelemetry import trace
+
 app = Flask(__name__)
 app.logger.setLevel(logging.DEBUG)
 
@@ -38,7 +40,9 @@ def exception_handler(err):
 
 @app.route('/health-check', methods=['GET'])
 def health():
-
+    tracer = trace.get_tracer(__name__)
+    span = trace.get_current_span()
+    span.set_attribute('http.request.header.x_instana_synthetic', '1')
     return 'OK'
 
 # Prometheus
