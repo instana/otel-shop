@@ -18,7 +18,7 @@ import prometheus_client
 from prometheus_client import Counter, Histogram
 
 app = Flask(__name__)
-app.logger.setLevel(logging.INFO)
+app.logger.setLevel(logging.DEBUG)
 
 CART = os.getenv('CART_HOST', 'cart')
 USER = os.getenv('USER_HOST', 'user')
@@ -38,6 +38,7 @@ def exception_handler(err):
 
 @app.route('/health-check', methods=['GET'])
 def health():
+
     return 'OK'
 
 # Prometheus
@@ -148,9 +149,9 @@ publisher = Publisher(app.logger)
 
 if __name__ == "__main__":
     sh = logging.StreamHandler(sys.stdout)
-    sh.setLevel(logging.INFO)
+    sh.setLevel(logging.DEBUG)
     fmt = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     app.logger.info('Payment gateway {}'.format(PAYMENT_GATEWAY))
     port = int(os.getenv("SHOP_PAYMENT_PORT", "8080"))
     app.logger.info('Starting on port {}'.format(port))
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=port, debug=True, use_reloader=False)

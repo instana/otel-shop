@@ -250,8 +250,10 @@ services:
     networks:
       app-network:
     environment:
-      OTEL_EXPORTER_OTLP_ENDPOINT: collector:4317
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://collector:4317
       OTEL_SERVICE_NAME: otel-shop-payment
+      OTEL_TRACES_EXPORTER: otlp_proto_grpc
+      OTEL_RESOURCE_ATTRIBUTES: service.name=otel-shop-payment
     healthcheck:
       test:
         [

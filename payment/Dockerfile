@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.10
 
 EXPOSE 8080
 USER root
@@ -13,7 +13,5 @@ COPY requirements.txt /app/
 RUN pip install -r requirements.txt
 
 COPY *.py /app/
-COPY payment.ini /app/
 
-#CMD ["python", "payment.py"]
-CMD ["opentelemetry-instrument", "uwsgi", "--ini", "payment.ini"]
+CMD ["opentelemetry-instrument", "--log_level", "debug", "python", "app.py"]
