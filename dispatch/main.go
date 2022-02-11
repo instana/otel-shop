@@ -75,7 +75,7 @@ func rabbitConnector(uri string) {
 		handleErr(err, "Failed to create channel")
 
 		// create exchange
-		err = rabbitChan.ExchangeDeclare("robot-shop", "direct", true, false, false, false, nil)
+		err = rabbitChan.ExchangeDeclare("otel-shop", "direct", true, false, false, false, nil)
 		handleErr(err, "Failed to create exchange")
 
 		// create queue
@@ -83,7 +83,7 @@ func rabbitConnector(uri string) {
 		handleErr(err, "Failed to create queue")
 
 		// bind queue to exchange
-		err = rabbitChan.QueueBind(queue.Name, "orders", "robot-shop", false, nil)
+		err = rabbitChan.QueueBind(queue.Name, "orders", "otel-shop", false, nil)
 		handleErr(err, "Failed to bind queue")
 
 		// signal ready
@@ -136,7 +136,7 @@ func createSpan(headers map[string]interface{}, order string) {
 
 	span.SetAttributes(
 		attribute.KeyValue{Key: semconv.MessagingSystemKey, Value: attribute.StringValue("rabbitmq")},
-		attribute.KeyValue{Key: semconv.MessagingDestinationKey, Value: attribute.StringValue("robot-shop")},
+		attribute.KeyValue{Key: semconv.MessagingDestinationKey, Value: attribute.StringValue("otel-shop")},
 		attribute.KeyValue{Key: semconv.MessagingProtocolKey, Value: attribute.StringValue("AMQP")},
 	)
 
