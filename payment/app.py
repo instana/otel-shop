@@ -18,6 +18,7 @@ import prometheus_client
 from prometheus_client import Counter, Histogram
 
 from opentelemetry import trace
+from opentelemetry.propagate import extract, inject
 
 app = Flask(__name__)
 app.logger.setLevel(logging.DEBUG)

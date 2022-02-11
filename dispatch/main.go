@@ -21,7 +21,7 @@ import (
 	"go.opentelemetry.io/otel/sdk/resource"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.7.0"
-	"go.opentelemetry.io/otel/trace"
+	oteltrace "go.opentelemetry.io/otel/trace"
 
 	"github.com/streadway/amqp"
 )
@@ -112,8 +112,10 @@ func getOrderId(order []byte) string {
 func createSpan(headers map[string]interface{}, order string) {
 	tracer := otel.Tracer("dispatcher-tracer")
 
-	ctx, span := tracer.Start(context.Background(), "CollectorExporter-Example")
-	defer span.End()
+	//ctx, span := tracer.Start(context.Background(), "CollectorExporter-Example")
+	//defer span.End()
+
+	//fmt.Fprintln(headers)
 
 	// headers is map[string]interface{}
 	// carrier is map[string]string
@@ -126,18 +128,25 @@ func createSpan(headers map[string]interface{}, order string) {
 	// get the order id
 	log.Printf("order %s\n", order)
 
-	ctx = otel.GetTextMapPropagator().Extract(ctx, carrier)
+	ctx := otel.GetTextMapPropagator().Extract(context.Background(), carrier)
 	log.Println("Creating child span")
-	// create child span
-	ctx, span = tracer.Start(ctx, "getOrder")
+
+	opts := []oteltrace.SpanStartOption{
+		oteltrace.WithSpanKind(oteltrace.SpanKindConsumer),
+	}
+	ctx, span := tracer.Start(ctx, "getOrder", opts...)
+	defer span.End()
 
 	fakeDataCenter := dataCenters[rand.Intn(len(dataCenters))]
-	span.SetAttributes(attribute.KeyValue{Key: "datacenter", Value: attribute.StringValue(fakeDataCenter)})
 
 	span.SetAttributes(
+		semconv.MessagingDestinationKindQueue,
+		attribute.KeyValue{Key: semconv.MessagingRabbitmqRoutingKeyKey, Value: attribute.StringValue("otel-shop")},
 		attribute.KeyValue{Key: semconv.MessagingSystemKey, Value: attribute.StringValue("rabbitmq")},
 		attribute.KeyValue{Key: semconv.MessagingDestinationKey, Value: attribute.StringValue("otel-shop")},
 		attribute.KeyValue{Key: semconv.MessagingProtocolKey, Value: attribute.StringValue("AMQP")},
+
+		attribute.KeyValue{Key: "datacenter", Value: attribute.StringValue(fakeDataCenter)},
 	)
 
 	time.Sleep(time.Duration(42+rand.Int63n(42)) * time.Millisecond)
@@ -148,7 +157,7 @@ func createSpan(headers map[string]interface{}, order string) {
 	processSale(ctx, span)
 }
 
-func processSale(ctx context.Context, parentSpan trace.Span) {
+func processSale(ctx context.Context, parentSpan oteltrace.Span) {
 	tracer := otel.Tracer("dispatcher-tracer")
 	_, span := tracer.Start(ctx, "processSale")
 	defer span.End()

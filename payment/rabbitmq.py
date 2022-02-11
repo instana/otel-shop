@@ -1,6 +1,8 @@
 import json
 import pika
 import os
+from opentelemetry import trace
+from opentelemetry.propagate import extract, inject
 
 class Publisher:
     HOST = os.getenv('AMQP_HOST', 'rabbitmq')
@@ -34,6 +36,8 @@ class Publisher:
 
     #Publish msg, reconnecting if necessary.
     def publish(self, msg, headers):
+        span = trace.get_current_span()
+        inject(headers)
         if self._channel is None or self._channel.is_closed or self._conn is None or self._conn.is_closed:
             self._connect()
         try:
