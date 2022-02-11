@@ -216,7 +216,7 @@ services:
           "-H",
           "X-INSTANA-SYNTHETIC: 1",
           "-f",
-          "http://localhost/_health",
+          "http://localhost/health-check",
         ]
       interval: 10s
       timeout: 10s
@@ -240,7 +240,7 @@ services:
           "-H",
           "X-INSTANA-SYNTHETIC: 1",
           "-f",
-          "http://localhost:8080/health",
+          "http://localhost:8080/health-check",
         ]
       interval: 10s
       timeout: 10s
@@ -270,7 +270,7 @@ services:
           "-H",
           "X-INSTANA-SYNTHETIC: 1",
           "-f",
-          "http://localhost:8080/health",
+          "http://localhost:8080/health-check",
         ]
       interval: 10s
       timeout: 10s

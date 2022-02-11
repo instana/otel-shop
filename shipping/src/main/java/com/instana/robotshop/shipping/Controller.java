@@ -54,7 +54,7 @@ public class Controller {
         return bytesGlobal.size();
     }
 
-    @GetMapping("/health")
+    @GetMapping("/health-check")
     public String health() {
         return "OK";
     }

@@ -36,7 +36,7 @@ def exception_handler(err):
     app.logger.error(str(err))
     return str(err), 500
 
-@app.route('/health', methods=['GET'])
+@app.route('/health-check', methods=['GET'])
 def health():
     return 'OK'
 

@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/_health")
+ * @Route("/health-check")
  */
 class HealthController implements LoggerAwareInterface
 {
