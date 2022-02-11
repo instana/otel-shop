@@ -5,7 +5,7 @@ services:
     build:
       context: load-gen
     environment:
-      HOST: http://front:8080
+      HOST: http://front
     networks:
       app-network:
     depends_on:
