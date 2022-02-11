@@ -1,0 +1,9 @@
+uwsgi
+Flask
+requests
+pika
+prometheus_client
+opentracing
+
+opentelemetry-distro[otlp]
+opentelemetry-instrumentation-flask
