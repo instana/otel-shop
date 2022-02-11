@@ -70,7 +70,11 @@ app.get('/health-check', (req, res) => {
     };
 
     const currentSpan = api.trace.getSpan(api.context.active());
-    currentSpan.setAttribute('custom.sdk.tags.datacenter', dcs[Math.floor(Math.random() * dcs.length)]);
+    currentSpan.setAttribute('http.request.header.x_instana_synthetic', 1);
+
+    if (!stat.redis) {
+        return res.status(500).json(stat);
+    }
 
     res.json(stat);
 });

@@ -63,6 +63,13 @@ app.get('/health-check', (req, res) => {
         mongo: mongoConnected
     };
 
+    const currentSpan = api.trace.getSpan(api.context.active());
+    currentSpan.setAttribute('http.request.header.x_instana_synthetic', 1);
+
+    if (!stat.mongo) {
+        return res.status(500).json(stat);
+    }
+
     res.json(stat);
 });
 
