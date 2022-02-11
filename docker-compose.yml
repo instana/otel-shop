@@ -274,7 +274,7 @@ services:
   shipping:
     build:
       context: shipping
-    image: ${REPOSITORY}-ratings:${PROJECT_VERSION}
+    image: ${REPOSITORY}-shipping:${PROJECT_VERSION}
     depends_on:
       - mysql
     networks:
