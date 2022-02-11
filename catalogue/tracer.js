@@ -17,11 +17,7 @@ module.exports = (serviceName) => {
   });
 
   const otlpExporter = new OTLPTraceExporter({
-    // todo: switch to environment smh?
-    url: 'collector:4317',
-
-    // optional - collection of custom headers to be sent with each request, empty by default
-    headers: {},
+    url: process.env.OTEL_EXPORTER_OTLP_ENDPOINT
   });
 
   provider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));

@@ -79,7 +79,7 @@ class Kernel extends BaseKernel implements EventSubscriberInterface
         $c->loadFromExtension('otel_sdk', [
             'resource' => [
                 'attributes' => [
-                    'service.name' => "OtelBundle Ratings app",
+                    'service.name' => getenv('OTEL_SERVICE_NAME'),
                 ]
             ],
             'trace' => [
@@ -87,7 +87,7 @@ class Kernel extends BaseKernel implements EventSubscriberInterface
                 'exporters' => [
                     'otlpgrpc' => [
                         'type' => 'otlpgrpc',
-                        'url' => 'collector:4317',
+                        'url' => getenv('OTEL_EXPORTER_OTLP_ENDPOINT'),
                     ]
                 ]
             ],

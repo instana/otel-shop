@@ -76,7 +76,7 @@ services:
       app-network:
     environment:
       OTEL_EXPORTER_OTLP_ENDPOINT: collector:4317
-      OTEL_SERVICE_NAME: dispatch
+      OTEL_SERVICE_NAME: otel-shop-dispatch
     logging:
       <<: *logging
 
@@ -90,7 +90,8 @@ services:
       - user
       - web
     environment:
-      OTEL_SERVICE_NAME: front
+      OTEL_EXPORTER_OTLP_ENDPOINT: collector:4317
+      OTEL_SERVICE_NAME: otel-shop-front
     volumes:
       - ./front/conf/nginx.conf:/etc/nginx/nginx.conf
       - ./front/conf/otel-nginx.toml:/conf/otel-nginx.toml
@@ -102,13 +103,27 @@ services:
       - /usr/sbin/nginx
       - -g
       - daemon off;
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "curl",
+          "-H",
+          "X-INSTANA-SYNTHETIC: 1",
+          "-f",
+          "http://localhost/health-check",
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 3
 
   web:
     image: ${REPOSITORY}-web:${PROJECT_VERSION}
     build:
       context: web
     environment:
-      OTEL_SERVICE_NAME: web
+      OTEL_EXPORTER_OTLP_ENDPOINT: collector:4317
+      OTEL_SERVICE_NAME: otel-shop-web
     volumes:
       - ./web/conf/opentelemetry.conf:/etc/apache2/mods-available/opentelemetry.conf
       - ./web/html:/var/www/html
@@ -124,7 +139,8 @@ services:
     networks:
       app-network:
     environment:
-      OTEL_SERVICE_NAME: cart
+      OTEL_EXPORTER_OTLP_ENDPOINT: collector:4317
+      OTEL_SERVICE_NAME: otel-shop-cart
     healthcheck:
       test:
         [
@@ -150,7 +166,8 @@ services:
     networks:
       app-network:
     environment:
-      OTEL_SERVICE_NAME: catalogue
+      OTEL_EXPORTER_OTLP_ENDPOINT: collector:4317
+      OTEL_SERVICE_NAME: otel-shop-catalogue
     healthcheck:
       test:
         [
@@ -177,7 +194,7 @@ services:
     networks:
       app-network:
     environment:
-      OTEL_SERVICE_NAME: cart
+      OTEL_SERVICE_NAME: otel-shop-user
     healthcheck:
       test:
         [
@@ -203,7 +220,7 @@ services:
       OTEL_EXPORTER_OTLP_ENDPOINT: collector:4317
       OTEL_PROPAGATORS: w3c
       OTEL_EXPORTER_OTLP_PROTOCOL: grpc
-      OTEL_SERVICE_NAME: ratings
+      OTEL_SERVICE_NAME: otel-shop-ratings
     networks:
       app-network:
     depends_on:
@@ -232,6 +249,9 @@ services:
       - rabbitmq
     networks:
       app-network:
+    environment:
+      OTEL_EXPORTER_OTLP_ENDPOINT: collector:4317
+      OTEL_SERVICE_NAME: otel-shop-payment
     healthcheck:
       test:
         [
@@ -261,7 +281,7 @@ services:
       app-network:
     environment:
       OTEL_EXPORTER_OTLP_ENDPOINT: collector:4317
-      OTEL_SERVICE_NAME: shipping
+      OTEL_SERVICE_NAME: otel-shop-shipping
     healthcheck:
       test:
         [

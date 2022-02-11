@@ -16,4 +16,4 @@ schedule_delay_millis = 5000
 max_export_batch_size = 512
 
 [service]
-name = "nginx-front"
+name = "otel-shop-nginx-front"

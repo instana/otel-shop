@@ -30,4 +30,3 @@ COPY --from=build /opt/shipping/target/shipping-1.0.jar shipping.jar
 COPY --from=build /opt/shipping/opentelemetry-javaagent.jar opentelemetry-javaagent.jar
 
 CMD [ "java", "-Xmn256m", "-Xmx768m", "-javaagent:opentelemetry-javaagent.jar", "-jar", "shipping.jar" ]
-
