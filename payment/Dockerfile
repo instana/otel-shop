@@ -4,7 +4,7 @@ EXPOSE 8080
 USER root
 
 ENV INSTANA_SERVICE_NAME=payment
-ENV OTEL_SERVICE_NAME=payment
+ENV OTEL_SERVICE_NAME=otel-shop-payment
 
 WORKDIR /app
 
