@@ -26,6 +26,8 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         # agent networking access
         env:
+          - name: INSTANA_DISABLE_AUTO_INSTR
+            value: '1'
           - name: AMQP_HOST
             value: {{ .Release.Name }}-rabbitmq
           - name: CART_HOST
@@ -37,7 +39,7 @@ spec:
               fieldRef:
                 fieldPath: status.hostIP
           - name: OTEL_EXPORTER_OTLP_ENDPOINT
-            value: "$(INSTANA_AGENT_HOST):4317"
+            value: "http://$(INSTANA_AGENT_HOST):4317"
           - name: OTEL_SERVICE_NAME
             value: {{ .Release.Name }}-payment
           {{- if .Values.payment.gateway }}

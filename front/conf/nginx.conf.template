@@ -49,6 +49,8 @@ http {
       opentelemetry_propagate;
       opentelemetry_capture_headers on;
 
+      opentelemetry_attribute "http.route" "/api/catalogue/";
+
       proxy_pass http://catalogue/;
     }
 
@@ -56,6 +58,8 @@ http {
       opentelemetry_operation_name user_backend;
       opentelemetry_propagate;
       opentelemetry_capture_headers on;
+
+      opentelemetry_attribute "http.route" "/api/user/";
 
       proxy_pass http://user/;
     }
@@ -65,6 +69,8 @@ http {
       opentelemetry_propagate;
       opentelemetry_capture_headers on;
 
+      opentelemetry_attribute "http.route" "/api/cart/";
+
       proxy_pass http://cart/;
     }
 
@@ -72,6 +78,8 @@ http {
       opentelemetry_operation_name shipping_backend;
       opentelemetry_propagate;
       opentelemetry_capture_headers on;
+
+      opentelemetry_attribute "http.route" "/api/shipping/";
 
       proxy_pass http://shipping/;
     }
@@ -81,6 +89,8 @@ http {
       opentelemetry_propagate;
       opentelemetry_capture_headers on;
 
+      opentelemetry_attribute "http.route" "/api/payment/";
+
       proxy_pass http://payment/;
     }
 
@@ -88,6 +98,8 @@ http {
       opentelemetry_operation_name ratings_backend;
       opentelemetry_propagate;
       opentelemetry_capture_headers on;
+
+      opentelemetry_attribute "http.route" "/api/ratings/";
 
       proxy_pass http://ratings/;
     }
