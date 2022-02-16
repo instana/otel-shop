@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-web
+  labels:
+    service: {{ .Release.Name }}-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: {{ .Release.Name }}-web
+  template:
+    metadata:
+      labels:
+        service: {{ .Release.Name }}-web
+    spec:
+      {{ if .Values.psp.enabled }}
+      serviceAccountName: {{ .Release.Name }}
+      {{ end }}
+      containers:
+      - name: {{ .Release.Name }}-web
+        image: {{ .Values.image.repo }}/{{ .Values.image.prefix }}-web:{{ .Values.image.version }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        env:
+        - name: INSTANA_AGENT_HOST
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        - name: OTEL_EXPORTER_OTLP_ENDPOINT
+          value: "$(INSTANA_AGENT_HOST):4317"
+        - name: OTEL_SERVICE_NAME
+          value: {{ .Release.Name }}-web
+        {{- if .Values.eum.key }}
+        - name: INSTANA_EUM_KEY
+          value: {{ .Values.eum.key }}
+        - name: INSTANA_EUM_REPORTING_URL
+          value: {{ .Values.eum.url }}
+        {{- end}}
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            cpu: 200m
+            memory: 100Mi
+          requests:
+            cpu: 100m
+            memory: 50Mi
+      restartPolicy: Always

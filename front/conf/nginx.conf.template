@@ -1,0 +1,110 @@
+load_module /usr/share/nginx/modules/otel_ngx_module.so;
+
+events {}
+
+http {
+  opentelemetry_config /conf/otel-nginx.toml;
+  access_log stderr;
+  error_log stderr debug;
+
+  upstream web {
+    server ${WEB_HOST}:80;
+  }
+
+  upstream catalogue {
+    server ${CATALOGUE_HOST}:8080;
+  }
+
+  upstream cart {
+    server ${CART_HOST}:8080;
+  }
+
+  upstream payment {
+    server ${PAYMENT_HOST}:8080;
+  }
+
+  upstream shipping {
+    server ${SHIPPING_HOST}:8080;
+  }
+
+  upstream ratings {
+    server ${RATINGS_HOST}:80;
+  }
+
+  upstream user {
+    server ${USER_HOST}:8080;
+  }
+
+  server {
+    listen 80;
+    server_name front;
+
+    root /var/www/html;
+
+    opentelemetry_attribute "test.attrib.global" "global";
+    opentelemetry_attribute "test.attrib.custom" "global-custom";
+
+    location /api/catalogue/ {
+      opentelemetry_operation_name catalogue_backend;
+      opentelemetry_propagate;
+      opentelemetry_capture_headers on;
+
+      proxy_pass http://catalogue/;
+    }
+
+    location /api/user/ {
+      opentelemetry_operation_name user_backend;
+      opentelemetry_propagate;
+      opentelemetry_capture_headers on;
+
+      proxy_pass http://user/;
+    }
+
+    location /api/cart/ {
+      opentelemetry_operation_name cart_backend;
+      opentelemetry_propagate;
+      opentelemetry_capture_headers on;
+
+      proxy_pass http://cart/;
+    }
+
+    location /api/shipping/ {
+      opentelemetry_operation_name shipping_backend;
+      opentelemetry_propagate;
+      opentelemetry_capture_headers on;
+
+      proxy_pass http://shipping/;
+    }
+
+    location /api/payment/ {
+      opentelemetry_operation_name payment_backend;
+      opentelemetry_propagate;
+      opentelemetry_capture_headers on;
+
+      proxy_pass http://payment/;
+    }
+
+    location /api/ratings/ {
+      opentelemetry_operation_name ratings_backend;
+      opentelemetry_propagate;
+      opentelemetry_capture_headers on;
+
+      proxy_pass http://ratings/;
+    }
+
+    location ^~ / {
+      opentelemetry_operation_name web_backend;
+      opentelemetry_propagate;
+      opentelemetry_capture_headers on;
+
+      proxy_pass http://web/;
+    }
+
+    location = /health-check {
+      opentelemetry_attribute "http.request.header.x_instana_synthetic" "1";
+      opentelemetry_capture_headers on;
+
+      return 200 "ok\n";
+    }
+  }
+}

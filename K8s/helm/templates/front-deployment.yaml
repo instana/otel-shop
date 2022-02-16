@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-front
+  labels:
+    service: {{ .Release.Name }}-front
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: {{ .Release.Name }}-front
+  template:
+    metadata:
+      labels:
+        service: {{ .Release.Name }}-front
+    spec:
+      {{ if .Values.psp.enabled }}
+      serviceAccountName: {{ .Release.Name }}
+      {{ end }}
+      containers:
+      - name: {{ .Release.Name }}-front
+        image: {{ .Values.image.repo }}/{{ .Values.image.prefix }}-front:{{ .Values.image.version }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        env:
+        - name: WEB_HOST
+          value: {{ .Release.Name }}-web
+        - name: CATALOGUE_HOST
+          value: {{ .Release.Name }}-catalogue
+        - name: CART_HOST
+          value: {{ .Release.Name }}-cart
+        - name: PAYMENT_HOST
+          value: {{ .Release.Name }}-payment
+        - name: SHIPPING_HOST
+          value: {{ .Release.Name }}-shipping
+        - name: RATINGS_HOST
+          value: {{ .Release.Name }}-ratings
+        - name: USER_HOST
+          value: {{ .Release.Name }}-user
+        - name: INSTANA_AGENT_HOST
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        - name: OTEL_EXPORTER_OTLP_ENDPOINT
+          value: "$(INSTANA_AGENT_HOST):4317"
+        - name: OTEL_SERVICE_NAME
+          value: {{ .Release.Name }}-front
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: 200m
+            memory: 100Mi
+          requests:
+            cpu: 100m
+            memory: 50Mi
+        readinessProbe:
+          httpGet:
+            path: /health-check
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          failureThreshold: 30
+          successThreshold: 1
+      restartPolicy: Always

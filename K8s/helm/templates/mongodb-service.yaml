@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: {{ .Release.Name }}-mongodb
+  name: {{ .Release.Name }}-mongodb
+spec:
+  ports:
+  - name: mongo
+    port: 27017
+    targetPort: 27017
+  selector:
+    service: {{ .Release.Name }}-mongodb

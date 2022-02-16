@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-payment
+  labels:
+    service: {{ .Release.Name }}-payment
+    stage: prod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: {{ .Release.Name }}-payment
+      stage: prod
+  template:
+    metadata:
+      labels:
+        service: {{ .Release.Name }}-payment
+        stage: prod
+    spec:
+      {{ if .Values.psp.enabled }}
+      serviceAccountName: {{ .Release.Name }}
+      {{ end }}
+      containers:
+      - name: {{ .Release.Name }}-payment
+        image: {{ .Values.image.repo }}/{{ .Values.image.prefix }}-payment:{{ .Values.image.version }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        # agent networking access
+        env:
+          - name: AMQP_HOST
+            value: {{ .Release.Name }}-rabbitmq
+          - name: CART_HOST
+            value: {{ .Release.Name }}-cart
+          - name: USER_HOST
+            value: {{ .Release.Name }}-user
+          - name: INSTANA_AGENT_HOST
+            valueFrom:
+              fieldRef:
+                fieldPath: status.hostIP
+          - name: OTEL_EXPORTER_OTLP_ENDPOINT
+            value: "$(INSTANA_AGENT_HOST):4317"
+          - name: OTEL_SERVICE_NAME
+            value: {{ .Release.Name }}-payment
+          {{- if .Values.payment.gateway }}
+          - name: PAYMENT_GATEWAY
+            value: {{ .Values.payment.gateway }}
+          {{- end }}
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            cpu: 200m
+            memory: 100Mi
+          requests:
+            cpu: 100m
+            memory: 50Mi
+      restartPolicy: Always

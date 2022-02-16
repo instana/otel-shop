@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-dispatch
+  labels:
+    service: {{ .Release.Name }}-dispatch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: {{ .Release.Name }}-dispatch
+  template:
+    metadata:
+      labels:
+        service: {{ .Release.Name }}-dispatch
+    spec:
+      {{ if .Values.psp.enabled }}
+      serviceAccountName: {{ .Release.Name }}
+      {{ end }}
+      containers:
+      - name: {{ .Release.Name }}-dispatch
+        image: {{ .Values.image.repo }}/{{ .Values.image.prefix }}-dispatch:{{ .Values.image.version }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        env:
+        - name: AMQP_HOST
+          value: {{ .Release.Name }}-rabbitmq
+        - name: INSTANA_AGENT_HOST
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        - name: OTEL_EXPORTER_OTLP_ENDPOINT
+          value: "$(INSTANA_AGENT_HOST):4317"
+        - name: OTEL_SERVICE_NAME
+          value: {{ .Release.Name }}-dispatch
+        resources:
+          limits:
+            cpu: 200m
+            memory: 100Mi
+          requests:
+            cpu: 100m
+            memory: 50Mi
+      restartPolicy: Always

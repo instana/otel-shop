@@ -1,0 +1,37 @@
+{{ if .Values.load.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-load
+  labels:
+    service: {{ .Release.Name }}-load
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: {{ .Release.Name }}-load
+  template:
+    metadata:
+      labels:
+        service: {{ .Release.Name }}-load
+    spec:
+      containers:
+      - name: {{ .Release.Name }}-load
+        env:
+          - name: HOST
+            value: "http://{{ .Release.Name }}-front/"
+          - name: NUM_CLIENTS
+            value: "15"
+          - name: SILENT
+            value: "1"
+          - name: ERROR
+            value: "1"
+        image: {{ .Values.image.repo }}/{{ .Values.image.prefix }}-load:{{ .Values.image.version }}
+        resources:
+          limits:
+            cpu: 200m
+            memory: 200Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi
+{{ end }}

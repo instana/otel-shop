@@ -12,8 +12,14 @@ RUN curl -o /etc/apt/trusted.gpg.d/nginx_signing.asc https://nginx.org/keys/ngin
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive TZ="Europe/London" \
     apt-get install --no-install-recommends --no-install-suggests -y \
-    nginx
+    nginx gettext-base
 
+ADD conf/nginx.conf.template /etc/nginx/nginx.conf.template
+ADD conf/otel-nginx.toml /conf/otel-nginx.toml
 ADD otel_ngx_module.so /usr/share/nginx/modules/otel_ngx_module.so
+
+COPY docker-entrypoint.sh /
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
 
 CMD ["/usr/sbin/nginx", "-g", "daemon off;"]

@@ -1,0 +1,39 @@
+# Registry and rpository for Docker images
+# Default is docker/instanacedricziel/image:latest
+image:
+  repo: instanacedricziel
+  prefix: otel-shop
+  version: 4
+  pullPolicy: Always
+
+# Alternative payment gateway URL
+# Default is https://www.paypal.com
+payment:
+  gateway: null
+  #gateway: https://www.worldpay.com
+
+# EUM configuration
+# Provide your key and set the endpoint
+eum:
+  key: null
+  url: https://eum-eu-west-1.instana.io
+  #url: https://eum-us-west-2.instana.io
+
+# Pod Security Policy
+psp:
+  enabled: false
+
+# For the mini ones minikube, minishift set to true
+nodeport: false
+
+# "special" Openshift. Set to true when deploying to any openshift flavour
+openshift: false
+
+# Storage class to use with redis statefulset.
+redis:
+  storageClassName: standard
+
+ocCreateRoute: false
+
+load:
+  enabled: true

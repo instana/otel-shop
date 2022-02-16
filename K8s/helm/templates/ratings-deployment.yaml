@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-ratings
+  labels:
+    service: {{ .Release.Name }}-ratings
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: {{ .Release.Name }}-ratings
+  template:
+    metadata:
+      labels:
+        service: {{ .Release.Name }}-ratings
+    spec:
+      {{ if .Values.psp.enabled }}
+      serviceAccountName: {{ .Release.Name }}
+      {{ end }}
+      containers:
+      - name: {{ .Release.Name }}-ratings
+        image: {{ .Values.image.repo }}/{{ .Values.image.prefix }}-ratings:{{ .Values.image.version }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        env:
+          - name: CATALOGUE_URL
+            value: http://{{ .Release.Name }}-catalogue:8080
+          - name: PDO_URL
+            value: 'mysql:host={{ .Release.Name }}-mysql;dbname=ratings;charset=utf8mb4'
+          - name: INSTANA_AGENT_HOST
+            valueFrom:
+              fieldRef:
+                fieldPath: status.hostIP
+          - name: OTEL_EXPORTER_OTLP_ENDPOINT
+            value: "$(INSTANA_AGENT_HOST):4317"
+          - name: OTEL_SERVICE_NAME
+            value: {{ .Release.Name }}-ratings
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: 200m
+            memory: 100Mi
+          requests:
+            cpu: 100m
+            memory: 50Mi
+        readinessProbe:
+          httpGet:
+            path: /health-check
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          failureThreshold: 30
+          successThreshold: 1
+      restartPolicy: Always

@@ -90,10 +90,16 @@ services:
       - user
       - web
     environment:
+      WEB_HOST: web
+      CATALOGUE_HOST: catalogue
+      CART_HOST: cart
+      PAYMENT_HOST: payment
+      SHIPPING_HOST: shipping
+      RATINGS_HOST: ratings
+      USER_HOST: user
       OTEL_EXPORTER_OTLP_ENDPOINT: collector:4317
       OTEL_SERVICE_NAME: otel-shop-front
     volumes:
-      - ./front/conf/nginx.conf:/etc/nginx/nginx.conf
       - ./front/conf/otel-nginx.toml:/conf/otel-nginx.toml
     networks:
       app-network:
@@ -282,6 +288,8 @@ services:
     networks:
       app-network:
     environment:
+      CART_ENDPOINT: cart:8080
+      DB_HOST: mysql
       OTEL_EXPORTER_OTLP_ENDPOINT: http://collector:4317
       OTEL_SERVICE_NAME: otel-shop-shipping
       OTEL_TRACES_SAMPLER: always_on

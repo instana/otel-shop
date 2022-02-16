@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-shipping
+  labels:
+    service: {{ .Release.Name }}-shipping
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: {{ .Release.Name }}-shipping
+  template:
+    metadata:
+      labels:
+        service: {{ .Release.Name }}-shipping
+    spec:
+      {{ if .Values.psp.enabled }}
+      serviceAccountName: {{ .Release.Name }}
+      {{ end }}
+      containers:
+      - name: {{ .Release.Name }}-shipping
+        image: {{ .Values.image.repo }}/{{ .Values.image.prefix }}-shipping:{{ .Values.image.version }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        env:
+        - name: INSTANA_AGENT_HOST
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        - name: OTEL_EXPORTER_OTLP_ENDPOINT
+          value: "http://$(INSTANA_AGENT_HOST):4317"
+        - name: OTEL_SERVICE_NAME
+          value: {{ .Release.Name }}-shipping
+        - name: OTEL_TRACES_SAMPLER
+          value: always_on
+        - name: CART_ENDPOINT
+          value: {{ .Release.Name }}-cart:8080
+        - name: DB_HOST
+          value: {{ .Release.Name }}-mysql
+        ports:
+        - containerPort: 8080
+        # it's Java it needs lots of memory
+        resources:
+          limits:
+            cpu: 500m
+            memory: 1000Mi
+          requests:
+            cpu: 100m
+            memory: 500Mi
+        readinessProbe:
+          httpGet:
+            path: /health-check
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          failureThreshold: 30
+          successThreshold: 1
+      restartPolicy: Always

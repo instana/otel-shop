@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-fix
+  labels:
+    service: payment
+    stage: test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: payment
+      stage: test
+  template:
+    metadata:
+      labels:
+        service: payment
+        stage: test
+    spec:
+      containers:
+      - name: payment-fix
+        image: robotshop/rs-payment-fix:latest
+        # agent networking access
+        env:
+          - name: INSTANA_AGENT_HOST
+            valueFrom:
+              fieldRef:
+                fieldPath: status.hostIP
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            cpu: 200m
+            memory: 100Mi
+          requests:
+            cpu: 100m
+            memory: 50Mi
+      restartPolicy: Always

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: {{ .Release.Name }}-mysql
+  name: {{ .Release.Name }}-mysql
+spec:
+  ports:
+  - name: {{ .Release.Name }}-mysql
+    port: 3306
+    targetPort: 3306
+  selector:
+    service: {{ .Release.Name }}-mysql
