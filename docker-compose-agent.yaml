@@ -1,0 +1,30 @@
+version: "3"
+services:
+  agent:
+    image: instana/agent:latest
+    pid: "host"
+    privileged: true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /dev:/dev
+      - /sys:/sys
+      - /var/log:/var/log
+      - ./agent/configuration-otel.yaml:/opt/instana/agent/etc/instana/configuration-otel.yaml
+      - ./agent/configuration-php.yaml:/opt/instana/agent/etc/instana/configuration-php.yaml
+      - ./agent/com.instana.agent.main.sender.File.cfg:/opt/instana/agent/etc/instana/com.instana.agent.main.sender.File.cfg
+      - ./agent/logs:/opt/instana/agent/data/log
+    networks:
+      app-network:
+        aliases:
+          - instana-agent
+          - collector
+    environment:
+      - INSTANA_AGENT_ENDPOINT=${agent_endpoint:?No agent endpoint provided}
+      - INSTANA_AGENT_ENDPOINT_PORT=${agent_endpoint_port:-443}
+      - INSTANA_AGENT_KEY=${agent_key:?No agent key provided}
+      - INSTANA_DOWNLOAD_KEY=${download_key}
+      - INSTANA_AGENT_ZONE=${agent_zone:-otel-test}
+      - INSTANA_MVN_REPOSITORY_FEATURES_PATH=artifactory/features-internal@id=features@snapshots@snapshotsUpdate=always
+      - INSTANA_MVN_REPOSITORY_SHARED_PATH=artifactory/shared@id=shared@snapshots@snapshotsUpdate=always
+    expose:
+      - "42699"
