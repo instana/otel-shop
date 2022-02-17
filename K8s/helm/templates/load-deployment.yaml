@@ -18,6 +18,8 @@ spec:
       containers:
       - name: {{ .Release.Name }}-load
         env:
+          - name: INSTANA_DISABLE_AUTO_INSTR
+            value: '1'
           - name: HOST
             value: "http://{{ .Release.Name }}-front/"
           - name: NUM_CLIENTS

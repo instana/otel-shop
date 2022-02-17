@@ -45,7 +45,7 @@ http {
     opentelemetry_attribute "test.attrib.custom" "global-custom";
 
     location /api/catalogue/ {
-      opentelemetry_operation_name catalogue_backend;
+      opentelemetry_operation_name "$request_method $uri";
       opentelemetry_propagate;
       opentelemetry_capture_headers on;
 
@@ -55,7 +55,7 @@ http {
     }
 
     location /api/user/ {
-      opentelemetry_operation_name user_backend;
+      opentelemetry_operation_name "$request_method $uri";
       opentelemetry_propagate;
       opentelemetry_capture_headers on;
 
@@ -65,7 +65,7 @@ http {
     }
 
     location /api/cart/ {
-      opentelemetry_operation_name cart_backend;
+      opentelemetry_operation_name "$request_method $uri";
       opentelemetry_propagate;
       opentelemetry_capture_headers on;
 
@@ -75,7 +75,7 @@ http {
     }
 
     location /api/shipping/ {
-      opentelemetry_operation_name shipping_backend;
+      opentelemetry_operation_name "$request_method $uri";
       opentelemetry_propagate;
       opentelemetry_capture_headers on;
 
@@ -85,7 +85,7 @@ http {
     }
 
     location /api/payment/ {
-      opentelemetry_operation_name payment_backend;
+      opentelemetry_operation_name "$request_method $uri";
       opentelemetry_propagate;
       opentelemetry_capture_headers on;
 
@@ -95,7 +95,7 @@ http {
     }
 
     location /api/ratings/ {
-      opentelemetry_operation_name ratings_backend;
+      opentelemetry_operation_name "$request_method $uri";
       opentelemetry_propagate;
       opentelemetry_capture_headers on;
 
@@ -105,7 +105,7 @@ http {
     }
 
     location ^~ / {
-      opentelemetry_operation_name web_backend;
+      opentelemetry_operation_name "$request_method $uri";
       opentelemetry_propagate;
       opentelemetry_capture_headers on;
 
