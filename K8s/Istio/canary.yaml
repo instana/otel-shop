@@ -6,7 +6,7 @@ kind: DestinationRule
 metadata:
   name: canary-test
 spec:
-  host: payment.robot-shop.svc.cluster.local
+  host: payment.otel-shop.svc.cluster.local
   subsets:
   - name: production
     labels:
@@ -22,14 +22,14 @@ metadata:
   name: robotshop-canary
 spec:
   hosts:
-  - payment.robot-shop.svc.cluster.local
+  - payment.otel-shop.svc.cluster.local
   http:
   - route:
     - destination:
-        host: payment.robot-shop.svc.cluster.local
+        host: payment.otel-shop.svc.cluster.local
         subset: production
       weight: 99
     - destination:
-        host: payment.robot-shop.svc.cluster.local
+        host: payment.otel-shop.svc.cluster.local
         subset: canary
       weight: 1

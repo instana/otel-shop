@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ResourceQuota
 metadata:
-  name: robot-shop-quota
+  name: otel-shop-quota
 spec:
   hard:
     limits.cpu: 4

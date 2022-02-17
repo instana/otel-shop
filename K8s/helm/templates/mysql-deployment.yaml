@@ -15,7 +15,7 @@ spec:
         service: {{ .Release.Name }}-mysql
     spec:
       {{ if .Values.psp.enabled }}
-      serviceAccountName: robot-shop
+      serviceAccountName: {{ .Release.Name }}
       {{ end }}
       containers:
       - name: {{ .Release.Name }}-mysql
