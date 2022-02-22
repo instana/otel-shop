@@ -19,4 +19,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build service ${{matrix.service}}
-        run: docker-compose -f docker-compose.yaml -f docker-compose-agent.yaml -f docker-compose-load.yaml build ${{matrix.service}}
+        run: docker-compose -f docker-compose.yaml -f docker-compose-load.yaml build ${{matrix.service}}
