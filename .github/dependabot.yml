@@ -68,3 +68,7 @@ updates:
     directory: "/web"
     schedule:
       interval: "daily"
+  - package-ecosystem: "maven"
+    directory: "/shipping"
+    schedule:
+      interval: "daily"
