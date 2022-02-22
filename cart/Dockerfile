@@ -6,6 +6,7 @@ EXPOSE 8080
 
 WORKDIR /opt/server
 
+COPY package-lock.json /opt/server/
 COPY package.json /opt/server/
 
 RUN npm install

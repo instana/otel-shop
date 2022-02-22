@@ -392,16 +392,18 @@ function saveCart(id, cart) {
     });
 }
 
-// connect to Redis
-var redisClient = redis.createClient({
-    host: redisHost
+const redisClient = redis.createClient({
+    host: redisHost,
+    legacyMode: true
 });
 
 redisClient.on('error', (e) => {
     logger.error('Redis ERROR', e);
 });
+
 redisClient.on('ready', (r) => {
     logger.info('Redis READY', r);
+
     redisConnected = true;
 });
 
