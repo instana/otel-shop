@@ -19,7 +19,7 @@
     "express": "^4.15.4",
     "express-pino-logger": "^7.0.0",
     "mongodb": "^3.5.3",
-    "pino": "^5.10.8",
+    "pino": "^7.8.0",
     "pino-pretty": "^7.5.1"
   }
 }
