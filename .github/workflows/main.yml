@@ -33,18 +33,48 @@ jobs:
         DOCKER_BUILDKIT: 1
     steps:
       - uses: actions/checkout@v2
+
+      - name: Bump version
+        uses: remorses/bump-version@js
+        with:
+          version_file: ./VERSION
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get Version
+        id: version
+        run: |
+          echo ::set-output name=version_tag::$(cat ./VERSION)
+
       - run: cp .env.template .env
         shell: bash
+
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
         if: github.ref == 'refs/heads/master'
+
       - name: Pull service ${{matrix.service}}
         run: docker-compose -f docker-compose.yaml -f docker-compose-load.yaml pull --ignore-pull-failures ${{matrix.service}}
+
       - name: Build service ${{matrix.service}}
         run: docker-compose -f docker-compose.yaml -f docker-compose-load.yaml build ${{matrix.service}}
+
+      - name: Push changes to master
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tags: true
+        if: github.ref == 'refs/heads/master'
+
       - name: Push service ${{matrix.service}}
         run: docker-compose -f docker-compose.yaml -f docker-compose-load.yaml push ${{matrix.service}}
+        if: github.ref == 'refs/heads/master'
+
+      - uses: actions-ecosystem/action-push-tag@v1
+        with:
+          tag: ${{ steps.version.outputs.version_tag }}
+          message: '${{ steps.version.outputs.version_tag }}: Automatic release'
         if: github.ref == 'refs/heads/master'
