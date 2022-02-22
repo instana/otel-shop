@@ -19,7 +19,7 @@
         "symfony/http-foundation": "^5.2",
         "symfony/http-kernel": "^5.2",
         "symfony/monolog-bundle": "^3.5",
-        "symfony/options-resolver": "^5.2",
+        "symfony/options-resolver": "^6.0",
         "symfony/routing": "^5.2"
     },
     "autoload": {
