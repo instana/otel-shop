@@ -18,5 +18,7 @@ jobs:
         SERVICE: ${{matrix.service}}
     steps:
       - uses: actions/checkout@v2
+      - run: cp .env.template .env
+        shell: bash
       - name: Build service ${{matrix.service}}
         run: docker-compose -f docker-compose.yaml -f docker-compose-load.yaml build ${{matrix.service}}
