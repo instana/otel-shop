@@ -3,7 +3,7 @@
 image:
   repo: instanacedricziel
   prefix: otel-shop
-  version: 7
+  version: 8
   pullPolicy: Always
 
 # Alternative payment gateway URL
