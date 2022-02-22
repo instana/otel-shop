@@ -17,7 +17,7 @@ updates:
     schedule:
       interval: "daily"
   - package-ecosystem: "composer"
-    directory: "/ratings"
+    directory: "/ratings/html"
     schedule:
       interval: "daily"
   - package-ecosystem: "docker"
