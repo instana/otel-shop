@@ -1,0 +1,22 @@
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "npm"
+    directory: "/catalogue"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "npm"
+    directory: "/cart"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "npm"
+    directory: "/user"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "composer"
+    directory: "/ratings"
+    schedule:
+      interval: "daily"
