@@ -12,7 +12,7 @@
         "open-telemetry/opentelemetry": "^0.0.4",
         "open-telemetry/opentelemetry-php-contrib": "dev-main",
         "psr/log": "*",
-        "symfony/config": "^5.2",
+        "symfony/config": "^6.0",
         "symfony/dependency-injection": "^5.2",
         "symfony/framework-bundle": "^5.2",
         "symfony/http-client": "^5.2",
