@@ -20,3 +20,51 @@ updates:
     directory: "/ratings"
     schedule:
       interval: "daily"
+  - package-ecosystem: "docker"
+    directory: "/cart"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "docker"
+    directory: "/catalogue"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "docker"
+    directory: "/dispatch"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "docker"
+    directory: "/front"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "docker"
+    directory: "/load-gen"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "docker"
+    directory: "/mongo"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "docker"
+    directory: "/mysql"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "docker"
+    directory: "/payment"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "docker"
+    directory: "/ratings"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "docker"
+    directory: "/shipping"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "docker"
+    directory: "/user"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "docker"
+    directory: "/web"
+    schedule:
+      interval: "daily"
