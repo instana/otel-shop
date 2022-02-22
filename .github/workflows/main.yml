@@ -1,0 +1,22 @@
+name: Build
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+  workflow_dispatch:
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service: [ratings]
+    env:
+        SERVICE: ${{matrix.service}}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build service ${{matrix.service}}
+        run: docker-compose -f docker-compose.yaml -f docker-compose-agent.yaml -f docker-compose-load.yaml build ${{matrix.service}}
