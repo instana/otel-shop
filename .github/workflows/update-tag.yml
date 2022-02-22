@@ -1,4 +1,4 @@
-name: Update tag
+name: Update Release
 
 on:
   push:
@@ -11,16 +11,20 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: actions-ecosystem/action-get-latest-tag@v1
-        id: get-latest-tag
-
-      - uses: actions-ecosystem/action-bump-semver@v1
-        id: bump-semver
+      - name: Bump version
+        uses: remorses/bump-version@js
         with:
-          current_version: ${{ steps.get-latest-tag.outputs.tag }}
-          level: patch
+          version_file: ./VERSION
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions-ecosystem/action-push-tag@v1
+      - name: Get Version
+        id: version
+        run: |
+          echo ::set-output name=version_tag::$(cat ./VERSION)
+
+      - name: Push changes to master
+        uses: ad-m/github-push-action@master
         with:
-          tag: ${{ steps.bump-semver.outputs.new_version }}
-          message: '${{ steps.bump-semver.outputs.new_version }}: Automated version bump'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tags: true

@@ -10,6 +10,7 @@
 	</parent>
 	<groupId>com.instana</groupId>
 	<artifactId>shipping</artifactId>
+	<!-- [bump] -->
 	<version>1.0</version>
 	<name>shipping service</name>
 	<description>Shipping calculations</description>
