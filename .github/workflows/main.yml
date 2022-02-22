@@ -13,7 +13,21 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        service: [ratings]
+        service:
+          - mongodb
+          - redis
+          - rabbitmq
+          - mysql
+          - dispatch
+          - front
+          - web
+          - cart
+          - catalogue
+          - user
+          - payment
+          - shipping
+          - ratings
+          - load
     env:
         SERVICE: ${{matrix.service}}
     steps:
