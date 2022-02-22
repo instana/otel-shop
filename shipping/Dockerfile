@@ -26,7 +26,8 @@ WORKDIR /opt/shipping
 ENV CART_ENDPOINT=cart:8080
 ENV DB_HOST=mysql
 
-COPY --from=build /opt/shipping/target/shipping-1.0.jar shipping.jar
+# [bump]
+COPY --from=build /opt/shipping/target/shipping-1.0.0.jar shipping.jar
 COPY --from=build /opt/shipping/opentelemetry-javaagent-all.jar opentelemetry-javaagent-all.jar
 
 CMD [ "java", "-Xmn256m", "-Xmx768m", "-javaagent:opentelemetry-javaagent-all.jar", "-jar", "shipping.jar" ]
