@@ -1,8 +1,7 @@
-# [bump]
 version: "3"
 services:
   load:
-    image: ${REPOSITORY}-load:${PROJECT_VERSION:0.1.44}
+    image: ${REPOSITORY}-load:${PROJECT_VERSION}
     build:
       context: load-gen
     environment:
