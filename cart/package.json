@@ -1,7 +1,7 @@
 {
   "name": "cart",
   "_": "[bump]",
-  "version": "0.1.36",
+  "version": "0.1.37",
   "description": "cart REST API",
   "main": "server.js",
   "scripts": {
