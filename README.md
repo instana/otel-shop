@@ -54,6 +54,14 @@ helm install --create-namespace instana-agent --namespace instana-agent \
 
 Operator:
 
+**Note**: You need `cert-manager` in your cluster. You can install it as follows, if you dont have it:
+
+```shell
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.7.1/cert-manager.yaml
+```
+
+Install the Instana Agent operator
+
 ```shell
 # Install the operator
 kubectl apply -f https://github.com/instana/instana-agent-operator/releases/latest/download/instana-agent-operator.yaml
