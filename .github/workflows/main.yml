@@ -76,7 +76,7 @@ jobs:
       - name: Fetch updated source through SHA from bump
         uses: actions/checkout@v2
         with:
-          ref: ${{ needs.bump.outputs.SHA }}
+          ref: ${{ needs.bump.outputs.bumped_sha }}
           fetch-depth: 0
         if: github.ref == 'refs/heads/master'
 
