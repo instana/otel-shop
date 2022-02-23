@@ -16,7 +16,7 @@
     "@opentelemetry/sdk-metrics-base": "^0.27.0",
     "@opentelemetry/sdk-node": "^0.27.0",
     "body-parser": "^1.18.1",
-    "express": "^4.15.4",
+    "express": "^4.17.3",
     "express-pino-logger": "^7.0.0",
     "mongodb": "^4.4.0",
     "pino": "^7.8.0",
