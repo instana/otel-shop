@@ -14,6 +14,7 @@ jobs:
     name: Bump version
     outputs:
       bumped_sha: ${{ steps.sha.outputs.SHA }}
+      new_version: ${{ steps.version.outputs.VERSION }}
     steps:
       - uses: actions/checkout@v2
 
@@ -28,7 +29,7 @@ jobs:
       - name: Get Version
         id: version
         run: |
-          echo ::set-output name=version_tag::$(cat ./VERSION)
+          echo ::set-output name=VERSION::$(cat ./VERSION)
         if: github.ref == 'refs/heads/master'
 
       - name: Push changes to master
@@ -100,8 +101,18 @@ jobs:
         run: docker-compose -f docker-compose.yaml -f docker-compose-load.yaml push ${{matrix.service}}
         if: github.ref == 'refs/heads/master'
 
+  tag_release:
+    needs:
+      - bump
+      - build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ needs.bump.outputs.SHA }}
+          fetch-depth: 0
       - uses: actions-ecosystem/action-push-tag@v1
         with:
-          tag: ${{ steps.version.outputs.version_tag }}
-          message: '${{ steps.version.outputs.version_tag }}: Automatic release'
-        if: github.ref == 'refs/heads/master'
+          tag: ${{ needs.bump.outputs.new_version }}
+          message: '${{ needs.bump.outputs.new_version }}: Automatic release'
+    if: github.ref == 'refs/heads/master'
