@@ -30,8 +30,8 @@ spec:
             value: "$(INSTANA_AGENT_HOST):4317"
           - name: OTEL_SERVICE_NAME
             value: {{ .Release.Name }}-catalogue
-          - name: REDIS_HOST
-            value: {{ .Release.Name }}-redis
+          - name: REDIS_URL
+            value: redis://{{ .Release.Name }}-redis
           - name: CATALOGUE_HOST
             value: {{ .Release.Name }}-catalogue
         ports:

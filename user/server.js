@@ -5,8 +5,8 @@ const mongoObjectID = require('mongodb').ObjectID;
 const redis = require('redis');
 const bodyParser = require('body-parser');
 const express = require('express');
-const pino = require('pino');
-const expPino = require('express-pino-logger');
+const logger = require('pino')()
+const pinoHttp = require('pino-http')()
 const { countAllRequests } = require("./monitoring");
 
 // MongoDB
@@ -15,20 +15,9 @@ var usersCollection;
 var ordersCollection;
 var mongoConnected = false;
 
-const logger = pino({
-    level: 'info',
-    prettyPrint: false,
-    useLevelLabels: true
-});
-
-const expLogger = expPino({
-    logger: logger
-
-});
-
 const app = express();
 
-app.use(expLogger);
+app.use(pinoHttp);
 
 app.use(countAllRequests());
 
@@ -263,9 +252,11 @@ app.get('/history/:id', (req, res) => {
 
 // connect to Redis
 var redisClient = redis.createClient({
-    host: process.env.REDIS_HOST || 'redis',
+    url: process.env.REDIS_URL || 'redis://redis:6379',
     legacyMode: true
 });
+
+redisClient.connect();
 
 redisClient.on('error', (e) => {
     logger.error('Redis ERROR', e);
