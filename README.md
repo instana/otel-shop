@@ -88,6 +88,14 @@ spec:
           enabled: false
 ```
 
+#### Install otel-shop in your cluster
+
+```shell
+helm install otel-shop otel-shop \
+  --create-namespace \
+  --namespace otel-shop \
+  --repo https://instana.github.io/otel-shop/
+```
 
 ## License
 

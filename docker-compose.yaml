@@ -1,9 +1,10 @@
+# [bump]
 version: "3"
 services:
   mongodb:
     build:
       context: mongo
-    image: ${REPOSITORY}-mongodb:${PROJECT_VERSION}
+    image: ${REPOSITORY}-mongodb:${PROJECT_VERSION:0.1.44}
     networks:
       app-network:
     logging: &logging
@@ -29,7 +30,7 @@ services:
   mysql:
     build:
       context: mysql
-    image: ${REPOSITORY}-mysql-db:${PROJECT_VERSION}
+    image: ${REPOSITORY}-mysql-db:${PROJECT_VERSION:0.1.44}
     cap_add:
       - NET_ADMIN
     networks:
@@ -40,7 +41,7 @@ services:
   dispatch:
     build:
       context: dispatch
-    image: ${REPOSITORY}-dispatch:${PROJECT_VERSION}
+    image: ${REPOSITORY}-dispatch:${PROJECT_VERSION:0.1.44}
     depends_on:
       - rabbitmq
     networks:
@@ -52,7 +53,7 @@ services:
       <<: *logging
 
   front:
-    image: ${REPOSITORY}-front:${PROJECT_VERSION}
+    image: ${REPOSITORY}-front:${PROJECT_VERSION:0.1.44}
     build:
       context: front
     depends_on:
@@ -95,7 +96,7 @@ services:
       retries: 3
 
   web:
-    image: ${REPOSITORY}-web:${PROJECT_VERSION}
+    image: ${REPOSITORY}-web:${PROJECT_VERSION:0.1.44}
     build:
       context: web
     environment:
@@ -110,7 +111,7 @@ services:
   cart:
     build:
       context: cart
-    image: ${REPOSITORY}-cart:${PROJECT_VERSION}
+    image: ${REPOSITORY}-cart:${PROJECT_VERSION:0.1.44}
     depends_on:
       - redis
     networks:
@@ -137,7 +138,7 @@ services:
   catalogue:
     build:
       context: catalogue
-    image: ${REPOSITORY}-catalogue:${PROJECT_VERSION}
+    image: ${REPOSITORY}-catalogue:${PROJECT_VERSION:0.1.44}
     depends_on:
       - mongodb
     networks:
@@ -164,7 +165,7 @@ services:
   user:
     build:
       context: user
-    image: ${REPOSITORY}-user:${PROJECT_VERSION}
+    image: ${REPOSITORY}-user:${PROJECT_VERSION:0.1.44}
     depends_on:
       - mongodb
       - redis
@@ -191,7 +192,7 @@ services:
   ratings:
     build:
       context: ratings
-    image: ${REPOSITORY}-ratings:${PROJECT_VERSION}
+    image: ${REPOSITORY}-ratings:${PROJECT_VERSION:0.1.44}
     environment:
       APP_ENV: prod
       OTEL_EXPORTER_OTLP_ENDPOINT: collector:4317
@@ -221,7 +222,7 @@ services:
   payment:
     build:
       context: payment
-    image: ${REPOSITORY}-payment:${PROJECT_VERSION}
+    image: ${REPOSITORY}-payment:${PROJECT_VERSION:0.1.44}
     depends_on:
       - rabbitmq
     networks:
@@ -253,7 +254,7 @@ services:
   shipping:
     build:
       context: shipping
-    image: ${REPOSITORY}-shipping:${PROJECT_VERSION}
+    image: ${REPOSITORY}-shipping:${PROJECT_VERSION:0.1.44}
     depends_on:
       - mysql
     networks:
