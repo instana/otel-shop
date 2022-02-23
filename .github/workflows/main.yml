@@ -23,28 +23,33 @@ jobs:
           version_file: ./VERSION
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: github.ref == 'refs/heads/master'
 
       - name: Get Version
         id: version
         run: |
           echo ::set-output name=version_tag::$(cat ./VERSION)
+        if: github.ref == 'refs/heads/master'
 
       - name: Push changes to master
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           tags: true
+        if: github.ref == 'refs/heads/master'
       - name: get sha
         id: sha
         run: |
           sha_new=$(git rev-parse HEAD)
           echo $sha_new
           echo "::set-output name=SHA::$sha_new"
+        if: github.ref == 'refs/heads/master'
       - run:
           echo ${{ steps.sha.outputs.SHA }}
-    if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master'
 
   build:
+    needs: bump
     runs-on: ubuntu-latest
     strategy:
       matrix:
