@@ -1,9 +1,14 @@
 'use strict';
 
 const { MeterProvider, ConsoleMetricExporter } = require('@opentelemetry/sdk-metrics-base');
+const { OTLPMetricExporter } = require('@opentelemetry/exporter-metrics-otlp-grpc');
+
+const otlpExporter = new OTLPMetricExporter({
+  url: process.env.OTEL_EXPORTER_OTLP_ENDPOINT
+});
 
 const meter = new MeterProvider({
-  exporter: new ConsoleMetricExporter(),
+  exporter: otlpExporter,
   interval: 1000,
 }).getMeter('your-meter-name');
 
