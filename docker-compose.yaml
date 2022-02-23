@@ -196,6 +196,8 @@ services:
     image: ${REPOSITORY}-ratings:${PROJECT_VERSION}
     environment:
       APP_ENV: prod
+      CATALOGUE_URL: http://catalogue:8080
+      PDO_URL: mysql:host=mysql;dbname=ratings;charset=utf8mb4
       OTEL_EXPORTER_OTLP_ENDPOINT: collector:4317
       OTEL_PROPAGATORS: w3c
       OTEL_EXPORTER_OTLP_PROTOCOL: grpc

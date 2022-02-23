@@ -54,7 +54,7 @@ class Database implements LoggerAwareInterface
             ->setSpanKind(SpanKind::KIND_CLIENT)
             ->setAttribute(TraceAttributes::DB_SYSTEM, 'mysql')
             ->setAttribute(TraceAttributes::DB_NAME, 'ratings')
-            ->setAttribute(TraceAttributes::DB_CONNECTION_STRING, 'mysql:host=mysql;dbname=ratings;charset=utf8mb4')
+            ->setAttribute(TraceAttributes::DB_CONNECTION_STRING, $this->dsn)
             ->setAttribute(TraceAttributes::DB_OPERATION, 'CONNECT')
             ->setAttribute(TraceAttributes::DB_STATEMENT, 'CONNECT')
             ->startSpan();

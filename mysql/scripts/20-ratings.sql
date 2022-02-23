@@ -13,4 +13,3 @@ CREATE TABLE ratings (
 
 GRANT ALL ON ratings.* TO 'ratings'@'%'
 IDENTIFIED BY 'iloveit';
-
