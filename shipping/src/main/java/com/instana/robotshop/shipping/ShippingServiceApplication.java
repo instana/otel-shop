@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import com.instana.sdk.support.SpanSupport;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -18,6 +17,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+import io.opentelemetry.api.trace.Span;
 
 import java.util.Random;
 
@@ -68,7 +69,8 @@ public class ShippingServiceApplication implements WebMvcConfigurer {
         @Override
         public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-            SpanSupport.annotate("datacenter", DATA_CENTERS[new Random().nextInt(DATA_CENTERS.length)]);
+            Span span = Span.current();
+            span.setAttribute("datacenter", DATA_CENTERS[new Random().nextInt(DATA_CENTERS.length)]);
 
             return super.preHandle(request, response, handler);
         }
