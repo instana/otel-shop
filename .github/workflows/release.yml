@@ -1,7 +1,7 @@
 name: Release
 on:
   release:
-    types: [created, published, prereleased, released]
+    types: [prereleased, released]
 
 jobs:
   release_chart:
