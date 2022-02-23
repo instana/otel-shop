@@ -4,30 +4,6 @@ on:
     types: [prereleased, released]
 
 jobs:
-  release_chart:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-
-      - name: Configure Git
-        run: |
-          git config user.name "$GITHUB_ACTOR"
-          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-
-      - name: Install Helm
-        uses: azure/setup-helm@v1
-        with:
-          version: v3.7.1
-
-      - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.3.0
-        with:
-          charts_dir: K8s/charts
-        env:
-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
   release_asset:
     runs-on: ubuntu-latest
     steps:
@@ -43,3 +19,38 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh release upload ${{ github.event.release.tag_name }} otel-shop-${{ github.event.release.tag_name }}.tgz
+      - uses: actions/upload-artifact@v2
+        with:
+          name: chart-archive
+          path: otel-shop-${{ github.event.release.tag_name }}.tgz
+
+  release_chart:
+    needs: release_asset
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: chart-archive
+
+      - name: Package Helm Chart
+        uses: WyriHaximus/github-action-helm3@v2
+        with:
+          exec: helm repo index . --merge index.yaml --url https://github.com/instana/otel-shop/releases/download/${{ github.event.release.tag_name }}/
+
+      - run: rm *.tgz
+
+      - name: Commit & Push changes
+        uses: actions-js/push@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          message: "Update helm repo for version ${{ github.event.release.tag_name }}"
