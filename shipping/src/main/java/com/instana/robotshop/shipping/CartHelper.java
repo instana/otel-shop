@@ -16,16 +16,18 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 
+import io.opentelemetry.extension.annotations.WithSpan;
+
 public class CartHelper {
     private static final Logger logger = LoggerFactory.getLogger(CartHelper.class);
-    
+
     private String baseUrl;
 
     public CartHelper(String baseUrl) {
         this.baseUrl = baseUrl;
     }
 
-    // TODO - Remove deprecated calls
+    @WithSpan
     public String addToCart(String id, String data) {
         logger.info("add shipping to cart {}", id);
         StringBuilder buffer = new StringBuilder();
