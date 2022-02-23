@@ -114,7 +114,7 @@ jobs:
 
       - name: Create Release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.STAN_TOKEN }}
         run: |
           gh release create ${{ needs.bump.outputs.new_version }} \
             --title "v${{ needs.bump.outputs.new_version }}" \
