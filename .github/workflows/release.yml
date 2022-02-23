@@ -53,4 +53,5 @@ jobs:
         uses: actions-js/push@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages
           message: "Update helm repo for version ${{ github.event.release.tag_name }}"
