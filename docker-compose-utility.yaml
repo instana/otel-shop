@@ -1,0 +1,8 @@
+version: "3"
+services:
+  utility-ext-grpc:
+    image: ${REPOSITORY}-utility-ext-grpc:1.43.0
+    build:
+      context: utility/ext-grpc
+      args:
+        - grpc_version=1.43.0
