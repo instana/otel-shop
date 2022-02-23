@@ -2,6 +2,15 @@ apiVersion: v1
 entries:
   otel-shop:
   - apiVersion: v1
+    created: "2022-02-23T22:35:56.056200103Z"
+    description: Sample micoservices application - with OpenTelemetry
+    digest: 013cd190e27f24f53903824178c833bca8e0b67f02ff7150d79dd32d19c6e36d
+    home: https://github.com/instana/otel-shop
+    name: otel-shop
+    urls:
+    - https://github.com/instana/otel-shop/releases/download/0.1.54/otel-shop-0.1.54.tgz
+    version: 0.1.54
+  - apiVersion: v1
     created: "2022-02-23T18:33:10.268910606Z"
     description: Sample micoservices application - with OpenTelemetry
     digest: eb2582c9e7225c4b93b0d585ad970fb1a119e9bac93e227cd23991dfa5ab29d6
@@ -82,4 +91,4 @@ entries:
     urls:
     - https://github.com/instana/otel-shop/releases/download/0.1.42/otel-shop-0.1.42.tgz
     version: 0.1.42
-generated: "2022-02-23T18:33:10.268137395Z"
+generated: "2022-02-23T22:35:56.055444599Z"
