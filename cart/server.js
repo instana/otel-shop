@@ -4,8 +4,8 @@ const tracer = require('./tracer')('example-mysql-http-server');
 const request = require('request');
 const bodyParser = require('body-parser');
 const express = require('express');
-const pino = require('pino');
-const expPino = require('express-pino-logger');
+const logger = require('pino')()
+const pinoHttp = require('pino-http')()
 const { countAllRequests } = require("./monitoring");
 
 // Prometheus
@@ -20,23 +20,11 @@ const counter = new promClient.Counter({
 
 
 var redisConnected = false;
-
-var redisHost = process.env.REDIS_HOST || 'redis'
 var catalogueHost = process.env.CATALOGUE_HOST || 'catalogue'
-
-const logger = pino({
-    level: 'info',
-    prettyPrint: false,
-    useLevelLabels: true
-});
-
-const expLogger = expPino({
-    logger: logger
-});
 
 const app = express();
 
-app.use(expLogger);
+app.use(pinoHttp);
 
 app.use((req, res, next) => {
     res.set('Timing-Allow-Origin', '*');
@@ -393,9 +381,11 @@ function saveCart(id, cart) {
 }
 
 const redisClient = redis.createClient({
-    host: redisHost,
+    url: process.env.REDIS_URL || 'redis://redis:6379',
     legacyMode: true
 });
+
+redisClient.connect();
 
 redisClient.on('error', (e) => {
     logger.error('Redis ERROR', e);
@@ -412,4 +402,3 @@ const port = process.env.CART_SERVER_PORT || '8080';
 app.listen(port, () => {
     logger.info('Started on port', port);
 });
-

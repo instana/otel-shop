@@ -4,20 +4,9 @@ const mongoClient = require('mongodb').MongoClient;
 const mongoObjectID = require('mongodb').ObjectID;
 const bodyParser = require('body-parser');
 const express = require('express');
-const pino = require('pino');
-const expPino = require('express-pino-logger');
+const logger = require('pino')()
+const pinoHttp = require('pino-http')()
 const { countAllRequests } = require("./monitoring");
-
-
-const logger = pino({
-    level: 'info',
-    prettyPrint: false,
-    useLevelLabels: true
-});
-
-const expLogger = expPino({
-    logger: logger
-});
 
 // MongoDB
 var db;
@@ -26,7 +15,7 @@ var mongoConnected = false;
 
 const app = express();
 
-app.use(expLogger);
+app.use(pinoHttp);
 
 app.use(countAllRequests());
 

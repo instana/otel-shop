@@ -32,8 +32,8 @@ spec:
           value: {{ .Release.Name }}-user
         - name: MONGO_URL
           value: 'mongodb://{{ .Release.Name }}-mongodb:27017/users'
-        - name: REDIS_HOST
-          value: {{ .Release.Name }}-redis
+        - name: REDIS_URL
+          value: redis://{{ .Release.Name }}-redis
         ports:
         - containerPort: 8080
         resources:

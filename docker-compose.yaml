@@ -171,6 +171,8 @@ services:
     networks:
       app-network:
     environment:
+      REDIS_URL: redis://redis:6379
+      MONGO_URL: mongodb://mongodb:27017/users
       OTEL_SERVICE_NAME: otel-shop-user
     healthcheck:
       test:
@@ -261,6 +263,7 @@ services:
     environment:
       CART_ENDPOINT: cart:8080
       DB_HOST: mysql
+      REDIS_URL: redis://redis:6379
       OTEL_EXPORTER_OTLP_ENDPOINT: http://collector:4317
       OTEL_SERVICE_NAME: otel-shop-shipping
       OTEL_TRACES_SAMPLER: always_on
