@@ -73,12 +73,15 @@ jobs:
         SERVICE: ${{matrix.service}}
         DOCKER_BUILDKIT: 1
     steps:
-      - uses: actions/checkout@v2
+      - name: Fetch updated source through SHA from bump
+        uses: actions/checkout@v2
         with:
           ref: ${{ needs.bump.outputs.SHA }}
           fetch-depth: 0
         if: github.ref == 'refs/heads/master'
-      - uses: actions/checkout@v2
+
+      - name: Fetch source from event
+        uses: actions/checkout@v2
         if: github.ref != 'refs/heads/master'
 
       - run: cp env.template .env
