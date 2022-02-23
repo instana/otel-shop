@@ -48,7 +48,7 @@ helm install --create-namespace instana-agent --namespace instana-agent \
     --set agent.endpointHost='<your host agent endpoint>' \
     --set cluster.name='<your-cluster-name>' \
     --set zone.name='<your-zone-name>' \
-    --set opentelemetry.enable=true \ # this is the setting
+    --set opentelemetry.enabled=true \ # this is the setting
     instana-agent
 ```
 
