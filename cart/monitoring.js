@@ -3,7 +3,7 @@
 const { MeterProvider, ConsoleMetricExporter } = require('@opentelemetry/sdk-metrics-base');
 const { OTLPMetricExporter } = require('@opentelemetry/exporter-metrics-otlp-grpc');
 
-const otlpExporter = new OTLPTraceExporter({
+const otlpExporter = new OTLPMetricExporter({
   url: process.env.OTEL_EXPORTER_OTLP_ENDPOINT
 });
 
