@@ -9,6 +9,39 @@ on:
   workflow_dispatch:
 
 jobs:
+  bump:
+    runs-on: ubuntu-latest
+    name: Bump version
+    outputs:
+      bumped_sha: ${{ steps.sha.outputs.SHA }}
+    steps:
+      - name: Bump version
+        uses: remorses/bump-version@js
+        with:
+          version_file: ./VERSION
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get Version
+        id: version
+        run: |
+          echo ::set-output name=version_tag::$(cat ./VERSION)
+
+      - name: Push changes to master
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tags: true
+      - name: get sha
+        id: sha
+        run: |
+          sha_new=$(git rev-parse HEAD)
+          echo $sha_new
+          echo "::set-output name=SHA::$sha_new"
+      - run:
+          echo ${{ steps.sha.outputs.SHA }}
+    if: github.ref == 'refs/heads/master'
+
   build:
     runs-on: ubuntu-latest
     strategy:
@@ -33,18 +66,15 @@ jobs:
         DOCKER_BUILDKIT: 1
     steps:
       - uses: actions/checkout@v2
-
-      - name: Bump version
-        uses: remorses/bump-version@js
         with:
-          version_file: ./VERSION
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Get Version
-        id: version
-        run: |
-          echo ::set-output name=version_tag::$(cat ./VERSION)
+          ref: ${{ needs.bump.outputs.SHA }}
+          fetch-depth: 0
+        if: github.ref == 'refs/heads/master'
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ needs.bump.outputs.SHA }}
+          fetch-depth: 0
+        if: github.ref != 'refs/heads/master'
 
       - run: cp .env.template .env
         shell: bash
@@ -61,13 +91,6 @@ jobs:
 
       - name: Build service ${{matrix.service}}
         run: docker-compose -f docker-compose.yaml -f docker-compose-load.yaml build ${{matrix.service}}
-
-      - name: Push changes to master
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          tags: true
-        if: github.ref == 'refs/heads/master'
 
       - name: Push service ${{matrix.service}}
         run: docker-compose -f docker-compose.yaml -f docker-compose-load.yaml push ${{matrix.service}}
