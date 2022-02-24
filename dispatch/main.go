@@ -16,12 +16,28 @@ import (
 
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
+	"go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetricgrpc"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
 	"go.opentelemetry.io/otel/propagation"
 	"go.opentelemetry.io/otel/sdk/resource"
+
+	controller "go.opentelemetry.io/otel/sdk/metric/controller/basic"
+	"go.opentelemetry.io/otel/sdk/metric/processor/basic"
+	"go.opentelemetry.io/otel/sdk/metric/selector/simple"
+
+	global "go.opentelemetry.io/otel/metric/global"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.7.0"
 	oteltrace "go.opentelemetry.io/otel/trace"
+
+	ec2Detector "go.opentelemetry.io/contrib/detectors/aws/ec2"
+	ecsDetector "go.opentelemetry.io/contrib/detectors/aws/ecs"
+	eksDetector "go.opentelemetry.io/contrib/detectors/aws/eks"
+	lambdaDetector "go.opentelemetry.io/contrib/detectors/aws/lambda"
+	gcpDetectors "go.opentelemetry.io/contrib/detectors/gcp"
+
+	"go.opentelemetry.io/contrib/instrumentation/host"
+	"go.opentelemetry.io/contrib/instrumentation/runtime"
 
 	"github.com/streadway/amqp"
 )
@@ -170,11 +186,30 @@ func processSale(ctx context.Context, parentSpan oteltrace.Span) {
 func initProvider() func() {
 	ctx := context.Background()
 
+	lambdaResource, _ := lambdaDetector.NewResourceDetector().Detect(ctx)
+	eksResource, _ := eksDetector.NewResourceDetector().Detect(ctx)
+	ecsResource, _ := ecsDetector.NewResourceDetector().Detect(ctx)
+	ec2Resource, _ := ec2Detector.NewResourceDetector().Detect(ctx)
+
+	gceResource, _ := (&gcpDetectors.GCE{}).Detect(ctx)
+	cloudRunResource, _ := gcpDetectors.NewCloudRun().Detect(ctx)
+	gkeResource, _ := (&gcpDetectors.GKE{}).Detect(ctx)
+
 	res, err := resource.New(ctx,
 		resource.WithAttributes(
 			// the service name used to display traces in backends
 			semconv.ServiceNameKey.String(os.Getenv("OTEL_SERVICE_NAME")),
 		),
+		resource.WithProcess(),
+		// AWS resource detectors
+		resource.WithAttributes(lambdaResource.Attributes()...),
+		resource.WithAttributes(eksResource.Attributes()...),
+		resource.WithAttributes(ecsResource.Attributes()...),
+		resource.WithAttributes(ec2Resource.Attributes()...),
+		// GCP resource detectors
+		resource.WithAttributes(gceResource.Attributes()...),
+		resource.WithAttributes(cloudRunResource.Attributes()...),
+		resource.WithAttributes(gkeResource.Attributes()...),
 	)
 	handleErr(err, "failed to create resource")
 
@@ -203,9 +238,31 @@ func initProvider() func() {
 	// set global propagator to tracecontext (the default is no-op).
 	otel.SetTextMapPropagator(propagation.TraceContext{})
 
+	// metrics
+	metricExporter, err := otlpmetricgrpc.New(ctx, otlpmetricgrpc.WithGRPCConn(conn))
+	handleErr(err, "failed to create metric exporter")
+
+	selector := simple.NewWithInexpensiveDistribution()
+	processor := basic.NewFactory(selector, metricExporter)
+
+	cont := controller.New(processor, controller.WithExporter(metricExporter), controller.WithCollectPeriod(time.Second*1),
+		controller.WithResource(res),
+	)
+	err = cont.Start(ctx)
+	handleErr(err, "failed to start metric provider")
+
+	global.SetMeterProvider(cont)
+
+	err = runtime.Start(runtime.WithMinimumReadMemStatsInterval(time.Second))
+	handleErr(err, "failed to start runtime instrumentation")
+
+	err = host.Start()
+	handleErr(err, "failed to start host instrumentation")
+
 	return func() {
 		// Shutdown will flush any remaining spans and shut down the exporter.
 		handleErr(tracerProvider.Shutdown(ctx), "failed to shutdown TracerProvider")
+		handleErr(metricExporter.Shutdown(ctx), "failed to shutdown metric exporter")
 	}
 }
 
