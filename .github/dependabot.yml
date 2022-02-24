@@ -76,3 +76,7 @@ updates:
     directory: "/payment"
     schedule:
       interval: "daily"
+  - package-ecosystem: "gomod"
+    directory: "/dispatch"
+    schedule:
+      interval: "daily"
