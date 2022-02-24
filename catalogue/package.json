@@ -1,6 +1,6 @@
 {
   "name": "catalogue [bump]",
-  "version": "0.1.60",
+  "version": "0.1.61",
   "description": "product catalogue REST API",
   "main": "server.js",
   "scripts": {
