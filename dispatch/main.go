@@ -186,14 +186,30 @@ func processSale(ctx context.Context, parentSpan oteltrace.Span) {
 func initProvider() func() {
 	ctx := context.Background()
 
+	lambdaResource, _ := lambdaDetector.NewResourceDetector().Detect(ctx)
+	eksResource, _ := eksDetector.NewResourceDetector().Detect(ctx)
+	ecsResource, _ := ecsDetector.NewResourceDetector().Detect(ctx)
+	ec2Resource, _ := ec2Detector.NewResourceDetector().Detect(ctx)
+
+	gceResource, _ := (&gcpDetectors.GCE{}).Detect(ctx)
+	cloudRunResource, _ := gcpDetectors.NewCloudRun().Detect(ctx)
+	gkeResource, _ := (&gcpDetectors.GKE{}).Detect(ctx)
+
 	res, err := resource.New(ctx,
 		resource.WithAttributes(
 			// the service name used to display traces in backends
 			semconv.ServiceNameKey.String(os.Getenv("OTEL_SERVICE_NAME")),
 		),
 		resource.WithProcess(),
-		resource.WithDetectors(lambdaDetector.NewResourceDetector(), eksDetector.NewResourceDetector(), ecsDetector.NewResourceDetector(), ec2Detector.NewResourceDetector()),
-		resource.WithDetectors(gcpDetectors.NewCloudRun(), &gcpDetectors.GKE{}, &gcpDetectors.GCE{}),
+		// AWS resource detectors
+		resource.WithAttributes(lambdaResource.Attributes()...),
+		resource.WithAttributes(eksResource.Attributes()...),
+		resource.WithAttributes(ecsResource.Attributes()...),
+		resource.WithAttributes(ec2Resource.Attributes()...),
+		// GCP resource detectors
+		resource.WithAttributes(gceResource.Attributes()...),
+		resource.WithAttributes(cloudRunResource.Attributes()...),
+		resource.WithAttributes(gkeResource.Attributes()...),
 	)
 	handleErr(err, "failed to create resource")
 
