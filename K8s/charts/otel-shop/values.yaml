@@ -4,7 +4,7 @@ image:
   repo: instanacedricziel
   prefix: otel-shop
   # [bump]
-  version: 0.1.64
+  version: 0.1.65-rc1
   pullPolicy: Always
 
 # Alternative payment gateway URL
@@ -32,6 +32,9 @@ openshift: false
 
 # Storage class to use with redis statefulset.
 redis:
+  storageClassName: standard
+
+mysql:
   storageClassName: standard
 
 ocCreateRoute: false
