@@ -51,7 +51,7 @@ services:
     networks:
       app-network:
     environment:
-      OTEL_EXPORTER_OTLP_ENDPOINT: collector:4317
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${collector_host:?No OpenTelemetry collector host specified}:${collector_port:?No OpenTelemetry collector port specified}
       OTEL_SERVICE_NAME: otel-shop-dispatch
     logging:
       <<: *logging
@@ -73,7 +73,7 @@ services:
       SHIPPING_HOST: shipping
       RATINGS_HOST: ratings
       USER_HOST: user
-      OTEL_EXPORTER_OTLP_ENDPOINT: collector:4317
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${collector_host:?No OpenTelemetry collector host specified}:${collector_port:?No OpenTelemetry collector port specified}
       OTEL_SERVICE_NAME: otel-shop-front
     volumes:
       - ./front/conf/otel-nginx.toml:/conf/otel-nginx.toml
@@ -104,7 +104,7 @@ services:
     build:
       context: web
     environment:
-      OTEL_EXPORTER_OTLP_ENDPOINT: collector:4317
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${collector_host:?No OpenTelemetry collector host specified}:${collector_port:?No OpenTelemetry collector port specified}
       OTEL_SERVICE_NAME: otel-shop-web
     volumes:
       - ./web/conf/opentelemetry.conf:/etc/apache2/mods-available/opentelemetry.conf
@@ -121,7 +121,7 @@ services:
     networks:
       app-network:
     environment:
-      OTEL_EXPORTER_OTLP_ENDPOINT: collector:4317
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${collector_host:?No OpenTelemetry collector host specified}:${collector_port:?No OpenTelemetry collector port specified}
       OTEL_SERVICE_NAME: otel-shop-cart
     healthcheck:
       test:
@@ -148,7 +148,7 @@ services:
     networks:
       app-network:
     environment:
-      OTEL_EXPORTER_OTLP_ENDPOINT: collector:4317
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${collector_host:?No OpenTelemetry collector host specified}:${collector_port:?No OpenTelemetry collector port specified}
       OTEL_SERVICE_NAME: otel-shop-catalogue
     healthcheck:
       test:
@@ -178,6 +178,7 @@ services:
     environment:
       REDIS_URL: redis://redis:6379
       MONGO_URL: mongodb://mongodb:27017/users
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${collector_host:?No OpenTelemetry collector host specified}:${collector_port:?No OpenTelemetry collector port specified}
       OTEL_SERVICE_NAME: otel-shop-user
     healthcheck:
       test:
@@ -203,7 +204,7 @@ services:
       APP_ENV: prod
       CATALOGUE_URL: http://catalogue:8080
       PDO_URL: mysql:host=mysql;dbname=ratings;charset=utf8mb4
-      OTEL_EXPORTER_OTLP_ENDPOINT: collector:4317
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${collector_host:?No OpenTelemetry collector host specified}:${collector_port:?No OpenTelemetry collector port specified}
       OTEL_PROPAGATORS: w3c
       OTEL_EXPORTER_OTLP_PROTOCOL: grpc
       OTEL_SERVICE_NAME: otel-shop-ratings
@@ -237,7 +238,7 @@ services:
     networks:
       app-network:
     environment:
-      OTEL_EXPORTER_OTLP_ENDPOINT: http://collector:4317
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://${collector_host:?No OpenTelemetry collector host specified}:${collector_port:?No OpenTelemetry collector port specified}
       OTEL_SERVICE_NAME: otel-shop-payment
       OTEL_TRACES_EXPORTER: otlp_proto_grpc
       OTEL_RESOURCE_ATTRIBUTES: service.name=otel-shop-payment
@@ -273,7 +274,7 @@ services:
       CART_ENDPOINT: cart:8080
       DB_HOST: mysql
       REDIS_URL: redis://redis:6379
-      OTEL_EXPORTER_OTLP_ENDPOINT: http://collector:4317
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://${collector_host:?No OpenTelemetry collector host specified}:${collector_port:?No OpenTelemetry collector port specified}
       OTEL_SERVICE_NAME: otel-shop-shipping
       OTEL_TRACES_SAMPLER: always_on
     healthcheck:
