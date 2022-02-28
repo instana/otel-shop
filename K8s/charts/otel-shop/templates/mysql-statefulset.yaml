@@ -1,11 +1,10 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ .Release.Name }}-mysql
-  labels:
-    service: {{ .Release.Name }}-mysql
 spec:
   replicas: 1
+  serviceName: {{ .Release.Name }}-mysql
   selector:
     matchLabels:
       service: {{ .Release.Name }}-mysql
@@ -21,6 +20,8 @@ spec:
       - name: {{ .Release.Name }}-mysql
         image: {{ .Values.image.repo }}/{{ .Values.image.prefix }}-mysql-db:{{ .Values.image.version }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
+        args:
+          - "--ignore-db-dir=lost+found"
         # added for Istio
         securityContext:
           capabilities:
@@ -34,4 +35,27 @@ spec:
           requests:
             cpu: 100m
             memory: 700Mi
+        volumeMounts:
+            - name: {{ .Release.Name }}-mysql-data
+              mountPath: /var/lib/mysql
+        livenessProbe:
+          exec:
+            command:
+            - bash
+            - "-c"
+            - |
+              mysqladmin -uratings -piloveit ping &> /dev/null
       restartPolicy: Always
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ .Release.Name }}-mysql-data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        {{ if not .Values.openshift }}
+        storageClassName: {{ .Values.mysql.storageClassName }}
+        volumeMode: Filesystem
+        {{ end }}
+        resources:
+          requests:
+            storage: 1Gi

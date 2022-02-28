@@ -34,6 +34,9 @@ openshift: false
 redis:
   storageClassName: standard
 
+mysql:
+  storageClassName: standard
+
 ocCreateRoute: false
 
 load:

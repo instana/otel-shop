@@ -34,6 +34,11 @@ services:
       - NET_ADMIN
     networks:
       app-network:
+    healthcheck:
+      test: ["CMD", "mysqladmin", "-uratings", "-piloveit", "-h", "localhost", "ping"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
     logging:
       <<: *logging
 
@@ -205,7 +210,8 @@ services:
     networks:
       app-network:
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     healthcheck:
       test:
         [
@@ -259,7 +265,8 @@ services:
       context: shipping
     image: ${REPOSITORY}-shipping:${PROJECT_VERSION}
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     networks:
       app-network:
     environment:

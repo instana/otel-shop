@@ -8,7 +8,7 @@ RUN apt-get update && apt-get -y install maven wget
 WORKDIR /opt/shipping
 
 COPY pom.xml /opt/shipping/
-RUN mvn dependency:resolve
+RUN mvn dependency:resolve -fail-never
 COPY src /opt/shipping/src/
 RUN mvn package
 
