@@ -41,3 +41,8 @@ ocCreateRoute: false
 
 load:
   enabled: true
+
+opentelemetry:
+  exporter:
+    otlp:
+      endpoint: "$(INSTANA_AGENT_HOST):4317"
