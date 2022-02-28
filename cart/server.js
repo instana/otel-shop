@@ -1,6 +1,5 @@
 const redis = require('redis');
 const api = require('@opentelemetry/api');
-const tracer = require('./tracer')('example-mysql-http-server');
 const request = require('request');
 const bodyParser = require('body-parser');
 const express = require('express');
@@ -25,6 +24,8 @@ var catalogueHost = process.env.CATALOGUE_HOST || 'catalogue'
 const app = express();
 
 app.use(pinoHttp);
+
+app.use(countAllRequests())
 
 app.use((req, res, next) => {
     res.set('Timing-Allow-Origin', '*');
