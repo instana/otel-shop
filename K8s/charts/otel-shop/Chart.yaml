@@ -1,8 +1,8 @@
 apiVersion: v2
 type: application
 name: otel-shop
-version: 0.2.0
 # [bump]
+version: 0.2.0
 appVersion: 0.1.67
 home: https://github.com/instana/otel-shop
 description: Sample micoservices application - with OpenTelemetry
