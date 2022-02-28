@@ -29,7 +29,7 @@ spec:
             fieldRef:
               fieldPath: status.hostIP
         - name: OTEL_EXPORTER_OTLP_ENDPOINT
-          value: "$(INSTANA_AGENT_HOST):4317"
+          value: {{ .Values.opentelemetry.exporter.otlp.endpoint }}
         - name: OTEL_SERVICE_NAME
           value: {{ .Release.Name }}-dispatch
         resources:

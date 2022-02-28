@@ -1,0 +1,30 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+      http:
+
+exporters:
+  otlp:
+    endpoint: "${INSTANA_OTLP_ENDPOINT}"
+    headers:
+      "x-instana-key": "${INSTANA_AGENT_KEY}"
+      "x-instana-host": "${INSTANA_HOST_ID}"
+      "x-instana-time": 0
+
+processors:
+  batch:
+
+extensions:
+  health_check:
+
+service:
+  extensions: [health_check]
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [otlp]
+  telemetry:
+    logs:
+      level: "debug"

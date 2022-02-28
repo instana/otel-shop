@@ -1,5 +1,4 @@
 const api = require('@opentelemetry/api');
-const tracer = require('./tracer')('example-mysql-http-server');
 const mongoClient = require('mongodb').MongoClient;
 const mongoObjectID = require('mongodb').ObjectID;
 const redis = require('redis');

@@ -18,7 +18,19 @@ import prometheus_client
 from prometheus_client import Counter, Histogram
 
 from opentelemetry import trace
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.resources import Resource
+from opentelemetry.semconv.resource import ResourceAttributes
 from opentelemetry.propagate import extract, inject
+
+trace.set_tracer_provider(
+    TracerProvider(
+        resource=Resource.create({
+            ResourceAttributes.SERVICE_NAME: os.getenv('OTEL_SERVICE_NAME'),
+            ResourceAttributes.PROCESS_PID: os.getpid(),
+        })
+    )
+)
 
 app = Flask(__name__)
 app.logger.setLevel(logging.DEBUG)
@@ -32,7 +44,6 @@ PromMetrics = {}
 PromMetrics['SOLD_COUNTER'] = Counter('sold_count', 'Running count of items sold')
 PromMetrics['AUS'] = Histogram('units_sold', 'Avergae Unit Sale', buckets=(1, 2, 5, 10, 100))
 PromMetrics['AVS'] = Histogram('cart_value', 'Avergae Value Sale', buckets=(100, 200, 500, 1000, 2000, 5000, 10000))
-
 
 @app.errorhandler(Exception)
 def exception_handler(err):

@@ -27,7 +27,7 @@ spec:
             fieldRef:
               fieldPath: status.hostIP
         - name: OTEL_EXPORTER_OTLP_ENDPOINT
-          value: "$(INSTANA_AGENT_HOST):4317"
+          value: {{ .Values.opentelemetry.exporter.otlp.endpoint }}
         - name: OTEL_SERVICE_NAME
           value: {{ .Release.Name }}-web
         {{- if .Values.eum.key }}
@@ -45,4 +45,12 @@ spec:
           requests:
             cpu: 100m
             memory: 50Mi
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          failureThreshold: 30
+          successThreshold: 1
       restartPolicy: Always

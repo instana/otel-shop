@@ -47,6 +47,15 @@ class UserBehavior(HttpUser):
         fake_ip = random.choice(self.fake_ip_addresses)
 
         self.client.get('/', headers={'x-forwarded-for': fake_ip})
+        self.client.get('/css/style.css', headers={'x-forwarded-for': fake_ip})
+        self.client.get('/css/auto-complete.css', headers={'x-forwarded-for': fake_ip})
+        self.client.get('/js/auto-complete.js', headers={'x-forwarded-for': fake_ip})
+        self.client.get('/js/controller.js', headers={'x-forwarded-for': fake_ip})
+        self.client.get('/media/stan.png', headers={'x-forwarded-for': fake_ip})
+        self.client.get('/splash.html', headers={'x-forwarded-for': fake_ip})
+        self.client.get('/media/graph.png', headers={'x-forwarded-for': fake_ip})
+        self.client.get('/media/instana_icon_square.png', headers={'x-forwarded-for': fake_ip})
+
         user = self.client.get('/api/user/uniqueid', headers={'x-forwarded-for': fake_ip}).json()
         uniqueid = user['uuid']
         print('User {}'.format(uniqueid))
@@ -94,5 +103,3 @@ class UserBehavior(HttpUser):
             print('Error request')
             cart = {'total': 0, 'tax': 0}
             self.client.post('/api/payment/pay/partner-57', json=cart, headers={'x-forwarded-for': fake_ip})
-
-
