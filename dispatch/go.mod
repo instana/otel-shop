@@ -1,4 +1,4 @@
-module github.ibm.com/instana/otel-demo-app/dispatch
+module github.com/instana/otel-shop/dispatch
 
 go 1.16
 
