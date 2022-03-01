@@ -55,6 +55,7 @@ jobs:
     strategy:
       matrix:
         service:
+          - otel-collector
           - mongodb
           - redis
           - rabbitmq
@@ -95,13 +96,13 @@ jobs:
         if: github.ref == 'refs/heads/master'
 
       - name: Pull service ${{matrix.service}}
-        run: docker-compose -f docker-compose.yaml -f docker-compose-load.yaml pull --ignore-pull-failures ${{matrix.service}}
+        run: docker-compose -f docker-compose.yaml -f docker-compose-load.yaml -f docker-compose-collector.yaml pull --ignore-pull-failures ${{matrix.service}}
 
       - name: Build service ${{matrix.service}}
-        run: docker-compose -f docker-compose.yaml -f docker-compose-load.yaml build ${{matrix.service}}
+        run: docker-compose -f docker-compose.yaml -f docker-compose-load.yaml -f docker-compose-collector.yaml build ${{matrix.service}}
 
       - name: Push service ${{matrix.service}}
-        run: docker-compose -f docker-compose.yaml -f docker-compose-load.yaml push ${{matrix.service}}
+        run: docker-compose -f docker-compose.yaml -f docker-compose-load.yaml -f docker-compose-collector.yaml push ${{matrix.service}}
         if: github.ref == 'refs/heads/master'
 
   create_release:
