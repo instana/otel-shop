@@ -109,6 +109,9 @@ http {
       opentelemetry_propagate;
       opentelemetry_capture_headers on;
 
+      proxy_no_cache 1;
+      proxy_cache_bypass 1;
+
       proxy_pass http://web/;
     }
 
