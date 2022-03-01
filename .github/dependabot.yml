@@ -68,6 +68,10 @@ updates:
     directory: "/web"
     schedule:
       interval: "daily"
+  - package-ecosystem: "docker"
+    directory: "/otel-collector"
+    schedule:
+      interval: "daily"
   - package-ecosystem: "maven"
     directory: "/shipping"
     schedule:

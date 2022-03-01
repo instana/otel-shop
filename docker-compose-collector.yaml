@@ -2,12 +2,15 @@ version: "3"
 services:
   otel-collector:
     image: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:0.45.0
+    build:
+      context: otel-collector
     command: ["--config=/etc/otel-collector-config.yml"]
     volumes:
       - ./otel-collector/config.yml:/etc/otel-collector-config.yml
     networks:
       app-network:
     environment:
+      INSTANA_OTLP_ENDPOINT: ${INSTANA_OTLP_ENDPOINT}
       INSTANA_HOST_ID: ${INSTANA_HOST_ID}
       INSTANA_AGENT_KEY: ${agent_key}
     logging: &logging
