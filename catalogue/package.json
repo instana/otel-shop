@@ -21,6 +21,6 @@
     "mongodb": "^4.4.1",
     "pino": "^7.9.1",
     "pino-http": "^6.6.0",
-    "pino-pretty": "^7.5.3"
+    "pino-pretty": "^7.5.4"
   }
 }
