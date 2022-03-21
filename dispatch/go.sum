@@ -307,8 +307,8 @@ go.opentelemetry.io/contrib/detectors/aws/ecs v1.4.0 h1:mQLNoIwTBXlXEGlyEQ/wLhYv
 go.opentelemetry.io/contrib/detectors/aws/ecs v1.4.0/go.mod h1:mYJweHlAcMTO73/oXyFTeKlzyJE0tIinZldMJhIXaxU=
 go.opentelemetry.io/contrib/detectors/aws/eks v1.4.0 h1:xewp+DjfX+0m0Z/9lg8ncNVwbeR59nY/2XuQkS5YqrU=
 go.opentelemetry.io/contrib/detectors/aws/eks v1.4.0/go.mod h1:XMaYnTUcoUOryalb6vrA6QAhcjr+yjDYXNbjAbJci3M=
-go.opentelemetry.io/contrib/detectors/aws/lambda v0.29.0 h1:yK3GUQcmzWcQ5rEc5b9MXOTprKaQNs9fVqSlQbVCDuo=
-go.opentelemetry.io/contrib/detectors/aws/lambda v0.29.0/go.mod h1:wpYyI4NVW+aWAwiUR5Jku4/Lz/x0FOzMT59MSCORets=
+go.opentelemetry.io/contrib/detectors/aws/lambda v0.30.0 h1:zD/IfhdDWM5uthgUu/u18XD0AjKImsA7uorz08h2Ve8=
+go.opentelemetry.io/contrib/detectors/aws/lambda v0.30.0/go.mod h1:DYGTyg/nIUNEHSV8DRLKJOs2uHp0Y46tFZ65RZX4C0o=
 go.opentelemetry.io/contrib/detectors/gcp v1.4.0 h1:FIeksx21O/xOSc717qAvqfZCmwCCQ4AHhK3coaXxguU=
 go.opentelemetry.io/contrib/detectors/gcp v1.4.0/go.mod h1:XmZVCly8Thqsi6aOLOdUlAAj6huv+ml4OlITbmtCwtA=
 go.opentelemetry.io/contrib/instrumentation/host v0.29.0 h1:dPT8KmaLkx4IBUVtG69oqKnfP8892RMMYcqDItGdRLU=
