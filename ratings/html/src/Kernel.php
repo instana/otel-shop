@@ -24,13 +24,14 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 use Symfony\Component\Routing\RouteCollectionBuilder;
 
 class Kernel extends BaseKernel implements EventSubscriberInterface
 {
     use MicroKernelTrait;
 
-    public function registerBundles()
+    public function registerBundles(): iterable
     {
         return [
             new FrameworkBundle(),
@@ -79,7 +80,7 @@ class Kernel extends BaseKernel implements EventSubscriberInterface
         $c->loadFromExtension('otel_sdk', [
             'resource' => [
                 'attributes' => [
-                    'service.name' => getenv('OTEL_SERVICE_NAME'),
+                    'service.name' => getenv('OTEL_SERVICE_NAME') ?:  'unknown-service',
                 ]
             ],
             'trace' => [
@@ -87,7 +88,7 @@ class Kernel extends BaseKernel implements EventSubscriberInterface
                 'exporters' => [
                     'otlpgrpc' => [
                         'type' => 'otlpgrpc',
-                        'url' => getenv('OTEL_EXPORTER_OTLP_ENDPOINT'),
+                        'url' => getenv('OTEL_EXPORTER_OTLP_ENDPOINT') ?: 'localhost:4137',
                     ]
                 ]
             ],
@@ -154,8 +155,8 @@ class Kernel extends BaseKernel implements EventSubscriberInterface
             ->setAutowired(true);
     }
 
-    protected function configureRoutes(RouteCollectionBuilder $routes)
+    protected function configureRoutes(RoutingConfigurator $routes): void
     {
-        $routes->import(__DIR__.'/Controller/', '/', 'annotation');
+        $routes->import(__DIR__.'/Controller/', 'annotation');
     }
 }

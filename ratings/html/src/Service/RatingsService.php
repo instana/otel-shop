@@ -10,7 +10,6 @@ use OpenTelemetry\SemConv\TraceAttributes;
 use PDO;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
-use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
 
 class RatingsService implements LoggerAwareInterface
 {

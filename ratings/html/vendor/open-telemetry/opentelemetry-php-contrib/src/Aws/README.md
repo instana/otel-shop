@@ -1,1 +1,0 @@
-Readme for opentelemetry-php-contrib AWS package (temporary file)
