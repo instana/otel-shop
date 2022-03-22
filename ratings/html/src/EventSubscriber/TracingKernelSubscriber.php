@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Instana\RobotShop\Ratings\EventSubscriber;
 
+use OpenTelemetry\API\Trace\Propagation\TraceContextPropagator;
 use OpenTelemetry\API\Trace\SpanInterface;
 use OpenTelemetry\API\Trace\SpanKind;
-use OpenTelemetry\SDK\Trace\Propagation\TraceContextPropagator;
 use OpenTelemetry\SDK\Trace\Tracer;
 use OpenTelemetry\SDK\Trace\TracerProvider;
 use OpenTelemetry\SemConv\TraceAttributes;

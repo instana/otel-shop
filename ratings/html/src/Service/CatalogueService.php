@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Instana\RobotShop\Ratings\Service;
 
 use Exception;
+use OpenTelemetry\API\Trace\Propagation\TraceContextPropagator;
 use OpenTelemetry\API\Trace\SpanKind;
-use OpenTelemetry\SDK\Trace\Propagation\TraceContextPropagator;
 use OpenTelemetry\SDK\Trace\Tracer;
 use OpenTelemetry\SemConv\TraceAttributes;
 use Psr\Log\LoggerAwareInterface;
