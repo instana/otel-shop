@@ -20,8 +20,6 @@ spec:
       - name: {{ .Release.Name }}-mysql
         image: {{ .Values.image.repo }}/{{ .Values.image.prefix }}-mysql-db:{{ .Values.image.version }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        args:
-          - "--ignore-db-dir=lost+found"
         # added for Istio
         securityContext:
           capabilities:
