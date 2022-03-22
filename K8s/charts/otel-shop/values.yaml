@@ -4,7 +4,7 @@ image:
   repo: instanacedricziel
   prefix: otel-shop
   # [bump]
-  version: 0.1.95
+  version: 0.1.96
   pullPolicy: Always
 
 # Alternative payment gateway URL
