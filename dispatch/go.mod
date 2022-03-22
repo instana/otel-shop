@@ -7,7 +7,7 @@ require (
 	go.opentelemetry.io/contrib/detectors/aws/ec2 v1.4.0
 	go.opentelemetry.io/contrib/detectors/aws/ecs v1.4.0
 	go.opentelemetry.io/contrib/detectors/aws/eks v1.4.0
-	go.opentelemetry.io/contrib/detectors/aws/lambda v0.29.0
+	go.opentelemetry.io/contrib/detectors/aws/lambda v0.30.0
 	go.opentelemetry.io/contrib/detectors/gcp v1.4.0
 	go.opentelemetry.io/contrib/instrumentation/host v0.29.0
 	go.opentelemetry.io/contrib/instrumentation/runtime v0.29.0
