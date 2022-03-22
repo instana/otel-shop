@@ -265,8 +265,8 @@ github.com/power-devops/perfstat v0.0.0-20210106213030-5aafc221ea8c/go.mod h1:Om
 github.com/prometheus/client_model v0.0.0-20190812154241-14fe0d1b01d4/go.mod h1:xMI15A0UPsDsEKsMN9yxemIoYk6Tm2C1GtYGdfGttqA=
 github.com/rogpeppe/fastuuid v1.2.0/go.mod h1:jVj6XXZzXRy/MSR5jhDC/2q6DgLz+nrA6LYCDYWNEvQ=
 github.com/rogpeppe/go-internal v1.3.0/go.mod h1:M8bDsm7K2OlrFYOpmOWEs/qY81heoFRclV5y23lUDJ4=
-github.com/shirou/gopsutil/v3 v3.22.1 h1:33y31Q8J32+KstqPfscvFwBlNJ6xLaBy4xqBXzlYV5w=
-github.com/shirou/gopsutil/v3 v3.22.1/go.mod h1:WapW1AOOPlHyXr+yOyw3uYx36enocrtSoSBy0L5vUHY=
+github.com/shirou/gopsutil/v3 v3.22.2 h1:wCrArWFkHYIdDxx/FSfF5RB4dpJYW6t7rcp3+zL8uks=
+github.com/shirou/gopsutil/v3 v3.22.2/go.mod h1:WapW1AOOPlHyXr+yOyw3uYx36enocrtSoSBy0L5vUHY=
 github.com/spaolacci/murmur3 v0.0.0-20180118202830-f09979ecbc72/go.mod h1:JwIasOWyU6f++ZhiEuf87xNszmSA2myDM2Kzu9HwQUA=
 github.com/spf13/afero v1.2.2/go.mod h1:9ZxEEn6pIJ8Rxe320qSDBk6AsU0r9pR7Q4OcevTdifk=
 github.com/spf13/pflag v0.0.0-20170130214245-9ff6c6923cff/go.mod h1:DYY7MBk1bdzusC3SYhjObp+wFpr4gzcvqqNjLnInEg4=
@@ -311,8 +311,8 @@ go.opentelemetry.io/contrib/detectors/aws/lambda v0.30.0 h1:zD/IfhdDWM5uthgUu/u1
 go.opentelemetry.io/contrib/detectors/aws/lambda v0.30.0/go.mod h1:DYGTyg/nIUNEHSV8DRLKJOs2uHp0Y46tFZ65RZX4C0o=
 go.opentelemetry.io/contrib/detectors/gcp v1.4.0 h1:FIeksx21O/xOSc717qAvqfZCmwCCQ4AHhK3coaXxguU=
 go.opentelemetry.io/contrib/detectors/gcp v1.4.0/go.mod h1:XmZVCly8Thqsi6aOLOdUlAAj6huv+ml4OlITbmtCwtA=
-go.opentelemetry.io/contrib/instrumentation/host v0.29.0 h1:dPT8KmaLkx4IBUVtG69oqKnfP8892RMMYcqDItGdRLU=
-go.opentelemetry.io/contrib/instrumentation/host v0.29.0/go.mod h1:pdZRsF/PWG4bBbzab08YSnM3p8vpq9ue34ADPZCbdfE=
+go.opentelemetry.io/contrib/instrumentation/host v0.30.0 h1:aMdJ7NCbgpiBumSPDsuLzlXMs5pGHfd97n2ufq3HEK0=
+go.opentelemetry.io/contrib/instrumentation/host v0.30.0/go.mod h1:/mLl105lgt8rlIBPh6UmnfLWEApoSFszTl+vbArcfjg=
 go.opentelemetry.io/contrib/instrumentation/runtime v0.29.0 h1:ZnLxB76QjHDLnrUWLYgcCc8lcdRGoraTLvJEWmwwC80=
 go.opentelemetry.io/contrib/instrumentation/runtime v0.29.0/go.mod h1:qGVpMUNpULYYXRYCQB3DNUe+of22Y+M28i1Oke8SuKQ=
 go.opentelemetry.io/otel v1.4.0/go.mod h1:jeAqMFKy2uLIxCtKxoFj0FAL5zAPKQagc3+GtBWakzk=
