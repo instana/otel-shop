@@ -5,7 +5,7 @@ go 1.16
 require (
 	github.com/streadway/amqp v1.0.0
 	go.opentelemetry.io/contrib/detectors/aws/ec2 v1.5.0
-	go.opentelemetry.io/contrib/detectors/aws/ecs v1.4.0
+	go.opentelemetry.io/contrib/detectors/aws/ecs v1.5.0
 	go.opentelemetry.io/contrib/detectors/aws/eks v1.5.0
 	go.opentelemetry.io/contrib/detectors/aws/lambda v0.30.0
 	go.opentelemetry.io/contrib/detectors/gcp v1.5.0
