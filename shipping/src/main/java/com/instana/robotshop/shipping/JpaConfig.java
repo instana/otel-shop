@@ -13,7 +13,7 @@ public class JpaConfig {
 
     @Bean
     public DataSource getDataSource() {
-        String JDBC_URL = String.format("jdbc:mysql://%s/cities?useSSL=false&autoReconnect=true", System.getenv("DB_HOST") == null ? "mysql" : System.getenv("DB_HOST"));
+        String JDBC_URL = String.format("jdbc:mysql://%s/cities?useSSL=false&autoReconnect=true&allowPublicKeyRetrieval=True", System.getenv("DB_HOST") == null ? "mysql" : System.getenv("DB_HOST"));
 
         logger.info("jdbc url {}", JDBC_URL);
 
