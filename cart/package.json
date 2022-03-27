@@ -20,7 +20,7 @@
     "express-pino-logger": "^7.0.0",
     "pino": "^7.9.2",
     "pino-http": "^6.6.0",
-    "pino-pretty": "^7.5.4",
+    "pino-pretty": "^7.6.0",
     "prom-client": "^14.0.1",
     "redis": "^4.0.4",
     "request": "^2.88.2"
