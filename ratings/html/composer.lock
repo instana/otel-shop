@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fb974d8595c855569d01211ce067396a",
+    "content-hash": "9813ae7981d20cc6c2324050954e246c",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -315,12 +315,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "c94a94f120803a18554c1805ef2e539f8285f9a2"
+                "reference": "5c693242bede743c23402bc5b9de62da04a882d7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/c94a94f120803a18554c1805ef2e539f8285f9a2",
-                "reference": "c94a94f120803a18554c1805ef2e539f8285f9a2",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/5c693242bede743c23402bc5b9de62da04a882d7",
+                "reference": "5c693242bede743c23402bc5b9de62da04a882d7",
                 "shasum": ""
             },
             "require": {
@@ -407,7 +407,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/2.2.1"
+                "source": "https://github.com/guzzle/psr7/tree/master"
             },
             "funding": [
                 {
@@ -423,7 +423,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-20T21:55:58+00:00"
+            "time": "2022-03-24T01:07:58+00:00"
         },
         {
             "name": "instana/instana-php-sdk",
@@ -635,16 +635,16 @@
         },
         {
             "name": "open-telemetry/opentelemetry",
-            "version": "0.0.6",
+            "version": "0.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/open-telemetry/opentelemetry-php.git",
-                "reference": "061adadafd7a55817698caa8b2adc703e772434d"
+                "reference": "39c99e5a2fc60ee1a30c31d67f023ce4edf0af8a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/open-telemetry/opentelemetry-php/zipball/061adadafd7a55817698caa8b2adc703e772434d",
-                "reference": "061adadafd7a55817698caa8b2adc703e772434d",
+                "url": "https://api.github.com/repos/open-telemetry/opentelemetry-php/zipball/39c99e5a2fc60ee1a30c31d67f023ce4edf0af8a",
+                "reference": "39c99e5a2fc60ee1a30c31d67f023ce4edf0af8a",
                 "shasum": ""
             },
             "require": {
@@ -703,7 +703,8 @@
             "type": "library",
             "autoload": {
                 "files": [
-                    "src/Context/fiber/initialize_fiber_handler.php"
+                    "src/Context/fiber/initialize_fiber_handler.php",
+                    "src/SDK/Common/Dev/Compatibility/_load.php"
                 ],
                 "psr-4": {
                     "Jaeger\\Thrift\\": "thrift/jaeger/",
@@ -734,9 +735,9 @@
             "homepage": "https://opentelemetry.io/docs/php",
             "support": {
                 "issues": "https://github.com/open-telemetry/opentelemetry-php/issues",
-                "source": "https://github.com/open-telemetry/opentelemetry-php/tree/0.0.6"
+                "source": "https://github.com/open-telemetry/opentelemetry-php/tree/0.0.8"
             },
-            "time": "2022-02-17T23:46:54+00:00"
+            "time": "2022-03-28T01:18:32+00:00"
         },
         {
             "name": "open-telemetry/opentelemetry-php-contrib",
