@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9813ae7981d20cc6c2324050954e246c",
+    "content-hash": "ebf59d89799bda0951cbfc42ed75eaeb",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -635,16 +635,16 @@
         },
         {
             "name": "open-telemetry/opentelemetry",
-            "version": "0.0.8",
+            "version": "0.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/open-telemetry/opentelemetry-php.git",
-                "reference": "39c99e5a2fc60ee1a30c31d67f023ce4edf0af8a"
+                "reference": "8f0b522bd30fb913b19e44f3ed92739c75264cbc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/open-telemetry/opentelemetry-php/zipball/39c99e5a2fc60ee1a30c31d67f023ce4edf0af8a",
-                "reference": "39c99e5a2fc60ee1a30c31d67f023ce4edf0af8a",
+                "url": "https://api.github.com/repos/open-telemetry/opentelemetry-php/zipball/8f0b522bd30fb913b19e44f3ed92739c75264cbc",
+                "reference": "8f0b522bd30fb913b19e44f3ed92739c75264cbc",
                 "shasum": ""
             },
             "require": {
@@ -735,9 +735,9 @@
             "homepage": "https://opentelemetry.io/docs/php",
             "support": {
                 "issues": "https://github.com/open-telemetry/opentelemetry-php/issues",
-                "source": "https://github.com/open-telemetry/opentelemetry-php/tree/0.0.8"
+                "source": "https://github.com/open-telemetry/opentelemetry-php/tree/0.0.9"
             },
-            "time": "2022-03-28T01:18:32+00:00"
+            "time": "2022-03-30T18:04:07+00:00"
         },
         {
             "name": "open-telemetry/opentelemetry-php-contrib",
