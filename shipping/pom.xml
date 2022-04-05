@@ -11,7 +11,7 @@
 	<groupId>com.instana</groupId>
 	<artifactId>shipping</artifactId>
 	<!-- [bump] -->
-	<version>0.1.111</version>
+	<version>0.1.112</version>
 	<name>shipping service</name>
 	<description>Shipping calculations</description>
 
