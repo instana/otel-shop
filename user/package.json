@@ -1,6 +1,6 @@
 {
   "name": "user [bump]",
-  "version": "0.1.114",
+  "version": "0.1.115",
   "description": "user REST API",
   "main": "server.js",
   "scripts": {
