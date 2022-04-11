@@ -19,7 +19,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh release upload ${{ github.event.release.tag_name }} otel-shop-${{ github.event.release.tag_name }}.tgz
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: chart-archive
           path: otel-shop-${{ github.event.release.tag_name }}.tgz
