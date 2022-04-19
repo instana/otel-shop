@@ -17,7 +17,7 @@ opentelemetry-instrumentation-urllib==0.30b0
 opentelemetry-instrumentation-wsgi==0.30b0
 opentelemetry-instrumentation-flask==0.30b0
 opentelemetry-instrumentation-grpc==0.30b0
-opentelemetry-instrumentation-jinja2==0.29b0
+opentelemetry-instrumentation-jinja2==0.30b0
 opentelemetry-instrumentation-pika==0.30b0
-opentelemetry-instrumentation-requests==0.29b0
-opentelemetry-instrumentation-urllib3==0.29b0
+opentelemetry-instrumentation-requests==0.30b0
+opentelemetry-instrumentation-urllib3==0.30b0
