@@ -12,7 +12,7 @@ opentelemetry-exporter-otlp-proto-grpc
 opentelemetry-instrumentation-aws-lambda==0.30b0
 opentelemetry-instrumentation-dbapi==0.29b0
 #opentelemetry-instrumentation-logging==0.28b1
-opentelemetry-instrumentation-sqlite3==0.29b0
+opentelemetry-instrumentation-sqlite3==0.30b0
 opentelemetry-instrumentation-urllib==0.29b0
 opentelemetry-instrumentation-wsgi==0.29b0
 opentelemetry-instrumentation-flask==0.29b1
