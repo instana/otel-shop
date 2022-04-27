@@ -1,7 +1,7 @@
 version: "3"
 services:
   agent:
-    image: instana/agent:latest
+    image: icr.io/instana/agent:latest
     pid: "host"
     privileged: true
     volumes:
