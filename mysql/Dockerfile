@@ -1,4 +1,4 @@
-FROM mysql:8.0.28
+FROM mysql:8.0.29
 
 ENV MYSQL_ALLOW_EMPTY_PASSWORD=yes \
     MYSQL_DATABASE=cities \
