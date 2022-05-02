@@ -6,7 +6,7 @@ require (
 	github.com/streadway/amqp v1.0.0
 	go.opentelemetry.io/contrib/detectors/aws/ec2 v1.7.0
 	go.opentelemetry.io/contrib/detectors/aws/ecs v1.7.0
-	go.opentelemetry.io/contrib/detectors/aws/eks v1.6.0
+	go.opentelemetry.io/contrib/detectors/aws/eks v1.7.0
 	go.opentelemetry.io/contrib/detectors/aws/lambda v0.32.0
 	go.opentelemetry.io/contrib/detectors/gcp v1.7.0
 	go.opentelemetry.io/contrib/instrumentation/host v0.32.0
