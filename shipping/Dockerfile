@@ -17,7 +17,7 @@ RUN wget https://github.com/open-telemetry/opentelemetry-java-instrumentation/re
 #
 # Run
 #
-FROM openjdk:17-jdk
+FROM openjdk:18-jdk
 
 EXPOSE 8080
 
