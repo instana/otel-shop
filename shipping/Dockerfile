@@ -12,7 +12,7 @@ RUN mvn dependency:resolve -fail-never
 COPY src /opt/shipping/src/
 RUN mvn package
 
-RUN wget https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/download/v1.13.0/opentelemetry-javaagent.jar -O /opt/shipping/opentelemetry-javaagent-all.jar
+RUN wget https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/download/v1.14.0/opentelemetry-javaagent.jar -O /opt/shipping/opentelemetry-javaagent-all.jar
 
 #
 # Run
