@@ -87,7 +87,7 @@ def pay(id):
     # check that the cart is valid
     # this will blow up if the cart is not valid
     has_shipping = False
-    for item in cart.get('items'):
+    for item in cart.get('items') or []:
         if item.get('sku') == 'SHIP':
             has_shipping = True
 
