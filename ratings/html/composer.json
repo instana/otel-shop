@@ -10,7 +10,7 @@
         "instana/instana-php-sdk": "^1.10",
         "monolog/monolog": "^2.4.0",
         "open-telemetry/opentelemetry": "^0.0.10",
-        "open-telemetry/opentelemetry-php-contrib": "^0.0.2",
+        "open-telemetry/opentelemetry-php-contrib": "^0.0.4",
         "psr/log": "*",
         "symfony/config": "^6.0",
         "symfony/dependency-injection": "^6.0",

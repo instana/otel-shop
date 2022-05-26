@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6599e297a37be11d483878dcfaa90f2e",
+    "content-hash": "873dea8af5f3089372bf702bf0400ca2",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -222,16 +222,16 @@
         },
         {
             "name": "google/protobuf",
-            "version": "v3.20.1",
+            "version": "v3.21.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/protocolbuffers/protobuf-php.git",
-                "reference": "5537a424882b2cbce891330d3e4bdfe363694975"
+                "reference": "ac95b8a39e506bfe425ae5dd50a2d793c3012791"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/protocolbuffers/protobuf-php/zipball/5537a424882b2cbce891330d3e4bdfe363694975",
-                "reference": "5537a424882b2cbce891330d3e4bdfe363694975",
+                "url": "https://api.github.com/repos/protocolbuffers/protobuf-php/zipball/ac95b8a39e506bfe425ae5dd50a2d793c3012791",
+                "reference": "ac95b8a39e506bfe425ae5dd50a2d793c3012791",
                 "shasum": ""
             },
             "require": {
@@ -261,9 +261,9 @@
             ],
             "support": {
                 "issues": "https://github.com/protocolbuffers/protobuf-php/issues",
-                "source": "https://github.com/protocolbuffers/protobuf-php/tree/v3.20.1"
+                "source": "https://github.com/protocolbuffers/protobuf-php/tree/v3.21.0"
             },
-            "time": "2022-04-22T01:22:58+00:00"
+            "time": "2022-05-26T00:41:56+00:00"
         },
         {
             "name": "grpc/grpc",
@@ -315,12 +315,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "5c693242bede743c23402bc5b9de62da04a882d7"
+                "reference": "f8ae7cb4c654e9d6f31c10271321ea99f7ca8ae9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/5c693242bede743c23402bc5b9de62da04a882d7",
-                "reference": "5c693242bede743c23402bc5b9de62da04a882d7",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/f8ae7cb4c654e9d6f31c10271321ea99f7ca8ae9",
+                "reference": "f8ae7cb4c654e9d6f31c10271321ea99f7ca8ae9",
                 "shasum": ""
             },
             "require": {
@@ -423,7 +423,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-24T01:07:58+00:00"
+            "time": "2022-05-02T17:34:52+00:00"
         },
         {
             "name": "instana/instana-php-sdk",
@@ -746,27 +746,24 @@
         },
         {
             "name": "open-telemetry/opentelemetry-php-contrib",
-            "version": "0.0.2",
+            "version": "0.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/open-telemetry/opentelemetry-php-contrib.git",
-                "reference": "16960b1876724b7e401d9e4236252a602faa6bec"
+                "reference": "3839f76c2abcf83206931db46a6f7854a1fd48ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/open-telemetry/opentelemetry-php-contrib/zipball/16960b1876724b7e401d9e4236252a602faa6bec",
-                "reference": "16960b1876724b7e401d9e4236252a602faa6bec",
+                "url": "https://api.github.com/repos/open-telemetry/opentelemetry-php-contrib/zipball/3839f76c2abcf83206931db46a6f7854a1fd48ac",
+                "reference": "3839f76c2abcf83206931db46a6f7854a1fd48ac",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "open-telemetry/opentelemetry": "~0.0.6",
+                "open-telemetry/opentelemetry": "^0.0.10",
                 "php": "^7.4 || ^8.0",
                 "php-http/discovery": "^1.14",
                 "php-http/message": "^1.12"
-            },
-            "conflict": {
-                "open-telemetry/opentelemetry": "<=0.0.3"
             },
             "replace": {
                 "open-telemetry/otel-sdk-bundle": "self.version"
@@ -781,8 +778,9 @@
                 "mikey179/vfsstream": "^1.6",
                 "nyholm/psr7": "^1.4",
                 "phan/phan": "^4.1",
-                "phpstan/phpstan": "^0.12.50",
-                "phpstan/phpstan-phpunit": "^0.12.16",
+                "phpstan/phpstan": "^1.4",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "phpstan/phpstan-symfony": "^1.1",
                 "phpunit/phpunit": "^9.5",
                 "psalm/plugin-phpunit": "^0.13.0",
                 "symfony/config": "^4.4|^5.0|^6.0",
@@ -817,9 +815,9 @@
             ],
             "description": "The contributor repo for opentelemetry-php",
             "support": {
-                "source": "https://github.com/open-telemetry/opentelemetry-php-contrib/tree/0.0.2"
+                "source": "https://github.com/open-telemetry/opentelemetry-php-contrib/tree/0.0.4"
             },
-            "time": "2022-02-27T19:58:55+00:00"
+            "time": "2022-05-24T15:14:12+00:00"
         },
         {
             "name": "packaged/thrift",
@@ -862,16 +860,16 @@
         },
         {
             "name": "php-http/discovery",
-            "version": "1.14.1",
+            "version": "1.14.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-http/discovery.git",
-                "reference": "de90ab2b41d7d61609f504e031339776bc8c7223"
+                "reference": "c8d48852fbc052454af42f6de27635ddd916b959"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-http/discovery/zipball/de90ab2b41d7d61609f504e031339776bc8c7223",
-                "reference": "de90ab2b41d7d61609f504e031339776bc8c7223",
+                "url": "https://api.github.com/repos/php-http/discovery/zipball/c8d48852fbc052454af42f6de27635ddd916b959",
+                "reference": "c8d48852fbc052454af42f6de27635ddd916b959",
                 "shasum": ""
             },
             "require": {
@@ -884,8 +882,7 @@
                 "graham-campbell/phpspec-skip-example-extension": "^5.0",
                 "php-http/httplug": "^1.0 || ^2.0",
                 "php-http/message-factory": "^1.0",
-                "phpspec/phpspec": "^5.1 || ^6.1",
-                "puli/composer-plugin": "1.0.0-beta10"
+                "phpspec/phpspec": "^5.1 || ^6.1"
             },
             "suggest": {
                 "php-http/message": "Allow to use Guzzle, Diactoros or Slim Framework factories"
@@ -924,9 +921,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-http/discovery/issues",
-                "source": "https://github.com/php-http/discovery/tree/1.14.1"
+                "source": "https://github.com/php-http/discovery/tree/1.14.2"
             },
-            "time": "2021-09-18T07:57:46+00:00"
+            "time": "2022-05-25T07:26:05+00:00"
         },
         {
             "name": "php-http/message",
