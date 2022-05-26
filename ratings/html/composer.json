@@ -9,7 +9,7 @@
         "guzzlehttp/psr7": "2.2.x-dev",
         "instana/instana-php-sdk": "^1.10",
         "monolog/monolog": "^2.4.0",
-        "open-telemetry/opentelemetry": "^0.0.10",
+        "open-telemetry/opentelemetry": "^0.0.11",
         "open-telemetry/opentelemetry-php-contrib": "^0.0.2",
         "psr/log": "*",
         "symfony/config": "^6.0",
