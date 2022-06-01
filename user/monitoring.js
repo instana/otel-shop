@@ -1,16 +1,20 @@
 'use strict';
 
-const { MeterProvider, ConsoleMetricExporter } = require('@opentelemetry/sdk-metrics-base');
+const { MeterProvider, PeriodicExportingMetricReader } = require('@opentelemetry/sdk-metrics-base');
 const { OTLPMetricExporter } = require('@opentelemetry/exporter-metrics-otlp-grpc');
 
 const otlpExporter = new OTLPMetricExporter({
   url: process.env.OTEL_EXPORTER_OTLP_ENDPOINT
 });
 
-const meter = new MeterProvider({
+const meterProvider = new MeterProvider({});
+
+meterProvider.addMetricReader(new PeriodicExportingMetricReader({
   exporter: otlpExporter,
-  interval: 1000,
-}).getMeter('your-meter-name');
+  exportIntervalMillis: 1000,
+}));
+
+const meter = meterProvider.getMeter('user-meter');
 
 const requestCount = meter.createCounter("requests", {
   description: "Count all incoming requests"
