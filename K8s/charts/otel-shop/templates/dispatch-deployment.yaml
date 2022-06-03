@@ -43,4 +43,18 @@ spec:
           requests:
             cpu: 100m
             memory: 50Mi
+      - name: {{ .Release.Name }}-dispatch-otelcol-sidecar
+        image: {{ .Values.image.repo }}/{{ .Values.image.prefix }}-otel-collector:{{ .Values.image.version }}
+        args:
+        - --config=/conf/agent.yaml
+        volumeMounts:
+        - mountPath: /conf
+          name: {{ .Release.Name }}-agent-config
+      volumes:
+      - configMap:
+          items:
+          - key: agent.yaml
+            path: agent.yaml
+          name: {{ .Release.Name }}-agent-config
+        name: {{ .Release.Name }}-agent-config
       restartPolicy: Always
