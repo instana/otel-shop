@@ -28,6 +28,10 @@ spec:
               fieldPath: status.hostIP
         - name: OTEL_EXPORTER_OTLP_ENDPOINT
           value: {{ .Values.opentelemetry.exporter.otlp.endpoint }}
+        {{- if ne .Values.opentelemetry.exporter.otlp.headers "" }}
+        - name: OTEL_EXPORTER_OTLP_HEADERS
+          value: {{ .Values.opentelemetry.exporter.otlp.headers }}
+        {{- end }}
         - name: OTEL_SERVICE_NAME
           value: {{ .Release.Name }}-user
         - name: MONGO_URL
