@@ -46,3 +46,4 @@ opentelemetry:
   exporter:
     otlp:
       endpoint: "$(INSTANA_AGENT_HOST):4317"
+      headers: ""

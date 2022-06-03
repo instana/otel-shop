@@ -113,6 +113,15 @@ helm upgrade otel-shop otel-shop \
   --repo https://instana.github.io/otel-shop/
 ```
 
+### Sending OTLP somewhere else
+
+This chart can as well as adressing Instana, send the data to some other destination, via OTLP.
+
+The following settings can be used:
+
+`opentelemetry.exporter.otlp.endpoint` - Set the OTLP endpoint to send the data to (defaulting to Instana Agent)
+`opentelemetry.exporter.otlp.headers` - Set a list of comma-separated headers for the OTLP exporter (defaulting to blanks)
+
 ## License
 
 Apache 2.0
