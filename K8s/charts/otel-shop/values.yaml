@@ -1,4 +1,4 @@
-# Registry and rpository for Docker images
+# Registry and repository for Docker images
 # Default is docker/instanacedricziel/image:latest
 image:
   repo: instanacedricziel
@@ -12,6 +12,19 @@ image:
 payment:
   gateway: null
   #gateway: https://www.worldpay.com
+
+cart:
+  opentelemetry:
+    exporter:
+      otlp:
+        endpoint: "$(INSTANA_AGENT_HOST):4317"
+
+shipping:
+  opentelemetry:
+    exporter:
+      otlp:
+        # for "opentelemetry-javaagent" the url scheme is mandatory, either "http" or "https"
+        endpoint: "http://$(INSTANA_AGENT_HOST):4317"
 
 # EUM configuration
 # Provide your key and set the endpoint
