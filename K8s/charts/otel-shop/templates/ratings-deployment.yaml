@@ -55,4 +55,18 @@ spec:
           periodSeconds: 5
           failureThreshold: 30
           successThreshold: 1
+      - name: {{ .Release.Name }}-ratings-otelcol-sidecar
+        image: {{ .Values.image.repo }}/{{ .Values.image.prefix }}-otel-collector:{{ .Values.image.version }}
+        args:
+        - --config=/conf/agent.yaml
+        volumeMounts:
+        - mountPath: /conf
+          name: {{ .Release.Name }}-agent-config
+      volumes:
+      - configMap:
+          items:
+          - key: agent.yaml
+            path: agent.yaml
+          name: {{ .Release.Name }}-agent-config
+        name: {{ .Release.Name }}-agent-config
       restartPolicy: Always
