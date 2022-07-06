@@ -139,7 +139,7 @@ services:
     networks:
       app-network:
     environment:
-      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT:?No OpenTelemetry collector specified via OTEL_EXPORTER_OTLP_ENDPOINT}
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${CART_OTEL_EXPORTER_OTLP_ENDPOINT:?No OpenTelemetry collector specified via CART_OTEL_EXPORTER_OTLP_ENDPOINT}
       OTEL_EXPORTER_OTLP_HEADERS: ${OTEL_EXPORTER_OTLP_HEADERS:?No OpenTelemetry headers specified via OTEL_EXPORTER_OTLP_HEADERS}
       OTEL_SERVICE_NAME: otel-shop-cart
     healthcheck:
@@ -297,7 +297,7 @@ services:
       CART_ENDPOINT: cart:8080
       DB_HOST: mysql
       REDIS_URL: redis://redis:6379
-      OTEL_EXPORTER_OTLP_ENDPOINT: http://${OTEL_EXPORTER_OTLP_ENDPOINT:?No OpenTelemetry collector specified via OTEL_EXPORTER_OTLP_ENDPOINT}
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${SHIPPING_OTEL_EXPORTER_OTLP_ENDPOINT:?No OpenTelemetry collector specified via SHIPPING_OTEL_EXPORTER_OTLP_ENDPOINT}
       OTEL_EXPORTER_OTLP_HEADERS: ${OTEL_EXPORTER_OTLP_HEADERS:?No OpenTelemetry headers specified via OTEL_EXPORTER_OTLP_HEADERS}
       OTEL_SERVICE_NAME: otel-shop-shipping
       OTEL_TRACES_SAMPLER: always_on
