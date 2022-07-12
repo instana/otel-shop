@@ -13,6 +13,8 @@
     "@opentelemetry/auto-instrumentations-node": "^0.30.0",
     "@opentelemetry/exporter-metrics-otlp-grpc": "^0.29.2",
     "@opentelemetry/exporter-trace-otlp-grpc": "^0.29.2",
+    "@opentelemetry/resource-detector-instana": "^0.2.0",
+    "@opentelemetry/resources": "^1.4.0",
     "@opentelemetry/sdk-metrics-base": "^0.29.2",
     "@opentelemetry/sdk-node": "^0.29.2",
     "body-parser": "^1.20.0",
