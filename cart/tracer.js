@@ -1,74 +1,33 @@
-"use strict";
+'use strict';
 
-const { detectResources } = require("@opentelemetry/resources");
-const opentelemetry = require("@opentelemetry/sdk-node");
-const { SimpleSpanProcessor } = require("@opentelemetry/sdk-trace-base");
-
-const { NodeTracerProvider } = require("@opentelemetry/sdk-trace-node");
-const { AlwaysOnSampler } = require("@opentelemetry/core");
+const opentelemetry = require('@opentelemetry/sdk-node');
+const api = require('@opentelemetry/api');
 const {
   getNodeAutoInstrumentations,
-} = require("@opentelemetry/auto-instrumentations-node");
+} = require('@opentelemetry/auto-instrumentations-node');
 const {
   OTLPMetricExporter,
-} = require("@opentelemetry/exporter-metrics-otlp-grpc");
+} = require('@opentelemetry/exporter-metrics-otlp-grpc');
 const {
   SemanticResourceAttributes,
-} = require("@opentelemetry/semantic-conventions");
+} = require('@opentelemetry/semantic-conventions');
 
+// TODO: replace when the package was released!
 const {
   instanaAgentDetector,
-} = require("../../opentelemetry-js-contrib/detectors/node/opentelemetry-resource-detector-instana/build/src/");
+} = require('../../opentelemetry-js-contrib/detectors/node/opentelemetry-resource-detector-instana/build/src/');
 
 const {
   Resource,
   envDetector,
   processDetector,
-} = require("@opentelemetry/resources");
-const { trace } = require("@opentelemetry/api");
+} = require('@opentelemetry/resources');
 const {
   OTLPTraceExporter,
-} = require("@opentelemetry/exporter-trace-otlp-grpc");
-const {
-  AsyncLocalStorageContextManager,
-} = require("@opentelemetry/context-async-hooks");
-/*
-exports.init = async () => {
-  const serviceName = "LOL";
-  const resource = await detectResources({
-    detectors: [instanaAgentDetector],
-  });
+} = require('@opentelemetry/exporter-trace-otlp-grpc');
 
-  const resource2 = new Resource({
-    [SemanticResourceAttributes.SERVICE_NAME]: serviceName,
-  });
-  const mergedResource = resource2.merge(resource);
-  const tracerProvider = new NodeTracerProvider({ resource: mergedResource });
-  console.log(process.env.OTEL_EXPORTER_OTLP_ENDPOINT);
-  const traceOtlpExporter = new OTLPTraceExporter({
-    url: process.env.OTEL_EXPORTER_OTLP_ENDPOINT,
-  });
-
-  const metricOtlpExporter = new OTLPMetricExporter({
-    url: process.env.OTEL_EXPORTER_OTLP_ENDPOINT,
-  });
-
-  tracerProvider.addSpanProcessor(new SimpleSpanProcessor(traceOtlpExporter));
-  tracerProvider.addSpanProcessor(new SimpleSpanProcessor(metricOtlpExporter));
-
-  tracerProvider.register();
-
-  registerInstrumentations({
-    instrumentations: [getNodeAutoInstrumentations({})],
-    tracerProvider,
-  });
-
-  return trace.getTracer(serviceName);
-};
-*/
-
-exports.init = async function () {
-  const serviceName = "LOL";
+(async function () {
+  const serviceName = 'Cart Otel Service';
   const globalResource = new Resource({
     [SemanticResourceAttributes.SERVICE_NAME]: serviceName,
   });
@@ -87,8 +46,6 @@ exports.init = async function () {
     instrumentations: [getNodeAutoInstrumentations()],
     autoDetectResources: false,
     resource: globalResource,
-    sampler: new AlwaysOnSampler(),
-    // contextManager: new AsyncLocalStorageContextManager(),
   });
 
   // attributes are automatically merged!
@@ -96,10 +53,6 @@ exports.init = async function () {
     detectors: [envDetector, processDetector, instanaAgentDetector],
   });
 
-  const resource = sdk["_resource"];
-  console.log("final resource", resource);
-  // const provider = new NodeTracerProvider({ resource });
-  // trace.setGlobalTracerProvider(provider);
-  console.log(sdk);
-  sdk.start();
-};
+  api.diag.debug(`Merged resource ${JSON.stringify(sdk['_resource'])}`);
+  await sdk.start();
+})();
