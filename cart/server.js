@@ -17,6 +17,9 @@ const counter = new promClient.Counter({
     registers: [register]
 });
 
+if (process.env.CART_DEBUG) {
+  api.diag.setLogger(new api.DiagConsoleLogger(), api.DiagLogLevel.ALL);
+}
 
 var redisConnected = false;
 var catalogueHost = process.env.CATALOGUE_HOST || 'catalogue'
