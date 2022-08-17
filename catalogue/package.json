@@ -1,6 +1,6 @@
 {
   "name": "catalogue [bump]",
-  "version": "0.1.173",
+  "version": "0.1.174",
   "description": "product catalogue REST API",
   "main": "server.js",
   "scripts": {
@@ -21,6 +21,6 @@
     "mongodb": "^4.7.0",
     "pino": "^8.0.0",
     "pino-http": "^7.1.0",
-    "pino-pretty": "^8.0.0"
+    "pino-pretty": "^9.0.1"
   }
 }
