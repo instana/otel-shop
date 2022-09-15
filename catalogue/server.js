@@ -60,7 +60,7 @@ app.get('/health-check', (req, res) => {
 });
 
 // all products
-app.get('/products', (req, res) => {
+app.get('/otel-products', (req, res) => {
     if (mongoConnected) {
         collection.find({}).toArray().then((products) => {
             res.json(products);
@@ -151,6 +151,7 @@ app.get('/search/:text', (req, res) => {
 function mongoConnect() {
     return new Promise((resolve, reject) => {
         var mongoURL = process.env.MONGO_URL || 'mongodb://mongodb:27017/catalogue';
+        logger.info(`Attempting to connect to MongoDB at ${mongoURL}.`)
         mongoClient.connect(mongoURL, (error, client) => {
             if (error) {
                 reject(error);
@@ -169,7 +170,7 @@ function mongoLoop() {
         mongoConnected = true;
         logger.info('MongoDB connected');
     }).catch((e) => {
-        logger.error('ERROR', e);
+        logger.error({msg: 'ERROR', error: e});
         setTimeout(mongoLoop, 2000);
     });
 }
@@ -179,5 +180,5 @@ mongoLoop();
 // fire it up!
 const port = process.env.CATALOGUE_SERVER_PORT || '8080';
 app.listen(port, () => {
-    logger.info('Started on port', port);
+    logger.info(`Started on port ${port}`);
 });

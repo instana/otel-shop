@@ -9,6 +9,7 @@
   "author": "SteveW",
   "license": "Apache-2.0",
   "dependencies": {
+    "@instana/collector": "^2.7.1",
     "@opentelemetry/api": "^1.1.0",
     "@opentelemetry/auto-instrumentations-node": "^0.30.0",
     "@opentelemetry/exporter-metrics-otlp-grpc": "^0.29.2",
