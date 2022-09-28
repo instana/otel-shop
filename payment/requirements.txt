@@ -13,7 +13,7 @@ opentelemetry-instrumentation-aws-lambda==0.31b0
 opentelemetry-instrumentation-dbapi==0.31b0
 #opentelemetry-instrumentation-logging==0.31b0
 opentelemetry-instrumentation-sqlite3==0.31b0
-opentelemetry-instrumentation-urllib==0.31b0
+opentelemetry-instrumentation-urllib==0.34b0
 opentelemetry-instrumentation-wsgi==0.31b0
 opentelemetry-instrumentation-flask==0.31b0
 opentelemetry-instrumentation-grpc==0.31b0
