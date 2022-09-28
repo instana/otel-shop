@@ -18,6 +18,6 @@ opentelemetry-instrumentation-wsgi==0.31b0
 opentelemetry-instrumentation-flask==0.31b0
 opentelemetry-instrumentation-grpc==0.31b0
 opentelemetry-instrumentation-jinja2==0.31b0
-opentelemetry-instrumentation-pika==0.31b0
+opentelemetry-instrumentation-pika==0.34b0
 opentelemetry-instrumentation-requests==0.31b0
 opentelemetry-instrumentation-urllib3==0.31b0
