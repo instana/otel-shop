@@ -1,4 +1,4 @@
-FROM ubuntu/apache2:2.4-20.04_beta
+FROM ubuntu/apache2:2.4-22.10_edge
 
 RUN apt-get update && apt-get install -y \
   curl \
