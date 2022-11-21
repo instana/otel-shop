@@ -10,7 +10,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@opentelemetry/api": "^1.1.0",
-    "@opentelemetry/auto-instrumentations-node": "^0.30.0",
+    "@opentelemetry/auto-instrumentations-node": "^0.35.0",
     "@opentelemetry/exporter-metrics-otlp-grpc": "^0.29.2",
     "@opentelemetry/exporter-trace-otlp-grpc": "^0.29.2",
     "@opentelemetry/resource-detector-instana": "^0.2.0",
