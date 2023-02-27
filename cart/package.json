@@ -24,7 +24,7 @@
     "pino-http": "^7.1.0",
     "pino-pretty": "^8.0.0",
     "prom-client": "^14.0.1",
-    "redis": "^4.1.0",
+    "redis": "^4.6.5",
     "request": "^2.88.2"
   }
 }
