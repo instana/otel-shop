@@ -26,6 +26,6 @@ app.listen(port, () => {
   logger.info(`Started on port: ${port}`);
 });
 
-setInterval(() => {
-  fetch(`http://localhost:${port}/export`);
+setInterval(async () => {
+  await fetch(`http://localhost:${port}/export`);
 }, 5 * 1000);

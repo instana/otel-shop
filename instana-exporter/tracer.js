@@ -2,7 +2,6 @@
 
 const path = require('path');
 const process = require('process');
-const logger = require('./logger');
 
 require('dotenv').config({ path: path.resolve(process.cwd(), '..', '.env') });
 
