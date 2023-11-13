@@ -19,7 +19,6 @@ public class JpaConfig {
 
         DataSourceBuilder bob = DataSourceBuilder.create();
 
-        bob.driverClassName("com.mysql.jdbc.Driver");
         bob.url(JDBC_URL);
         bob.username("shipping");
         bob.password("secret");
